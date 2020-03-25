@@ -1,0 +1,267 @@
+/*MINE*/
+/* ----- General ---- */
+body a{
+  text-decoration:none;
+}
+
+body {
+  background-color: #232f34;
+  user-select: none;
+}
+
+#main{
+  position: fixed;
+  height: 50%; width: 70%;
+  top: 20%; left: 15%;
+}
+
+
+/* ----- Menu -----*/
+a.menu {
+  display: inline-block;
+  margin-top: 1%;
+  margin-left: 5%;
+  margin-bottom: 1%;
+}
+a.menu div{
+  color: white;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+a.menu span{
+  font-size: larger;
+  display: inline-block;
+  vertical-align: middle;
+}
+a.menu div:hover{
+  transform: scale(1.2)
+}
+
+
+/* ----- Custom Button ----- */
+a.custom_button div{
+  height: 25px;
+  width: 120px;
+  border-radius: 5px;
+
+  color: white;
+
+  background-color: #344954;
+
+  box-shadow: 3px 3px 5px 6px #182024;
+
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+a.custom_button span{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+a.custom_button div:hover{
+  background-color: #293942;
+  transform: scale(1.1)
+}
+
+#button_div{
+  padding-top: 1%;
+  position: relative;
+}
+
+
+/* ----- Progress Bar ----- */
+#progress_bar{
+  position: fixed;
+  bottom: 25%;
+  height: 2%;
+  width: 100%;
+  vertical-align: middle;
+  text-align: center;
+}
+#progress{
+  position: relative;
+  left: 0%;
+  width: 80%;
+  height: 4px;
+  background-color: #f9aa33;
+  border-radius: 2px;
+  text-align: center;
+}
+#empty{
+  position: relative;
+  left: 20%;
+  height: 4px; width: 60%;
+  border-radius: 2px;
+  background-color: #344954;
+}
+#progress_bar p{
+  position: relative;
+  display: inline-block;
+  font-size: x-small;
+  color: white;
+}
+
+
+/* ----- Reset -----*/
+#reset{
+  position: fixed;
+  width: 100%;
+  bottom: 5%; left: 0%;
+  transition: all .2s ease-in-out;
+  text-align: center;
+}
+#reset div{
+  display: inline-block;
+  text-align: center;
+}
+#reset div:hover{
+  transform: scale(1.1);
+}
+#reset p{
+  position: relative;
+  display: inline-block;
+  font-size: x-small;
+  color: white;
+  cursor: pointer;
+}
+#reset_message{
+  margin-left: 15pt;
+  visibility: hidden;
+}
+
+
+/* ----- Header ----- */
+#head{
+  position: fixed;
+  width: 100%;
+  top: 0%; left: 0%;
+  background-color: #344954;
+  box-shadow: 0px 3px 5px 6px #182024;
+  display: table;
+}
+#head_img{
+  display: inline-block;
+  margin-top: 1%;
+  margin-left: 3%;
+  margin-right: 1%;
+  margin-bottom: 1%;
+}
+#head_img img{
+  position: absolute;
+  top: 15%;
+  height: 70%;
+}
+
+
+
+/*----- Suggestions -----*/
+#suggestions{
+  float: right;
+  margin-right: 3%;
+}
+#suggestions span{
+  margin-right: 3px;
+}
+#suggestion_overlay{
+  position: relative;
+  z-index: 1;
+  padding: 15px;
+  margin-top: 4%;
+  border-radius: 10px;
+  background-color: #344954;
+  box-shadow: 0px 3px 5px 6px #182024;
+  float: right;
+}
+#suggestion_overlay input{
+  margin-top: 5px;
+}
+#suggestion_overlay input[type=text]{
+  color: white;
+  width: 90%;
+  background-color: #4a6572;
+  border-radius: 5px;
+  border: 0;
+  padding: 5px;
+  outline: none;
+}
+#suggestion_overlay input[type=text]::-webkit-input-placeholder{
+  color: white;
+}
+#suggestion_overlay input[type=text]:-ms-input-placeholder{
+  color: white;
+}
+#suggestion_overlay input[type=text]::placeholder{
+  color: white;
+}
+#suggestion_overlay input[type=submit]{
+  margin-top: 8px;
+  border: 0;
+  height: 25px;
+  width: 100px;
+  border-radius: 5px;
+  color: white;
+  background-color: #344954;
+  box-shadow: .5px .5px 1px 1.3px #182024;
+  cursor: pointer;
+  outline: none;
+}
+#suggestion_overlay input[type=submit]:disabled{
+  box-shadow: 0 0 0 0;
+  color: gray;
+}
+#suggestion_overlay label{
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  color: white;
+}
+
+
+/* ----- Question Carousel ----- */
+#question_div{
+  height: 90%; width: 100%;
+  transform-style: preserve-3d;
+  position: relative;
+  perspective: -50em;
+  -webkit-perspective: -50em;
+}
+#carousel {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform: translateZ(-150em) rotateY(0deg);
+  transform-style: preserve-3d;
+  transition: transform 0.3s;
+}
+.carousel_cell {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  transition: transform 0.3s, opacity 1s;
+  background-color: #4a6572;
+  box-shadow: 1px 1px 2px 2px #182024;
+  border-radius: 20px;
+  display: table;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+}
+.container{
+  display: table-cell;
+  vertical-align: middle;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.container img{
+  max-height: 80%;
+}
+/* tz = 70% * tan(360 / (n * 2)) */
+.carousel_cell:nth-child(1) { transform: rotateY(   0deg) translateZ(-150em);}
+.carousel_cell:nth-child(2) { transform: rotateY(  45deg) translateZ(-150em);}
+.carousel_cell:nth-child(3) { transform: rotateY(  90deg) translateZ(-150em);}
+.carousel_cell:nth-child(4) { transform: rotateY( 135deg) translateZ(-150em);}
+.carousel_cell:nth-child(5) { transform: rotateY( 180deg) translateZ(-150em);}
+.carousel_cell:nth-child(6) { transform: rotateY( 225deg) translateZ(-150em);}
+.carousel_cell:nth-child(7) { transform: rotateY( 270deg) translateZ(-150em);}
+.carousel_cell:nth-child(8) { transform: rotateY( 315deg) translateZ(-150em);}

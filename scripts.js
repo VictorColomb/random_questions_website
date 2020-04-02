@@ -74,14 +74,14 @@ function init(){
         questions.push(i);
     }
 
-    /* Shuffles the elements in the array using Fisher-Yates Algorithm
+    //Shuffles the elements in the array using Fisher-Yates Algorithm
     random = mulberry32(seed);
     for(let i = nb_of_questions - 2; i > 0; i--){
         const j = Math.floor(random() * i);
         const temp = questions[i];
         questions[i] = questions[j];
         questions[j] = temp;
-    }*/
+    }
 
     if (my_position == '') {
         my_position = 0;

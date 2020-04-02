@@ -1,7 +1,10 @@
 <!DOCTYPE html>
+
 <?php
     if (isset($_GET['m']) && $_GET['m'] == 'physique') {$maths = false; $m_or_p = 'physique';}
     else {$maths = true; $m_or_p = 'maths';}
+
+    // Normal
 
     $files = glob(getcwd() . "/" . $m_or_p . "/*.png");
     if ($files) {
@@ -35,6 +38,8 @@
     <!-- External links -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap">
+
     <script>
         var nb_of_questions = <?php echo $nb_questions ?>;
         var m_or_p = <?php if ($maths) {echo '"maths"';} else {echo '"physique"';} ?>;
@@ -46,7 +51,7 @@
 
 <body onload='init();' onkeydown="keyDown(event.keyCode);">
     <div id="head">
-        <a href="/">
+    <a href="/">
             <div id="head_img">
                 <img src="icon.ico">
             </div>
@@ -57,7 +62,7 @@
                 <span class="material-icons">
                     functions
                 </span>
-                <span style="font-family: 'Roboto', sans-serif;">Maths</span>
+                <span style="font-family: 'Work Sans', sans-serif;">Maths</span>
             </div>
         </a>
 
@@ -66,18 +71,18 @@
                 <span class="material-icons">
                     flash_on
                 </span>
-                <span style="font-family: 'Roboto', sans-serif;">Physique</span>
+                <span style="font-family: 'Work Sans', sans-serif;">Physics</span>
             </div>
         </a>
 
-        <a class="menu" id="suggestions" onclick="suggestionOverlay();">
+        <!--a class="menu" id="suggestions" onclick="suggestionOverlay();">
             <div style="text-align: center;">
                 <span class="material-icons-outlined">
                     feedback
                 </span>
-                <span style="font-family: 'Roboto', sans-serif;">Suggestion / commentaire</span>
+                <span style="font-family: 'Roboto', sans-serif;">Suggestion / comment</span>
             </div>
-        </a>
+        </a-->
     </div>
 
     <div id="suggestion_overlay" style="visibility:hidden;">
@@ -96,32 +101,130 @@
     </div>
 
     <div id="progress_bar">
-        <p id="progress_number" style="font-family: 'Roboto', sans-serif;"></p>
+        <p id="progress_number" style="font-family: 'Work Sans', sans-serif;"></p>
         <div id="empty">
             <div id="progress"></div>
         </div>
-        <p id="reset_message" style="font-family: 'Roboto', sans-serif;">De nouvelles questions ont été ajoutées, la progression a été réinitialisée.</p>
+        <p id="reset_message" style="font-family: 'Work Sans', sans-serif;">Questions added. Progression reset...</p>
     </div>
 
-    <a id="reset">
+    <!--a id="reset">
         <div onclick="reset();">
             <p class="material-icons">refresh</p>
-            <p style="font-family: 'Roboto', sans-serif;">Réinitialiser la progression</p>
+            <p style="font-family: 'Roboto', sans-serif;">Reset Progress</p>
         </div>
-    </a>
+    </a-->
+
+    <div id="overlay">
+    <div id='scrim'></div>
+    <div id='dialog'>
+        <div class='header'>
+            <span class='title'>Chapitres</span>
+            <br>
+            <div class='button' onclick='select_all(1);'>Tout sélectionner</div>
+            <div class='button' style="margin-right:0;"onclick='select_all(0);'>Tout désélectionner</div>
+            <hr>
+        </div>
+        <div id='chapter_container' class='content'>
+        <ul>
+        <?php
+        $chapters = glob('maths/*' , GLOB_ONLYDIR);
+
+        // counts the amount of chapters
+        $number_of_chapters = count($chapters);
+
+        // Counts the amount of questions per chapter
+        function count_questions($my_chapter){
+            return count(glob($my_chapter.'/*'));
+        }
+        $questions_per_chapters = [];
+
+        // Enumerates over every available chapter
+        for ($i=0, $n=count($chapters); $i<$n; $i++){
+            $chapter=$chapters[$i];
+            $questions_per_chapters[] = count_questions($chapter);
+            $chapter_name=end(explode('/', $chapter));
+            //The amount of questions in said chapter
+            $count = count(glob($chapter.'/*'));
+
+            //adds the html
+            echo("<div class='chapter_container'>
+                <label for='chap".$i."' style='display: inline-block;'>
+                    <div class='switch'>
+                        <input type='checkbox' name='check_chapters' id='chap".$i."'>
+                        <span class='slider'></span>
+                    </div>
+                    <p class='chapter' for='chap".$i."'>".$chapter_name."</p>
+                </label>
+            </div>");
+        }
+        print_r($questions_per_chapters);
+        unset($n);
+        unset($i);
+        unset($chapter);
+        unset($chapter_name);
+        ?>
+        <script>
+            var questions_per_chapters = [<?php echo implode(',', $questions_per_chapters) ?>];
+            questions_per_chapter = questions_per_chapters.map(x=>parseInt(x));
+            var chapters = ["<?php echo implode('","', $chapters) ?>"];
+        </script>
+        </ul></div>
+        <hr>
+        <div id='navigation' class='footer'>
+            <div class='button' onclick='show_overlay(0);'>Annuler</div>
+            <div class='button' style='color:var(--secondary-color)' onclick='confirm_choice();'>Activer</div>
+        </div>
+    </div>
+
+    </div>
+
+    <input type='checkbox' id='fab_input'>
+    <label for='fab_input' onclick='show_menus();'>
+        <div id='fab'>
+            <span class="material-icons"></span>
+        </div>
+    </label>
+    <div id='fab_menu' class='shrink'>
+        <div class='mini_fab'>
+            <span class="material-icons">
+                feedback
+            </span>
+        </div>
+        <div class='mini_fab' onclick='set_chapter_menu(); show_overlay(1);'>
+            <span class="material-icons">
+                format_list_bulleted
+            </span>
+        </div>
+        <div class='mini_fab' onclick='reset();'>
+            <span class="material-icons">
+                refresh
+            </span>
+        </div>
+        <div class='mini_fab'>
+            <span class="material-icons">
+                help
+            </span>
+        </div>
+        <div class='mini_fab'>
+            <span class="material-icons">
+                save
+            </span>
+        </div>
+    </div>
 
     <div id="main">
 
         <div id="question_div">
             <div id='carousel'>
-                <div class="carousel_cell"><div class="container"><img id='question_0' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_7' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_6' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_5' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_4' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_3' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_2' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_1' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container">1<img id='question_0' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container">8<img id='question_7' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container">7<img id='question_6' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container">6<img id='question_5' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container">5<img id='question_4' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container">4<img id='question_3' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container">3<img id='question_2' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container">2<img id='question_1' width='80%' alt="Question Image"></div></div>
             </div>
         </div>
 
@@ -132,13 +235,13 @@
                 <span class="material-icons">
                     navigate_before
                 </span>
-                <span style="font-family: 'Roboto', sans-serif;">Précédente</span>
+                <span style="font-family: 'Work Sans', sans-serif;">Previous</span>
             </div>
             </a>
 
             <a class="custom_button" style="right: 5%;" onclick="nextQuestionPressed(1);">
             <div style="position:absolute; right: 5%;  color: #f9aa33; text-align: right; font-weight: bold;">
-                <span style="font-family: 'Roboto', sans-serif; text-emphasis: bold;">Suivante</span>
+                <span style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Next</span>
                 <span class="material-icons" style="padding-left: 15px;">
                     navigate_next
                 </span>

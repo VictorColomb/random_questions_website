@@ -3,21 +3,6 @@
 <?php
     if (isset($_GET['m']) && $_GET['m'] == 'physique') {$maths = false; $m_or_p = 'physique';}
     else {$maths = true; $m_or_p = 'maths';}
-
-    // Normal
-
-    $files = glob(getcwd() . "/" . $m_or_p . "/*.png");
-    if ($files) {
-        $nb_questions = count($files);
-    }
-    else {
-        if ($maths) {
-            exit("No questions.<br>Maybe we're in maintenance or we just fucked up...<br>Try <a href='?m=physique'>physique</a>.");
-        }
-        else {
-            exit("No questions.<br>Maybe we're in maintenance or we just fucked up...<br>Try <a href='?m=maths'>maths</a>.");
-        }
-    }
 ?>
 
 
@@ -41,7 +26,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap">
 
     <script>
-        var nb_of_questions = <?php echo $nb_questions ?>;
         var m_or_p = <?php if ($maths) {echo '"maths"';} else {echo '"physique"';} ?>;
     </script>
 
@@ -105,15 +89,7 @@
         <div id="empty">
             <div id="progress"></div>
         </div>
-        <p id="reset_message" style="font-family: 'Work Sans', sans-serif;">Questions added. Progression reset...</p>
     </div>
-
-    <!--a id="reset">
-        <div onclick="reset();">
-            <p class="material-icons">refresh</p>
-            <p style="font-family: 'Roboto', sans-serif;">Reset Progress</p>
-        </div>
-    </a-->
 
     <div id="overlay">
     <div id='scrim'></div>
@@ -128,7 +104,7 @@
         <div id='chapter_container' class='content'>
         <ul>
         <?php
-        $chapters = glob('maths/*' , GLOB_ONLYDIR);
+        $chapters = glob($m_or_p.'/*' , GLOB_ONLYDIR);
 
         // counts the amount of chapters
         $number_of_chapters = count($chapters);
@@ -143,7 +119,8 @@
         for ($i=0, $n=count($chapters); $i<$n; $i++){
             $chapter=$chapters[$i];
             $questions_per_chapters[] = count_questions($chapter);
-            $chapter_name=end(explode('/', $chapter));
+            $chapter_name_temp = explode('/', $chapter);
+            $chapter_name=end($chapter_name_temp);
             //The amount of questions in said chapter
             $count = count(glob($chapter.'/*'));
 
@@ -158,11 +135,11 @@
                 </label>
             </div>");
         }
-        print_r($questions_per_chapters);
         unset($n);
         unset($i);
         unset($chapter);
         unset($chapter_name);
+        unset($chapter_name_temp);
         ?>
         <script>
             var questions_per_chapters = [<?php echo implode(',', $questions_per_chapters) ?>];
@@ -217,14 +194,14 @@
 
         <div id="question_div">
             <div id='carousel'>
-                <div class="carousel_cell"><div class="container">1<img id='question_0' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container">8<img id='question_7' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container">7<img id='question_6' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container">6<img id='question_5' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container">5<img id='question_4' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container">4<img id='question_3' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container">3<img id='question_2' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container">2<img id='question_1' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_0' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_7' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_6' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_5' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_4' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_3' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_2' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_1' width='80%' alt="Question Image"></div></div>
             </div>
         </div>
 

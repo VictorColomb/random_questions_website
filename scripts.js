@@ -1,12 +1,21 @@
 // Beautiful Script
-var my_position = getCookieValue(m_or_p + '_position');
-var seed = getCookieValue(m_or_p + '_seed');
+var my_position = 0;
 var questions = [];
 var flips = 1;
 var sensitivity = 1;
-var selected_chapters = [];
+var selected_chapters_temp = localStorage.getItem('selected_chapters');
+if (selected_chapters_temp == null) {
+    var selected_chapters = [];
+}
+else {
+    selected_chapters_temp = selected_chapters_temp.split(',');
+    var selected_chapters = [];
+    for (var i=0; i<selected_chapters_temp.length; i++) {
+        selected_chapters = selected_chapters.concat(parseInt(selected_chapters_temp[i]));
+    }
+}
 var number_of_chapters = 0;
-var number_of_questions = 0;
+var nb_of_questions = 0;
 
 //SELECT CHAPTER
 function select_all(bol){
@@ -46,6 +55,18 @@ function confirm_choice(){
     get_chapter_menu();
     show_overlay(0);
     init();
+
+    // save selected chapters to local storage
+    var selected_chapters_temp = [];
+    for (var i=0; i<selected_chapters.length; i++) {
+        if (selected_chapters[i]) {
+            selected_chapters_temp = selected_chapters_temp.concat(1);
+        }
+        else {
+            selected_chapters_temp = selected_chapters_temp.concat(0);
+        }
+    }
+    localStorage.setItem('selected_chapters', selected_chapters_temp.toString());
 }
 
 
@@ -53,16 +74,6 @@ function confirm_choice(){
 function random(seed) {
     var x = Math.sin(seed++ * 10000);
     return x - Math.floor(x);
-}
-
-function count_questions(){
-    var s = 0;
-    for(i=0, n= questions_per_chapters.length; i< n; i++){
-        if (selected_chapters[i]){
-            s += questions_per_chapters[i];
-        }
-    }
-    number_of_questions = s;
 }
 
 function set_chapter_menu(){
@@ -94,14 +105,11 @@ function get_questions(){
 function swipes(){
     function unify(e) { return e.changedTouches ? e.changedTouches[0] : e };
     let x0 = null;
-    function lock(e) { e.stopPropagation(); console.log("Touched started"); x0 = unify(e).clientX};
+    function lock(e) { e.stopPropagation(); x0 = unify(e).clientX};
     function move(e) {
         e.stopPropagation();
-        console.log("Touched ended");
         if(x0 || x0 === 0){
-            let dx = unify(e).clientX - x0, s = Math.sign(dx);
             if(Math.abs(dx) > 10){
-                nextQuestionPressed(-s);
             }
         }
         x0=null;
@@ -116,22 +124,8 @@ function swipes(){
 }
 
 
-
-// Cookies
-if (getCookieValue('maths_nb_questions') != nb_of_questions) {
-    var fuck = ' -- de nouvelles questions ont été ajoutées, la progression a été réinitialisée';
-    console.log("Number of questions changed, resetting progression.");
-    my_position = '';
-    setCookie('maths_nb_questions', nb_of_questions.toString());
-}
-else {
-    var fuck = '';
-}
-
 function reset(){
     if(confirm('Warning you are about to reset all of your progress. Are you sure that you want to proceed ?')){
-        seed='';
-        my_position='';
         init();
     }
 }
@@ -143,41 +137,6 @@ function init(){
     var checkbox = document.getElementById('fab_input');
     checkbox.checked = false;
 
-    //window.localStorage.setItem('test', 'Test');
-    //var temp = [];
-    //for(var i=0; i<10000; i++){
-    //    temp.push(i)
-    //}
-    //window.localStorage.setItem('arr', temp);
-        // Cookie if question number changed
-        if (getCookieValue(m_or_p + '_nb_questions') != nb_of_questions) {
-            my_position = '';
-            setCookie(m_or_p + '_nb_questions', nb_of_questions.toString());
-            document.getElementById("reset_message").style.visibility = 'visible';
-        }
-
-
-    // Initializes seed if it doesn't exist yet
-    //if (seed == '') {
-    //    seed = Math.floor(Math.random() * 10**16);
-    //    setCookie(m_or_p + '_seed', seed.toString());
-    //}
-    //else seed = parseInt(seed);
-    //console.log('Seed: ' + seed)
-
-    // Initializes an array [1, 2, ..., nb_of_questions]
-    //for (var i = 0; i < nb_of_questions; i++) {
-    //    questions.push(i);
-    //}
-    /*
-    Shuffles the elements in the array using Fisher-Yates Algorithm
-    for(let i = nb_of_questions - 2; i > 0; i--){
-        const j = Math.floor(random(seed) * i);
-        const temp = questions[i];
-        questions[i] = questions[j];
-        questions[j] = temp;
-    }*/
-
     // Finds the amount of chapters
     number_of_chapters = questions_per_chapters.length;
 
@@ -188,39 +147,33 @@ function init(){
     set_chapter_menu();
 
     // Finds the amount of questions
-    count_questions();
     get_questions();
 
-    // debug
-    console.log("Found " + number_of_chapters.toString() + " chapters");
-    console.log("Found " + number_of_questions.toString() + " questions");
+    //Shuffles the elements in the array using Fisher-Yates Algorithm
+    for (let i = nb_of_questions - 2; i > 0; i--) {
+        const j = Math.floor(Math.random() * i);
+        const temp = questions[i];
+        questions[i] = questions[j];
+        questions[j] = temp;
+    }
 
     for(i=0; i<8; i++){
         var chap = questions[modpos(i - 2)][0];
         var q = questions[modpos(i - 2)][1];
         document.getElementById('question_' + ((i-2+8)%8)).src = chapters[chap] + '/' + q.toString() + '.png';
     }
-    //if (my_position == '') {
-    my_position = 0;
     nextQuestion(0);
-    //}
-    //else {
-    //    console.log("Retrieved position from cookies : " + my_position);
-    //    my_position = parseInt(my_position);
-    //    nextQuestion(0);
-    //}
     swipes();
 }
+
+
 function nextQuestionPressed(direction) {
-    document.getElementById('reset_message').style.visibility = 'hidden';
     nextQuestion(direction);
 }
 
 
 function nextQuestion(direction) {
     my_position = modpos(my_position + direction)
-    console.log('I am at ' + my_position)
-    setCookie(m_or_p + '_position', my_position.toString())
     document.getElementById('progress_number').innerHTML = (my_position + 1).toString() + '/' + (nb_of_questions).toString() + ' questions';
     document.getElementById('progress').style.width = ((my_position + 1) / (nb_of_questions) * 100).toString() + '%' ;
 
@@ -261,23 +214,6 @@ function enableSubmit() {
     }
 }
 
-
-// COOKIE STUFF !!!
-
-//sets a cookie value given a cookie name
-function setCookie(name, value) {
-    var now = new Date();
-    var time = now.getTime();
-    var expireTime = time + 31536000000;
-    now.setTime(expireTime);
-    document.cookie = name + "=" + (value || "") + ';expires=' + now.toGMTString() + ';';
-}
-
-//gets a cookie value given a cookie name
-function getCookieValue(name) {
-    var b = document.cookie.match('(^|[^;]+)\\s*' + name + '\\s*=\\s*([^;]+)');
-    return b ? b.pop() : '';
-}
 
 // suggestion overlay
 function suggestionOverlay() {

@@ -196,13 +196,13 @@
         <div id="question_div">
             <div id='carousel'>
                 <div class="carousel_cell"><div class="container"><img id='question_0' width='80%' alt="Question Image"><p id='question_chap_0'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_7' width='80%' alt="Question Image"><p id='question_chap_1'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_6' width='80%' alt="Question Image"><p id='question_chap_2'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_5' width='80%' alt="Question Image"><p id='question_chap_3'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_7' width='80%' alt="Question Image"><p id='question_chap_7'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_6' width='80%' alt="Question Image"><p id='question_chap_6'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_5' width='80%' alt="Question Image"><p id='question_chap_5'></p></div></div>
                 <div class="carousel_cell"><div class="container"><img id='question_4' width='80%' alt="Question Image"><p id='question_chap_4'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_3' width='80%' alt="Question Image"><p id='question_chap_5'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_2' width='80%' alt="Question Image"><p id='question_chap_6'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_1' width='80%' alt="Question Image"><p id='question_chap_7'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_3' width='80%' alt="Question Image"><p id='question_chap_3'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_2' width='80%' alt="Question Image"><p id='question_chap_2'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_1' width='80%' alt="Question Image"><p id='question_chap_1'></p></div></div>
             </div>
         </div>
 

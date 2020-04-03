@@ -159,15 +159,21 @@ function get_questions(){
 function swipes(){
     function unify(e) { return e.changedTouches ? e.changedTouches[0] : e};
     let x0 = null;
-    function lock(e) { console.log('touch started');e.stopPropagation(); x0 = unify(e).clientX};
+    function lock(e) {
+        e.stopPropagation();
+        x0 = unify(e).clientX;
+    }
     function move(e) {
         e.stopPropagation();
-        if(x0 || x0 === 0){
+        if(x0 || x0 === 0) {
             var dx = unify(e).clientX - x0;
             if(Math.abs(dx) > 10){
-                nextQuestion(Math.sign(-dx));
-                console.log(Math.sign(-dx));
-                console.log('touch ended');
+                if (Math.sign(-dx) > 0) {
+                    questionSucceeded();
+                }
+                else if(Math.sign(-dx) < 0) {
+                    nextQuestion(-1);
+                }
             }
         }
         x0=null;

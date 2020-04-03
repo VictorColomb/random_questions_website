@@ -80,9 +80,11 @@ function show_menus(){
 }
 
 function confirm_choice(){
+    my_position=0;
     questions = [];
     get_chapter_menu();
     show_overlay(0);
+    document.getElementById('fab_menu').className='shrink';
     init();
 
     // save selected chapters to local storage
@@ -159,7 +161,11 @@ function swipes(){
 // RESET
 function reset(){
     if(confirm('Warning you are about to reset all of your progress. Are you sure that you want to proceed ?')){
+        progression = [];
+        questions = [];
+        my_position = 0;
         init();
+        push_progression();
     }
 }
 
@@ -227,42 +233,66 @@ function nextQuestion(direction) {
     document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * my_position).toString() + 'deg)';
 }
 
+function push_progression() {
+    var progression_temp = [];
+    for (var i = 0; i < number_of_chapters; i++) {
+        progression_temp.push(progression[i].toString())
+    }
+    localStorage.setItem('progression_' + m_or_p, progression_temp.join(';'));
+}
+
 function questionSucceeded() {
     var question = questions[my_position]; // [0] = chapter ; [1] = question
 
     // add question[1] to the question[0] th element of progression
     var progression_chapter = progression[question[0]];
-    progression_chapter.push(question[1]);
-    // remove question[0] th element of the progression list and replace with progression_chapter
-    progression.splice(question[0],1,progression_chapter);
+    if (!progression_chapter.includes(question[1])) {
+        progression_chapter.push(question[1]);
+        // remove question[0] th element of the progression list and replace with progression_chapter
+        progression.splice(question[0],1,progression_chapter);
 
-    // push progression to localstorage
-    var progression_temp = [];
-    for (var i=0; i<number_of_chapters; i++) {
-        progression_temp.push(progression[i].toString())
+        // push progression to localstorage
+        push_progression();
     }
-    localStorage.setItem('progression_'+m_or_p, progression_temp.join(';'));
 
-    // next question
+    nextQuestion(1);
+}
+
+function questionFailed() {
+    var question = questions[my_position];
+
+    var progression_chapter = progression[question[0]];
+    if (progression_chapter.includes(question[1])) {
+        // delete question[1] from progression_chapter
+        progression_chapter.splice(progression_chapter.indexOf(question[1]),1);
+        // replace in progression
+        progression.splice(question[0], 1, progression_chapter);
+    }
+
+    // push progression to local storage
+    push_progression();
+
     nextQuestion(1);
 }
 
 
 // KEYS
 function keyDown(e) {
-    console.log(e);
-    if (e == 13 || e == 39  || e == 40 || e == 13) {
-        // down, right, enter, space
-        nextQuestion(1);
+    chapters_overlay = document.getElementById('chapters_overlay').style.visibility;
+    chapters_overlay_visibility = chapters_overlay == "hidden" || chapters_overlay == "";
+    if (chapters_overlay_visibility) {
+        if (e == 13 || e == 39  || e == 40 || e == 13) {
+            // down, right, enter, space
+            questionSucceeded();
+        }
+        else if (e == 37 || e == 38) {
+            // up, left
+            nextQuestion(-1);
+        }
     }
-    else if (e == 37 || e == 38) {
-        // up, left
-        nextQuestion(-1);
-    }
-    else if (e == 27) {
+    if (e == 27) {
         // echap
-        chapters_overlay = document.getElementById('chapters_overlay').style.visibility != 'hidden';
-        if (chapters_overlay) {
+        if (!chapters_overlay_visibility) {
             // if an overlay is visible, close it
             show_overlay(0);
         }
@@ -272,6 +302,7 @@ function keyDown(e) {
                 checkbox.checked = false;
                 document.getElementById('fab_menu').className = 'shrink';
             }
+            delete checkbox;
         }
     }
 }
@@ -279,12 +310,14 @@ function keyDown(e) {
 
 // suggestion overlay
 function enableSubmit() {
-    var radios = document.getElementsByName('suggestion_or_comment');
-    var radioChecked = radios[0].checked || radios[1].checked;
+    radios = document.getElementsByName('suggestion_or_comment');
+    radioChecked = radios[0].checked || radios[1].checked;
     if (radioChecked && (document.getElementById('name_input').value != '') && (document.getElementById('sugg_input').value != '')) {
         document.getElementById("submit_button").disabled = "";
     }
     else {
         document.getElementById("submit_button").disabled = "disabled";
     }
+    delete radios;
+    delete radioChecked;
 }

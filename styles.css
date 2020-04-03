@@ -344,7 +344,8 @@ a.menu div:hover{
 
 /* ----- Custom Button ----- */
 a.custom_button div{
-  height: 25px;
+  height: 27px;
+  padding-top: 2px;
   width: 120px;
   border-radius: 5px;
 
@@ -352,7 +353,7 @@ a.custom_button div{
 
   background-color: var(--secondary-background-color);
 
-  box-shadow: 3px 3px 5px 6px var(--shadow-color);
+  box-shadow: 1.5px 1.5px 2.5px 3px var(--shadow-color);
 
   cursor: pointer;
   transition: all .2s ease-in-out;
@@ -373,11 +374,47 @@ a.custom_button div:hover{
   position: relative;
 }
 
+a.custom_button_right{
+  right: 160px;
+}
+
+a.custom_button_right div{
+  position:absolute;
+  right: 160px;
+  text-align: center;
+}
+
+#custom_button_next{
+  padding-left: 15pt;
+}
+
+@media screen and (max-width: 630px) {
+  span.custom_button_text{
+    display: none !important;
+  }
+
+  a.custom_button div{
+    width: 30px;
+  }
+
+  a.custom_button_right{
+    right: 70px;
+  }
+
+  a.custom_button_right div{
+    right: 70px;
+  }
+
+  #custom_button_next{
+    padding-left: 0;
+  }
+}
+
 
 /* ----- Progress Bar ----- */
 #progress_bar{
   position: fixed;
-  bottom: 25%;
+  bottom: 20%;
   height: 2%;
   width: 100%;
   vertical-align: middle;
@@ -507,6 +544,7 @@ a.custom_button div:hover{
   background-color: var(--secondary-background-color);
   box-shadow: .5px .5px 1px 1.3px var(--shadow-color);
   cursor: pointer;
+  outline: none;
 }
 #suggestion_overlay input[type=submit]:disabled{
   box-shadow: 0 0 0 0;

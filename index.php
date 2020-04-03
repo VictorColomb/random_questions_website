@@ -7,7 +7,7 @@
 
 
 <html lang="en">
-<!--MINE-->
+
 <head>
 <meta charset="utf-8">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -198,21 +198,28 @@
 
         <div id="button_div">
 
-            <a class="custom_button" style="position:absolute; left: 5%;" onclick="nextQuestion(-1);">
+            <a class="custom_button" style="position:absolute; left: 30px;" onclick="nextQuestion(-1);">
             <div style="text-align: left;">
                 <span class="material-icons">
                     navigate_before
                 </span>
-                <span style="font-family: 'Work Sans', sans-serif;">Previous</span>
+                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif;">Previous</span>
             </div>
             </a>
 
-            <a class="custom_button" style="right: 5%;" onclick="questionSucceeded();">
-            <div style="position:absolute; right: 5%;  color: #f9aa33; text-align: right; font-weight: bold;">
-                <span style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Next</span>
-                <span class="material-icons" style="padding-left: 15px;">
+            <a class="custom_button custom_button_right" style="right: 30px;" onclick="questionSucceeded();">
+            <div style="right: 30px;  color: #f9aa33; text-align: right; font-weight: bold;">
+                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Next</span>
+                <span class="material-icons" id="custom_button_next">
                     navigate_next
                 </span>
+            </div>
+            <a class="custom_button custom_button_right" onclick="questionFailed();">
+            <div>
+                <span class="material-icons">
+                    clear
+                </span>
+                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Failed</span>
             </div>
             </a>
         </div>

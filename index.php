@@ -58,15 +58,6 @@
                 <span style="font-family: 'Work Sans', sans-serif;">Physics</span>
             </div>
         </a>
-
-        <!--a class="menu" id="suggestions" onclick="suggestionOverlay();">
-            <div style="text-align: center;">
-                <span class="material-icons-outlined">
-                    feedback
-                </span>
-                <span style="font-family: 'Roboto', sans-serif;">Suggestion / comment</span>
-            </div>
-        </a-->
     </div>
 
     <div id="suggestion_overlay" style="visibility:hidden;">
@@ -91,7 +82,7 @@
         </div>
     </div>
 
-    <div id="overlay">
+    <div id="chapters_overlay">
     <div id='scrim'></div>
     <div id='dialog'>
         <div class='header'>
@@ -207,7 +198,7 @@
 
         <div id="button_div">
 
-            <a class="custom_button" style="position:absolute; left: 5%;" onclick="nextQuestionPressed(-1);">
+            <a class="custom_button" style="position:absolute; left: 5%;" onclick="nextQuestion(-1);">
             <div style="text-align: left;">
                 <span class="material-icons">
                     navigate_before
@@ -216,7 +207,7 @@
             </div>
             </a>
 
-            <a class="custom_button" style="right: 5%;" onclick="nextQuestionPressed(1);">
+            <a class="custom_button" style="right: 5%;" onclick="questionSucceeded();">
             <div style="position:absolute; right: 5%;  color: #f9aa33; text-align: right; font-weight: bold;">
                 <span style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Next</span>
                 <span class="material-icons" style="padding-left: 15px;">

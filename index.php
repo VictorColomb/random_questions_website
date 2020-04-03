@@ -9,7 +9,7 @@
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -35,7 +35,7 @@
 
 <body onload='on_load();' onkeydown="keyDown(event.keyCode);">
     <div id="head">
-    <a href="/">
+        <a href="/">
             <div id="head_img">
                 <img src="icon.ico">
             </div>
@@ -62,17 +62,17 @@
 
     <div id="suggestion_overlay" style="visibility:hidden;">
         <form action="writeToText.php" method="post">
-        <input type="text" name="suggestion_text" id="sugg_input" placeholder="Suggestion / commentaire" onkeyup="enableSubmit();"><br>
-        <input type="text" name="name" id="name_input" placeholder="Nom" onkeyup="enableSubmit();"><br>
-        <input type="hidden" name="back" value=".">
-        <input type="hidden" name="maths_or_physics" value="<?php echo $m_or_p; ?>">
-        <input id="question_nb" type="hidden" name="question_nb">
-        <input type="radio" name="suggestion_or_comment" id="suggestion_or_comment_comment" value="comment" onclick="enableSubmit();">
-        <label for="suggestion_or_comment_comment">Commentaire à  de propos la question courante</label><br>
-        <input type="radio" name="suggestion_or_comment" id="suggestion_or_comment_suggestion" value="suggestion" onclick="enableSubmit();">
-        <label for="suggestion_or_comment_suggestion">Suggestion de question</label><br>
-        <input type="submit" id="submit_button" value="Envoyer" disabled="disabled">
-    </form>
+            <input type="text" name="suggestion_text" id="sugg_input" placeholder="Suggestion / commentaire" onkeyup="enableSubmit();"><br>
+            <input type="text" name="name" id="name_input" placeholder="Nom" onkeyup="enableSubmit();"><br>
+            <input type="hidden" name="back" value=".">
+            <input type="hidden" name="maths_or_physics" value="<?php echo $m_or_p; ?>">
+            <input id="question_nb" type="hidden" name="question_nb">
+            <input type="radio" name="suggestion_or_comment" id="suggestion_or_comment_comment" value="comment" onclick="enableSubmit();">
+            <label for="suggestion_or_comment_comment">Commentaire à  de propos la question courante</label><br>
+            <input type="radio" name="suggestion_or_comment" id="suggestion_or_comment_suggestion" value="suggestion" onclick="enableSubmit();">
+            <label for="suggestion_or_comment_suggestion">Suggestion de question</label><br>
+            <input type="submit" id="submit_button" value="Envoyer" disabled="disabled">
+        </form>
     </div>
 
     <div id="progress_bar">
@@ -131,11 +131,16 @@
         unset($chapter);
         unset($chapter_name);
         unset($chapter_name_temp);
+
+        $chapters_out = array_map(function ($item) {
+            return end(explode('/', $item));
+        }, $chapters);
         ?>
         <script>
             var questions_per_chapters = [<?php echo implode(',', $questions_per_chapters) ?>];
             questions_per_chapter = questions_per_chapters.map(x=>parseInt(x));
             var chapters = ["<?php echo implode('","', $chapters) ?>"];
+            var chapters_names = ["<?php echo implode('","', $chapters_out) ?>"];
         </script>
         </ul></div>
         <hr>
@@ -185,14 +190,14 @@
 
         <div id="question_div">
             <div id='carousel'>
-                <div class="carousel_cell"><div class="container"><img id='question_0' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_7' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_6' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_5' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_4' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_3' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_2' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_1' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_0' width='80%' alt="Question Image"><p id='question_chap_0'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_7' width='80%' alt="Question Image"><p id='question_chap_1'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_6' width='80%' alt="Question Image"><p id='question_chap_2'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_5' width='80%' alt="Question Image"><p id='question_chap_3'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_4' width='80%' alt="Question Image"><p id='question_chap_4'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_3' width='80%' alt="Question Image"><p id='question_chap_5'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_2' width='80%' alt="Question Image"><p id='question_chap_6'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_1' width='80%' alt="Question Image"><p id='question_chap_7'></p></div></div>
             </div>
         </div>
 

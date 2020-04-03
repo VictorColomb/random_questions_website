@@ -238,7 +238,9 @@ function init(){
     for(i=0; i<8; i++){
         var chap = questions[modpos(i - 2)][0];
         var q = questions[modpos(i - 2)][1];
-        document.getElementById('question_' + ((i-2+8)%8)).src = chapters[chap] + '/' + q.toString() + '.png';
+        which = ((i - 2 + 8) % 8);
+        document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
+        document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
     }
 
     nextQuestion(0);
@@ -255,11 +257,15 @@ function nextQuestion(direction) {
     if (direction > 0){
         var chap = questions[modpos(my_position + 5)][0];
         var q = questions[modpos(my_position + 5)][1];
-        document.getElementById('question_' + ((my_position + 5) % 8).toString()).src = chapters[chap] + '/' + q.toString() + '.png';
+        which = (my_position + 5) % 8;
+        document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
+        document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
     } else {
         var chap = questions[modpos(my_position - 2)][0];
         var q = questions[modpos(my_position - 2)][1];
-        document.getElementById('question_' + ((my_position + 8 - 2) % 8).toString()).src = chapters[chap] + '/' + q.toString() + '.png';
+        which = (my_position + 8 - 2) % 8;
+        document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
+        document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
     }
     document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * my_position).toString() + 'deg)';
 }

@@ -2,6 +2,14 @@
 https://materializecss.com/text-inputs.html
 */
 /* ----- General ---- */
+@font-face {
+    font-family: 'LM-Caps';
+    src: url('lmromancaps10-regular-webfont.woff') format('woff'),
+         url('lmromancaps10-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root{
   --main-background-color : #232F34;
   --secondary-background-color:#344954;
@@ -592,7 +600,18 @@ a.custom_button_right div{
   -webkit-backface-visibility: hidden;
   pointer-events: none;
 }
+.container p{
+  color: white;
+  position: absolute;
+  bottom: 0pt;
+  text-align: center;
+  width: 100%;
+  font-family: 'LM-Caps';
+  font-size: 12pt;
+  margin: 0 0 0.5em 0;
+}
 .container{
+  height: 90%;
   display: table-cell;
   vertical-align: middle;
   backface-visibility: hidden;

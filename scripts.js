@@ -4,6 +4,7 @@ var flips = 1;
 var sensitivity = 1;
 var number_of_chapters = 0;
 var nb_of_questions = 0;
+var buttons_visible = 1;
 
 // selected chapters
 selected_chapters_temp = localStorage.getItem('selected_chapters_'+m_or_p);
@@ -28,7 +29,7 @@ else {
     progression_temp = progression_temp.split(';');
     var progression = [];
     progression_temp.forEach(progression_temp_i => {
-        if (progression_temp_i == "") { 
+        if (progression_temp_i == "") {
             // no progression in chapter
             progression.push([]);
         }
@@ -52,6 +53,20 @@ function select_all(bol){
     document.getElementsByName('check_chapters').forEach(checkbox => {
         checkbox.checked = bol;
     })
+}
+
+function show_buttons(){
+    if(buttons_visible){
+        document.getElementById('button_visibility').innerHTML = 'visibility_off';
+        Array.from(document.getElementsByClassName('hidable_buttons')).forEach(button =>{
+            button.style.display = 'none';});
+        buttons_visible = 0;
+    } else{
+        document.getElementById('button_visibility').innerHTML = 'visibility';
+        Array.from(document.getElementsByClassName('hidable_buttons')).forEach(button =>{
+            button.style.display = 'block';});
+        buttons_visible = 1;
+    }
 }
 
 function show_overlay(bol){
@@ -137,13 +152,17 @@ function get_questions(){
 
 // SWIPES
 function swipes(){
-    function unify(e) { return e.changedTouches ? e.changedTouches[0] : e };
+    function unify(e) { return e.changedTouches ? e.changedTouches[0] : e};
     let x0 = null;
-    function lock(e) { e.stopPropagation(); x0 = unify(e).clientX};
+    function lock(e) { console.log('touch started');e.stopPropagation(); x0 = unify(e).clientX};
     function move(e) {
         e.stopPropagation();
         if(x0 || x0 === 0){
+            var dx = unify(e).clientX - x0;
             if(Math.abs(dx) > 10){
+                nextQuestion(Math.sign(-dx));
+                console.log(Math.sign(-dx));
+                console.log('touch ended');
             }
         }
         x0=null;
@@ -172,6 +191,11 @@ function reset(){
 
 // INIT
 function modpos(n){return (n + nb_of_questions) % (nb_of_questions)}
+
+function on_load(){
+    swipes();
+    init();
+}
 
 function init(){
     // init progression if empty
@@ -210,7 +234,6 @@ function init(){
     }
 
     nextQuestion(0);
-    swipes();
 }
 
 

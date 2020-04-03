@@ -33,7 +33,7 @@
     <script src="scripts.js"></script>
 </head>
 
-<body onload='init();' onkeydown="keyDown(event.keyCode);">
+<body onload='on_load();' onkeydown="keyDown(event.keyCode);">
     <div id="head">
     <a href="/">
             <div id="head_img">
@@ -154,14 +154,14 @@
         </div>
     </label>
     <div id='fab_menu' class='shrink'>
-        <div class='mini_fab'>
-            <span class="material-icons">
-                feedback
-            </span>
-        </div>
         <div class='mini_fab' onclick='set_chapter_menu(); show_overlay(1);'>
             <span class="material-icons">
                 format_list_bulleted
+            </span>
+        </div>
+        <div class='mini_fab'>
+            <span class="material-icons">
+                feedback
             </span>
         </div>
         <div class='mini_fab' onclick='reset();'>
@@ -169,14 +169,14 @@
                 refresh
             </span>
         </div>
-        <div class='mini_fab'>
-            <span class="material-icons">
-                help
+        <div class='mini_fab' onclick='show_buttons()'>
+            <span class="material-icons" id='button_visibility'>
+                visibility_off
             </span>
         </div>
         <div class='mini_fab'>
             <span class="material-icons">
-                save
+                help
             </span>
         </div>
     </div>
@@ -198,7 +198,7 @@
 
         <div id="button_div">
 
-            <a class="custom_button" style="position:absolute; left: 30px;" onclick="nextQuestion(-1);">
+            <a class="custom_button hidable_buttons" style="position:absolute; left: 30px;" onclick="nextQuestion(-1);">
             <div style="text-align: left;">
                 <span class="material-icons">
                     navigate_before
@@ -207,14 +207,14 @@
             </div>
             </a>
 
-            <a class="custom_button custom_button_right" style="right: 30px;" onclick="questionSucceeded();">
+            <a class="custom_button custom_button_right hidable_buttons" style="right: 30px;" onclick="questionSucceeded();">
             <div style="right: 30px;  color: #f9aa33; text-align: right; font-weight: bold;">
                 <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Next</span>
                 <span class="material-icons" id="custom_button_next">
                     navigate_next
                 </span>
             </div>
-            <a class="custom_button custom_button_right" onclick="questionFailed();">
+            <a class="custom_button custom_button_right hidable_buttons" onclick="questionFailed();">
             <div>
                 <span class="material-icons">
                     clear
@@ -223,7 +223,6 @@
             </div>
             </a>
         </div>
-
     </div>
 </body>
 </html>

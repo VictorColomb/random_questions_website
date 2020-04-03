@@ -28,6 +28,7 @@ body {
 
 /* ----- Choose chapters too study ----- */
 #fab{
+  z-index: 11;
   cursor: pointer;
   position: absolute;
   margin: 0;
@@ -68,7 +69,7 @@ input:checked + label #fab:hover{
 }
 #fab_menu{
   display: block;
-  z-index: -1;
+  z-index: 10;
   position: absolute;
   bottom: 5rem; width: 3.5rem;
   right: 1.5rem;
@@ -128,13 +129,17 @@ input:checked + label #fab:hover{
   visibility: hidden;
   width: 100%; height: 100%;
   top: 0; left: 0;
-  z-index: 2;
+  z-index: 12;
 }
 #scrim{
   position: absolute;
   width: 100%; height: 100%;
   background-color: var(--on-surface);
-  opacity: 32%;
+  opacity: 0.32;
+  -webkit-khtml: opacity 0.32;
+  -moz-khtml: opacity 0.32;
+  -ms-khtml: opacity 0.32;
+  -o-khtml: opacity 0.32;
   z-index: 2;
   transition: .2s ease-in-out;
 }
@@ -584,12 +589,14 @@ a.custom_button_right div{
   border-radius: 20px;
   display: table;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   pointer-events: none;
 }
 .container{
   display: table-cell;
   vertical-align: middle;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 .container img{
   max-height: 80%;

@@ -159,30 +159,35 @@
         </div>
     </label>
     <div id='fab_menu' class='shrink'>
-        <div class='mini_fab' onclick='set_chapter_menu(); show_overlay(1);'>
+        <div class='mini_fab tooltip' onclick='set_chapter_menu(); show_overlay(1);'>
             <span class="material-icons">
                 format_list_bulleted
             </span>
+            <span class="tooltiptext">Chapter selection</span>
         </div>
-        <div class='mini_fab'>
+        <div class='mini_fab tooltip'>
             <span class="material-icons">
                 feedback
             </span>
+            <span class="tooltiptext">Suggestions/comments</span>
         </div>
-        <div class='mini_fab' onclick='reset();'>
+        <div class='mini_fab tooltip' onclick='reset();'>
             <span class="material-icons">
                 refresh
             </span>
+            <span class="tooltiptext">Reset progression</span>
         </div>
-        <div class='mini_fab' onclick='show_buttons()'>
+        <div class='mini_fab tooltip' onclick='show_buttons()'>
             <span class="material-icons" id='button_visibility'>
                 visibility_off
             </span>
+            <span class="tooltiptext">Hide buttons</span>
         </div>
-        <div class='mini_fab'>
+        <div class='mini_fab tooltip'>
             <span class="material-icons">
                 help
             </span>
+            <span class="tooltiptext">Help</span>
         </div>
     </div>
 

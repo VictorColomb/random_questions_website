@@ -34,7 +34,7 @@ body {
 }
 
 
-/* ----- Choose chapters too study ----- */
+/* ----- Choose chapters to study ----- */
 #fab{
   z-index: 11;
   cursor: pointer;
@@ -100,8 +100,10 @@ input:checked + label #fab:hover{
   transition: .2s ease-in-out;
 }
 .mini_fab:hover{
-  transform: rotateZ(15deg);
   box-shadow: 1rem 1rem 1rem var(--shadow-color);
+}
+.mini_fab:hover span.material-icons{
+  transform: rotateZ(15deg);
 }
 .mini_fab span{
   position: relative;
@@ -330,6 +332,42 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+/* tooltips */
+.tooltip{
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted var(--secondary-background-color);
+}
+.tooltip .tooltiptext{
+  opacity: 90%;
+  visibility: hidden;
+  background-color: var(--secondary-background-color);
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  right: 120%;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.tooltip .tooltiptext::after{
+  opacity: 90%;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -4pt;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--secondary-background-color);
+}
+.tooltip:hover .tooltiptext{
+  transition-delay: .5s;
+  visibility: visible;
 }
 
 

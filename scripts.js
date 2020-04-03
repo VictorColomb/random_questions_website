@@ -4,6 +4,8 @@ var flips = 1;
 var sensitivity = 1;
 var number_of_chapters = 0;
 var nb_of_questions = 0;
+var real_nb_of_questions = 0;
+var real_nb_questions_succeeded = 0;
 var buttons_visible = 1;
 
 // selected chapters
@@ -95,7 +97,6 @@ function show_menus(){
 }
 
 function confirm_choice(){
-    my_position=0;
     questions = [];
     get_chapter_menu();
     show_overlay(0);
@@ -139,9 +140,13 @@ function get_questions(){
     selected_chapters.forEach((selected_chapter, i) => {
         if(selected_chapter){
             for(j=0; j< questions_per_chapters[i]; j++){
+                real_nb_of_questions += 1;
                 if (!progression[i].includes(j)) {
                     // if question not in progression
                     questions.push([i, j])
+                }
+                else {
+                    real_nb_questions_succeeded += 1;
                 }
             }
         }
@@ -182,7 +187,6 @@ function reset(){
     if(confirm('Warning you are about to reset all of your progress. Are you sure that you want to proceed ?')){
         progression = [];
         questions = [];
-        my_position = 0;
         init();
         push_progression();
     }
@@ -198,6 +202,10 @@ function on_load(){
 }
 
 function init(){
+    my_position = 0;
+    real_nb_questions_succeeded = 0;
+    real_nb_of_questions = 0;
+
     // init progression if empty
     if (progression.length < number_of_chapters) {
         for (var i = 0; i < number_of_chapters; i++) {
@@ -240,8 +248,8 @@ function init(){
 // NEXT QUESTION
 function nextQuestion(direction) {
     my_position = modpos(my_position + direction)
-    document.getElementById('progress_number').innerHTML = (my_position + 1).toString() + '/' + (nb_of_questions).toString() + ' questions';
-    document.getElementById('progress').style.width = ((my_position + 1) / (nb_of_questions) * 100).toString() + '%' ;
+    document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded + 1).toString() + '/' + (real_nb_of_questions).toString() + ' questions';
+    document.getElementById('progress').style.width = ((real_nb_questions_succeeded + 1) / (real_nb_of_questions) * 100).toString() + '%' ;
 
     // adds the next question on the back side
     if (direction > 0){
@@ -274,6 +282,8 @@ function questionSucceeded() {
         // remove question[0] th element of the progression list and replace with progression_chapter
         progression.splice(question[0],1,progression_chapter);
 
+        real_nb_questions_succeeded += 1;
+
         // push progression to localstorage
         push_progression();
     }
@@ -290,6 +300,8 @@ function questionFailed() {
         progression_chapter.splice(progression_chapter.indexOf(question[1]),1);
         // replace in progression
         progression.splice(question[0], 1, progression_chapter);
+
+        real_nb_questions_succeeded -= 1;
     }
 
     // push progression to local storage

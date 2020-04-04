@@ -394,6 +394,10 @@ a.menu div:hover{
 
 
 /* ----- Custom Button ----- */
+.hidable_buttons {
+  display: none;
+}
+
 a.custom_button div{
   height: 27px;
   padding-top: 2px;

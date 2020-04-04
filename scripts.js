@@ -9,7 +9,26 @@ var real_nb_questions_succeeded = 0;
 var buttons_visible = 1;
 var keys_active = true;
 
-// selected chapters
+
+// COOKIE STUFF
+
+//sets a cookie value given a cookie name
+function setCookie(name, value) {
+    var now = new Date();
+    var time = now.getTime();
+    var expireTime = time + 31536000000;
+    now.setTime(expireTime);
+    document.cookie = name + "=" + (value || "") + ';expires=' + now.toGMTString() + ';';
+}
+
+//gets a cookie value given a cookie name
+function getCookieValue(name) {
+    var b = document.cookie.match('(^|[^;]+)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return b ? b.pop() : '';
+}
+
+
+// SELECTED CHAPTERS
 selected_chapters_temp = localStorage.getItem('selected_chapters_'+m_or_p);
 if (selected_chapters_temp == null) {
     var selected_chapters = [];
@@ -23,7 +42,7 @@ else {
 }
 delete selected_chapters_temp;
 
-// progression
+// PROGRESSION
 progression_temp = localStorage.getItem('progression_'+m_or_p);
 if (progression_temp == null) {
     var progression = [];
@@ -58,17 +77,20 @@ function select_all(bol){
     })
 }
 
-function show_buttons(){
+function show_buttons() {
     if(buttons_visible){
         document.getElementById('button_visibility').innerHTML = 'visibility_off';
         Array.from(document.getElementsByClassName('hidable_buttons')).forEach(button =>{
             button.style.display = 'none';});
         buttons_visible = 0;
-    } else{
+        setCookie('buttons_visible', '1');
+    }
+    else{
         document.getElementById('button_visibility').innerHTML = 'visibility';
         Array.from(document.getElementsByClassName('hidable_buttons')).forEach(button =>{
             button.style.display = 'block';});
         buttons_visible = 1;
+        setCookie('buttons_visible', '0');
     }
 }
 
@@ -199,6 +221,7 @@ function reset(){
         });
         push_progression();
         questions = [];
+        document.getElementById('fab_menu').className = 'shrink';
         init();
     }
 }
@@ -208,6 +231,16 @@ function reset(){
 function modpos(n) {return (n + nb_of_questions) % (nb_of_questions)}
 
 function on_load(){
+    // button visibility cookies stuff
+    buttons_visible = getCookieValue('buttons_visible');
+    if (buttons_visible == '') {
+        buttons_visible = 0
+    }
+    else {
+        buttons_visible = parseInt(buttons_visible);
+    }
+    show_buttons();
+
     swipes();
     init();
 }
@@ -363,7 +396,7 @@ function keyDown(e) {
     chapters_overlay = document.getElementById('chapters_overlay').style.visibility;
     chapters_overlay_visibility = chapters_overlay == "hidden" || chapters_overlay == "";
     if (chapters_overlay_visibility && keys_active) {
-        if (e == 13 || e == 39  || e == 40 || e == 13) {
+        if (e == 13 || e == 39  || e == 40 || e == 32) {
             // down, right, enter, space
             questionSucceeded();
         }

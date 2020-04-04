@@ -190,17 +190,21 @@ function swipes(){
 
 // RESET
 function reset(){
-    if(confirm('Warning you are about to reset all of your progress. Are you sure that you want to proceed ?')){
-        progression = [];
+    if (confirm('Attention ! Vous êtes sur le point de réinitialiser la progression des chapitres sélectionnés . Voulez vous poursuivre ?')) {
+        selected_chapters.forEach((if_chapter, chapter_nb) => {
+            if (if_chapter) {
+                progression.splice(chapter_nb, 1, []);
+            }
+        });
+        push_progression();
         questions = [];
         init();
-        push_progression();
     }
 }
 
 
 // INIT
-function modpos(n){return (n + nb_of_questions) % (nb_of_questions)}
+function modpos(n) {return (n + nb_of_questions) % (nb_of_questions)}
 
 function on_load(){
     swipes();
@@ -233,47 +237,74 @@ function init(){
     // Finds the amount of questions
     get_questions();
 
-    //Shuffles the elements in the array using Fisher-Yates Algorithm
-    for (let i = nb_of_questions - 2; i > 0; i--) {
-        const j = Math.floor(Math.random() * i);
-        const temp = questions[i];
-        questions[i] = questions[j];
-        questions[j] = temp;
-    }
+    // if there actually are questions...
+    if (real_nb_of_questions > real_nb_questions_succeeded) {
+        //Shuffles the elements in the array using Fisher-Yates Algorithm
+        for (let i = nb_of_questions - 2; i > 0; i--) {
+            const j = Math.floor(Math.random() * i);
+            const temp = questions[i];
+            questions[i] = questions[j];
+            questions[j] = temp;
+        }
 
-    for(i=0; i<8; i++){
-        var chap = questions[modpos(i - 2)][0];
-        var q = questions[modpos(i - 2)][1];
-        which = ((i - 2 + 8) % 8);
-        document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
-        document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
-    }
+        for(i=0; i<8; i++){
+            var chap = questions[modpos(i - 2)][0];
+            var q = questions[modpos(i - 2)][1];
+            which = ((i - 2 + 8) % 8);
+            document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
+            document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
+        }
 
-    nextQuestion(0);
+        nextQuestion(0);
+    }
+    else { // if there are no questions
+        if (confirm("Vous avez déjà réussi toutes les questions des chapitres sélectionnés. Voulez vous réinitialiser la progression de ces chapitres ? Dans la négative, sélectionnez plus de chapitres pour pouvoir continuer.")) {
+            // remove progression from selected chapters
+            selected_chapters.forEach((if_chapter,chapter_nb) => {
+                if (if_chapter) {
+                    progression.splice(chapter_nb,1,[]);
+                }
+            });
+            push_progression();
+            // reload after progression reset
+            init();
+        }
+        else {
+            // Just display some crap...
+            document.getElementById('progress_number').innerHTML = "Terminé !";
+        }
+    }
 }
 
 
 // NEXT QUESTION
 function nextQuestion(direction) {
-    my_position = modpos(my_position + direction)
-    document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded + 1).toString() + '/' + (real_nb_of_questions).toString() + ' questions';
-    document.getElementById('progress').style.width = ((real_nb_questions_succeeded + 1) / (real_nb_of_questions) * 100).toString() + '%' ;
-
-    // adds the next question on the back side
-    if (direction > 0){
-        var chap = questions[modpos(my_position + 5)][0];
-        var q = questions[modpos(my_position + 5)][1];
-        which = (my_position + 5) % 8;
-        document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
-        document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
-    } else {
-        var chap = questions[modpos(my_position - 2)][0];
-        var q = questions[modpos(my_position - 2)][1];
-        which = (my_position + 8 - 2) % 8;
-        document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
-        document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
+    // if going over the number of questions
+    if (my_position + direction >= nb_of_questions) {
+        questions = [];
+        init();
     }
-    document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * my_position).toString() + 'deg)';
+    else {
+        my_position = modpos(my_position + direction)
+        document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded + 1).toString() + '/' + (real_nb_of_questions).toString() + ' questions';
+        document.getElementById('progress').style.width = ((real_nb_questions_succeeded + 1) / (real_nb_of_questions) * 100).toString() + '%' ;
+
+        // adds the next question on the back side
+        if (direction > 0){
+            var chap = questions[modpos(my_position + 5)][0];
+            var q = questions[modpos(my_position + 5)][1];
+            which = (my_position + 5) % 8;
+            document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
+            document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
+        } else {
+            var chap = questions[modpos(my_position - 2)][0];
+            var q = questions[modpos(my_position - 2)][1];
+            which = (my_position + 8 - 2) % 8;
+            document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
+            document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
+        }
+        document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * my_position).toString() + 'deg)';
+    }
 }
 
 function push_progression() {

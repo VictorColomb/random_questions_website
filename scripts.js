@@ -7,6 +7,7 @@ var nb_of_questions = 0;
 var real_nb_of_questions = 0;
 var real_nb_questions_succeeded = 0;
 var buttons_visible = 1;
+var keys_active = true;
 
 // selected chapters
 selected_chapters_temp = localStorage.getItem('selected_chapters_'+m_or_p);
@@ -215,6 +216,7 @@ function init(){
     my_position = 0;
     real_nb_questions_succeeded = 0;
     real_nb_of_questions = 0;
+    keys_active = true;
 
     // init progression if empty
     if (progression.length < number_of_chapters) {
@@ -272,6 +274,8 @@ function init(){
         else {
             // Just display some crap...
             document.getElementById('progress_number').innerHTML = "Terminé !";
+            // disable keys
+            keys_active = false;
         }
     }
 }
@@ -358,7 +362,7 @@ function questionFailed() {
 function keyDown(e) {
     chapters_overlay = document.getElementById('chapters_overlay').style.visibility;
     chapters_overlay_visibility = chapters_overlay == "hidden" || chapters_overlay == "";
-    if (chapters_overlay_visibility) {
+    if (chapters_overlay_visibility && keys_active) {
         if (e == 13 || e == 39  || e == 40 || e == 13) {
             // down, right, enter, space
             questionSucceeded();

@@ -8,6 +8,7 @@ var real_nb_of_questions = 0;
 var real_nb_questions_succeeded = 0;
 var buttons_visible = 1;
 var keys_active = true;
+var selected_chapters = [];
 
 
 // COOKIE STUFF
@@ -29,18 +30,20 @@ function getCookieValue(name) {
 
 
 // SELECTED CHAPTERS
-selected_chapters_temp = localStorage.getItem('selected_chapters_'+m_or_p);
-if (selected_chapters_temp == null) {
-    var selected_chapters = [];
+function fetch_selected_chapters() {
+    var selected_chapters_temp = localStorage.getItem('selected_chapters_'+m_or_p);
+    if (selected_chapters_temp == null) {        
+        chapters.forEach(() => {
+            selected_chapters.push(1);
+        })
+    }
+    else {
+        selected_chapters_temp = selected_chapters_temp.split(',');
+        selected_chapters_temp.forEach(selected_chapters_temp_i => {
+            selected_chapters.push(parseInt(selected_chapters_temp_i));
+        })
+    }
 }
-else {
-    selected_chapters_temp = selected_chapters_temp.split(',');
-    var selected_chapters = [];
-    selected_chapters_temp.forEach(selected_chapters_temp_i => {
-        selected_chapters.push(parseInt(selected_chapters_temp_i));
-    })
-}
-delete selected_chapters_temp;
 
 // PROGRESSION
 progression_temp = localStorage.getItem('progression_'+m_or_p);
@@ -241,6 +244,7 @@ function on_load(){
     }
     show_buttons();
 
+    fetch_selected_chapters();
     swipes();
     init();
 }
@@ -251,6 +255,9 @@ function init(){
     real_nb_of_questions = 0;
     keys_active = true;
 
+    // Finds the amount of chapters
+    number_of_chapters = questions_per_chapters.length;
+
     // init progression if empty
     if (progression.length < number_of_chapters) {
         for (var i = 0; i < number_of_chapters; i++) {
@@ -259,9 +266,6 @@ function init(){
     }
 
     document.getElementById('fab_input').checked = false;
-
-    // Finds the amount of chapters
-    number_of_chapters = questions_per_chapters.length;
 
     // Selects the chapters
     if (selected_chapters.length <= 0){

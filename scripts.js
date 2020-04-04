@@ -123,24 +123,33 @@ function show_menus(){
 }
 
 function confirm_choice(){
-    questions = [];
-    get_chapter_menu();
-    show_overlay(0);
-    document.getElementById('fab_menu').className='shrink';
-    init();
-
-    // save selected chapters to local storage
-    selected_chapters_temp = [];
-    selected_chapters.forEach(selected_chapter => {
-        if (selected_chapter) {
+    // get selected chapters
+    var selected_chapters_temp = [];
+    for (i = 0; i < number_of_chapters; i++) {
+        if (document.getElementById('chap' + i).checked) {
             selected_chapters_temp.push(1);
         }
         else {
             selected_chapters_temp.push(0);
         }
-    })
-    localStorage.setItem('selected_chapters_'+m_or_p, selected_chapters_temp.toString());
-    delete selected_chapters_temp;
+    }
+
+    if (selected_chapters_temp.includes(1)) {
+        // if at least one chapter has been selected
+        // save selected chapters to local storage
+        localStorage.setItem('selected_chapters_' + m_or_p, selected_chapters_temp.toString());
+
+        // reload everything
+        questions = [];
+        get_chapter_menu();
+        show_overlay(0);
+        document.getElementById('fab_menu').className='shrink';
+        init();
+    }
+    else {
+        // if no chapters were selected, alert user and do nothing else
+        alert("Veuillez sélectionner au moins un chapitre.");
+    }
 }
 
 

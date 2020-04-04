@@ -133,7 +133,8 @@
         unset($chapter_name_temp);
 
         $chapters_out = array_map(function ($item) {
-            return end(explode('/', $item));
+            $chapters_out_temp = explode('/', $item);
+            return end($chapters_out_temp);
         }, $chapters);
         ?>
         <script>

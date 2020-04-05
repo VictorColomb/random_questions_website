@@ -69,20 +69,42 @@ function show_buttons(){
     }
 }
 
-function show_overlay(bol){
+function auto_grow(element){
+    element.style.height = "1pt";
+    element.style.height = (element.scrollHeight) + "px";
+    // Overflow ?
+}
+function has_text(element, bol){
+    if(element.value != '' || bol){
+        element.labels[0].className='active text';
+    } else {
+        element.labels[0].className='text';
+    }
+}
+
+function show_overlay(name ,bol){
     if(bol == 1){
+        if(name=='suggestion'){
+            document.getElementById('question_nb').value = questions[my_position];
+            var now = new Date;
+            var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
+                now.getUTCHours(), now.getUTCMinutes());
+            document.getElementById('date').value = utc_timestamp.toString();
+        }
         // chapters selection overlay
-        document.getElementById('chapters_overlay').style.visibility = 'visible';
+        document.getElementById(name + '_overlay').style.visibility = 'visible';
         document.getElementById('fab').style.opacity = 0;
         document.getElementById('fab_menu').style.opacity = 0;
-        document.getElementById('dialog').style.transform = 'translateX(0em)';
+        document.getElementById(name + '_dialog').style.transform = 'translateX(0em)';
     }
     else {
         // close all overlays
-        document.getElementById('dialog').style.transform = 'translateX(30em)';
+        document.getElementById(name + '_dialog').style.transform = 'translateX(30em)';
         document.getElementById('fab').style.opacity = 1;
         document.getElementById('fab_menu').style.opacity = 1;
-        document.getElementById('chapters_overlay').style.visibility = 'hidden';
+        document.getElementById(name + '_overlay').style.visibility = 'hidden';
+        show_menus();
+        document.getElementById('fab_input').checked = false;
     }
 }
 
@@ -97,7 +119,7 @@ function show_menus(){
 function confirm_choice(){
     questions = [];
     get_chapter_menu();
-    show_overlay(0);
+    show_overlay('chapters', 0);
     init();
 
     // save selected chapters to local storage
@@ -187,6 +209,17 @@ function reset(){
 function modpos(n){return (n + nb_of_questions) % (nb_of_questions)}
 
 function on_load(){
+    has_text(document.getElementById('name'), 0);
+    has_text(document.getElementById('mail'), 0);
+    has_text(document.getElementById('comment'), 0);
+    document.addEventListener('keydown', function (event) {
+        if (event.keyCode === 13 && event.target.nodeName === 'INPUT') {
+          var form = event.target.form;
+          var index = Array.prototype.indexOf.call(form, event.target);
+          form.elements[index + 1].focus();
+          event.preventDefault();
+        }
+    });
     swipes();
     init();
 }
@@ -287,7 +320,7 @@ function keyDown(e) {
         chapters_overlay = document.getElementById('chapters_overlay').style.visibility != 'hidden';
         if (chapters_overlay) {
             // if an overlay is visible, close it
-            show_overlay(0);
+            show_overlay('chapters', 0);
         }
         else {
             checkbox = document.getElementById('fab_input');
@@ -296,18 +329,5 @@ function keyDown(e) {
                 document.getElementById('fab_menu').className = 'shrink';
             }
         }
-    }
-}
-
-
-// suggestion overlay
-function enableSubmit() {
-    var radios = document.getElementsByName('suggestion_or_comment');
-    var radioChecked = radios[0].checked || radios[1].checked;
-    if (radioChecked && (document.getElementById('name_input').value != '') && (document.getElementById('sugg_input').value != '')) {
-        document.getElementById("submit_button").disabled = "";
-    }
-    else {
-        document.getElementById("submit_button").disabled = "disabled";
     }
 }

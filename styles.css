@@ -25,8 +25,66 @@ body {
   top: 20%; left: 15%;
 }
 
-
-/* ----- Choose chapters too study ----- */
+/* ----- Suggestions -----*/
+form{
+  height: 100%;
+  width: 100%;
+}
+input[type=text], textarea{
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  width: 100%;
+  margin: 0 0 8px 0;
+  border-bottom: 1px solid var(--on-surface);
+  box-shadow: none;
+  line-height: normal;
+  overflow-y: hidden;
+  padding: .8rem 0 .3rem 0;
+  resize: none;
+  min-height: 2.5rem;
+  height: 1.5rem;
+  box-sizing: border-box;
+  transition: box-shadow .3s, border .3s;
+}
+input[type=submit]{
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+}
+input:focus{
+  outline: 0;
+  border: 0;
+}
+input:focus, textarea:focus{
+  border-bottom: 1px solid var(--secondary-color);
+  box-shadow: 0 1px 0 0 var(--secondary-color);
+}
+#suggestion_dialog label{
+  position: absolute;
+  top: .8rem; left: 0;
+  transform-origin: 0 100%;
+  cursor: text;
+  transition: transform .2s ease-out, color .2s ease, font-size .2s;
+}
+#suggestion_dialog textarea:focus + label, #suggestion_dialog input:focus + label{
+  color: var(--secondary-color);
+  box-shadow: none;
+  outline: 0;
+  border: 0;
+}
+#suggestion_dialog .active{
+  transform: translateY(-1.2rem);
+  font-size: small;
+}
+.input-field{
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+/* ----- fab ----- */
 #fab{
   z-index: 11;
   cursor: pointer;
@@ -46,6 +104,14 @@ body {
 }
 #fab_input{
   display: none;
+}
+.dialog .input-field .word_count{
+  position: absolute;
+  font-size: x-small;
+  font-weight: lighter;
+  opacity: .32 ;
+  right: 0;
+  margin: 0;
 }
 input:checked + label #fab{
   background-color: white;
@@ -124,14 +190,15 @@ input:checked + label #fab:hover{
   100% { transform: scale(1,0)      translateY(6rem);   opacity:  0.2;   display: none;}
 }
 
-#chapters_overlay{
+/* ----- Choose chapters too study ----- */
+.overlay{
   position: fixed;
   visibility: hidden;
   width: 100%; height: 100%;
   top: 0; left: 0;
   z-index: 12;
 }
-#scrim{
+.scrim{
   position: absolute;
   width: 100%; height: 100%;
   background-color: var(--on-surface);
@@ -143,7 +210,7 @@ input:checked + label #fab:hover{
   z-index: 2;
   transition: .2s ease-in-out;
 }
-#dialog{
+.dialog{
   right: 0;
   position: absolute;
   width: 46vh; height: 75vh;
@@ -172,16 +239,24 @@ input:checked + label #fab:hover{
   background: var(--primary-color);
   opacity: 60%;
 }
-#dialog .header{
+.dialog .header{
   flex: 0 1 auto;
 }
-#dialog .content{
+.dialog .content{
+  display: inline-block;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 75%;
+  width: 100%;
+  box-sizing: border-box;
   flex: 1 1 auto;
+  padding-right: 1em;
 }
-#dialog .footer{
+.dialog .footer{
   flex: 0 1 2em;
 }
-#dialog .title{
+.dialog .title{
   position: relative;
   font-family: 'Work Sans', sans-serif;
   font-weight: bolder;
@@ -190,7 +265,7 @@ input:checked + label #fab:hover{
   margin-bottom: 9%;
   color: var(--on-surface);
 }
-#dialog .text{
+.dialog .text{
   font-family: 'Work Sans', sans-serif;
   font-weight: normal;
   font-size: medium;
@@ -201,10 +276,7 @@ input:checked + label #fab:hover{
   bottom: 0;
   text-align: right;
 }
-#navigation .button{
-  margin: 1% 0 1% 10%;
-}
-#dialog .button{
+.dialog .button{
   position: relative;
   display: inline-block;
   font-family: 'Work Sans', sans-serif;
@@ -214,27 +286,20 @@ input:checked + label #fab:hover{
   color: var(--primary-color);
   transition: 0.1s ease-in;
 }
-#dialog .button:hover{
+.dialog .button:hover{
   transform: scale(1.1);
 }
-#dialog .button:active{
+.dialog .button:active{
   opacity: 32%;
 }
-#dialog hr{
+.dialog hr{
   position: relative;
   margin: 0;
+  border: none;
   color: var(--on-surface);
   background-color: var(--on-surface);
-  height: 1px;
+  height: 1pt;
   opacity: 32%;
-  width: 100%;
-}
-#chapter_container{
-  display: inline-block;
-  position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 75%;
   width: 100%;
 }
 #chapters_overlay ul{
@@ -460,67 +525,6 @@ a.custom_button div:hover{
   position: absolute;
   top: 15%;
   height: 70%;
-}
-
-
-/*----- Suggestions -----*/
-#suggestions{
-  float: right;
-  margin-right: 3%;
-}
-#suggestions span{
-  margin-right: 3px;
-}
-#suggestion_overlay{
-  position: relative;
-  z-index: 1;
-  padding: 15px;
-  margin-top: 4%;
-  border-radius: 10px;
-  background-color: var(--secondary-background-color);
-  box-shadow: 0px 3px 5px 6px var(--shadow-color);
-  float: right;
-}
-#suggestion_overlay input{
-  margin-top: 5px;
-}
-#suggestion_overlay input[type=text]{
-  color: white;
-  width: 90%;
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  border: 0;
-  padding: 5px;
-  outline: none;
-}
-#suggestion_overlay input[type=text]::-webkit-input-placeholder{
-  color: white;
-}
-#suggestion_overlay input[type=text]:-ms-input-placeholder{
-  color: white;
-}
-#suggestion_overlay input[type=text]::placeholder{
-  color: white;
-}
-#suggestion_overlay input[type=submit]{
-  margin-top: 8px;
-  border: 0;
-  height: 25px;
-  width: 100px;
-  border-radius: 5px;
-  color: white;
-  background-color: var(--secondary-background-color);
-  box-shadow: .5px .5px 1px 1.3px var(--shadow-color);
-  cursor: pointer;
-}
-#suggestion_overlay input[type=submit]:disabled{
-  box-shadow: 0 0 0 0;
-  color: gray;
-}
-#suggestion_overlay label{
-  font-family: 'Work Sans', sans-serif;
-  font-size: 11px;
-  color: white;
 }
 
 

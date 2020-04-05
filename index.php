@@ -7,9 +7,9 @@
 
 
 <html lang="en">
-<!--MINE-->
+
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -181,30 +181,35 @@
         </div>
     </label>
     <div id='fab_menu' class='shrink'>
-        <div class='mini_fab' onclick='set_chapter_menu(); show_overlay("chapters", 1);'>
+        <div class='mini_fab tooltip' onclick='set_chapter_menu(); show_overlay("chapters", 1);'>
             <span class="material-icons">
                 format_list_bulleted
             </span>
+            <span class="tooltiptext">Chapter selection</span>
         </div>
-        <div class='mini_fab' onclick='show_overlay("suggestion", 1);'>
+        <div class='mini_fab tooltip' onclick='show_overlay("suggestion", 1);'>
             <span class="material-icons">
                 feedback
             </span>
+            <span class="tooltiptext">Suggestions/comments</span>
         </div>
-        <div class='mini_fab' onclick='reset();'>
+        <div class='mini_fab tooltip' onclick='reset();'>
             <span class="material-icons">
                 refresh
             </span>
+            <span class="tooltiptext">Reset progression</span>
         </div>
-        <div class='mini_fab' onclick='show_buttons()'>
+        <div class='mini_fab tooltip' onclick='show_buttons()'>
             <span class="material-icons" id='button_visibility'>
                 visibility_off
             </span>
+            <span class="tooltiptext">Hide buttons</span>
         </div>
-        <div class='mini_fab'>
+        <div class='mini_fab tooltip'>
             <span class="material-icons">
                 help
             </span>
+            <span class="tooltiptext">Help</span>
         </div>
     </div>
 
@@ -212,38 +217,44 @@
 
         <div id="question_div">
             <div id='carousel'>
-                <div class="carousel_cell"><div class="container"><img id='question_0' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_7' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_6' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_5' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_4' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_3' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_2' width='80%' alt="Question Image"></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_1' width='80%' alt="Question Image"></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_0' width='80%' alt=" Pas de question..."><p id='question_chap_0'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_7' width='80%' alt=" Pas de question..."><p id='question_chap_7'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_6' width='80%' alt=" Pas de question..."><p id='question_chap_6'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_5' width='80%' alt=" Pas de question..."><p id='question_chap_5'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_4' width='80%' alt=" Pas de question..."><p id='question_chap_4'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_3' width='80%' alt=" Pas de question..."><p id='question_chap_3'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_2' width='80%' alt=" Pas de question..."><p id='question_chap_2'></p></div></div>
+                <div class="carousel_cell"><div class="container"><img id='question_1' width='80%' alt=" Pas de question..."><p id='question_chap_1'></p></div></div>
             </div>
         </div>
 
         <div id="button_div">
 
-            <a class="custom_button hidable_buttons" style="position:absolute; left: 5%;" onclick="nextQuestion(-1);">
+            <a class="custom_button hidable_buttons" style="position:absolute; left: 30px;" onclick="nextQuestion(-1);">
             <div style="text-align: left;">
                 <span class="material-icons">
                     navigate_before
                 </span>
-                <span style="font-family: 'Work Sans', sans-serif;">Previous</span>
+                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif;">Previous</span>
             </div>
             </a>
 
-            <a class="custom_button hidable_buttons" style="right: 5%;" onclick="questionSucceeded();">
-            <div style="position:absolute; right: 5%;  color: #f9aa33; text-align: right; font-weight: bold;">
-                <span style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Next</span>
-                <span class="material-icons" style="padding-left: 15px;">
+            <a class="custom_button custom_button_right hidable_buttons" style="right: 30px;" onclick="questionSucceeded();">
+            <div style="right: 30px;  color: #f9aa33; text-align: right; font-weight: bold;">
+                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Next</span>
+                <span class="material-icons" id="custom_button_next">
                     navigate_next
                 </span>
             </div>
+            <a class="custom_button custom_button_right hidable_buttons" onclick="questionFailed();">
+            <div>
+                <span class="material-icons">
+                    clear
+                </span>
+                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Failed</span>
+            </div>
             </a>
         </div>
-
     </div>
 </body>
 </html>

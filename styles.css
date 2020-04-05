@@ -2,6 +2,14 @@
 https://materializecss.com/text-inputs.html
 */
 /* ----- General ---- */
+@font-face {
+    font-family: 'LM-Caps';
+    src: url('lmromancaps10-regular-webfont.woff') format('woff'),
+         url('lmromancaps10-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root{
   --main-background-color : #232F34;
   --secondary-background-color:#344954;
@@ -158,8 +166,10 @@ input:checked + label #fab:hover{
   transition: .2s ease-in-out;
 }
 .mini_fab:hover{
-  transform: rotateZ(15deg);
   box-shadow: 1rem 1rem 1rem var(--shadow-color);
+}
+.mini_fab:hover span.material-icons{
+  transform: rotateZ(15deg);
 }
 .mini_fab span{
   position: relative;
@@ -389,6 +399,42 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+/* tooltips */
+.tooltip{
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted var(--secondary-background-color);
+}
+.tooltip .tooltiptext{
+  opacity: 90%;
+  visibility: hidden;
+  background-color: var(--secondary-background-color);
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  right: 120%;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.tooltip .tooltiptext::after{
+  opacity: 90%;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -4pt;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--secondary-background-color);
+}
+.tooltip:hover .tooltiptext{
+  transition-delay: .5s;
+  visibility: visible;
+}
+
 
 /* ----- Menu -----*/
 a.menu {
@@ -413,8 +459,13 @@ a.menu div:hover{
 
 
 /* ----- Custom Button ----- */
+.hidable_buttons {
+  display: none;
+}
+
 a.custom_button div{
-  height: 25px;
+  height: 27px;
+  padding-top: 2px;
   width: 120px;
   border-radius: 5px;
 
@@ -422,7 +473,7 @@ a.custom_button div{
 
   background-color: var(--secondary-background-color);
 
-  box-shadow: 3px 3px 5px 6px var(--shadow-color);
+  box-shadow: 1.5px 1.5px 2.5px 3px var(--shadow-color);
 
   cursor: pointer;
   transition: all .2s ease-in-out;
@@ -443,11 +494,47 @@ a.custom_button div:hover{
   position: relative;
 }
 
+a.custom_button_right{
+  right: 160px;
+}
+
+a.custom_button_right div{
+  position:absolute;
+  right: 160px;
+  text-align: center;
+}
+
+#custom_button_next{
+  padding-left: 15pt;
+}
+
+@media screen and (max-width: 630px) {
+  span.custom_button_text{
+    display: none !important;
+  }
+
+  a.custom_button div{
+    width: 30px;
+  }
+
+  a.custom_button_right{
+    right: 70px;
+  }
+
+  a.custom_button_right div{
+    right: 70px;
+  }
+
+  #custom_button_next{
+    padding-left: 0;
+  }
+}
+
 
 /* ----- Progress Bar ----- */
 #progress_bar{
   position: fixed;
-  bottom: 25%;
+  bottom: 20%;
   height: 2%;
   width: 100%;
   vertical-align: middle;
@@ -456,7 +543,7 @@ a.custom_button div:hover{
 #progress{
   position: relative;
   left: 0%;
-  width: 80%;
+  width: 100%;
   height: 4px;
   background-color: var(--secondary-color);
   border-radius: 2px;
@@ -558,7 +645,18 @@ a.custom_button div:hover{
   -webkit-backface-visibility: hidden;
   pointer-events: none;
 }
+.container p{
+  color: white;
+  position: absolute;
+  bottom: 0pt;
+  text-align: center;
+  width: 100%;
+  font-family: 'LM-Caps';
+  font-size: 12pt;
+  margin: 0 0 0.5em 0;
+}
 .container{
+  height: 90%;
   display: table-cell;
   vertical-align: middle;
   backface-visibility: hidden;

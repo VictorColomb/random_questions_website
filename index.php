@@ -244,13 +244,13 @@
             <span class="material-icons">
                 navigate_before
             </span>
-            <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif;">Précédente</span>
+            <span class="custom_button_text" style="font-size: .95em; font-family: 'Work Sans', sans-serif;">Précédente</span>
         </div>
         </a>
 
         <a class="custom_button custom_button_right hidable_buttons" style="right: 30px;" onclick="questionSucceeded();">
         <div style="right: 30px;  color: #f9aa33; text-align: right; font-weight: bold;">
-            <span class="custom_button_text" style="font-size: .95em; font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Suivante</span>
+            <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Suivante</span>
             <span class="material-icons" id="custom_button_next">
                 navigate_next
             </span>

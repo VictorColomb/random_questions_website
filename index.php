@@ -165,30 +165,35 @@
                 format_list_bulleted
             </span>
             <span class="tooltiptext">Chapter selection</span>
+            <span class="help left">Sélection des chapitres</span>
         </div>
         <div class='mini_fab tooltip'>
             <span class="material-icons">
                 feedback
             </span>
             <span class="tooltiptext">Suggestions/comments</span>
+            <span class="help left">Envoyer un commentaire</span>
         </div>
         <div class='mini_fab tooltip' onclick='reset();'>
             <span class="material-icons">
                 refresh
             </span>
             <span class="tooltiptext">Reset progression</span>
+            <span class="help left">Réinitialiser la progression</span>
         </div>
-        <div class='mini_fab tooltip' onclick='show_buttons()'>
+        <div class='mini_fab tooltip' onclick="show_buttons();">
             <span class="material-icons" id='button_visibility'>
                 visibility_off
             </span>
             <span class="tooltiptext">Hide buttons</span>
+            <span class="help left">Afficher/cacher les boutons</span>
         </div>
-        <div class='mini_fab tooltip'>
+        <div class='mini_fab tooltip' onclick="showHelp();">
             <span class="material-icons">
                 help
             </span>
             <span class="tooltiptext">Help</span>
+            <span class="help left">Afficher ce message d'aide</span>
         </div>
     </div>
 
@@ -206,34 +211,43 @@
                 <div class="carousel_cell"><div class="container"><img id='question_1' width='80%' alt=" Pas de question..."><p id='question_chap_1'></p></div></div>
             </div>
         </div>
+    </div>
+    <div id="button_div">
+        <a class="custom_button hidable_buttons" style="position:absolute; left: 30px;" onclick="nextQuestion(-1);">
+        <div style="text-align: left;">
+            <span class="material-icons">
+                navigate_before
+            </span>
+            <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif;">Previous</span>
+        </div>
+        </a>
 
-        <div id="button_div">
+        <a class="custom_button custom_button_right hidable_buttons" style="right: 30px;" onclick="questionSucceeded();">
+        <div style="right: 30px;  color: #f9aa33; text-align: right; font-weight: bold;">
+            <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Next</span>
+            <span class="material-icons" id="custom_button_next">
+                navigate_next
+            </span>
+        </div>
+        <a class="custom_button custom_button_right hidable_buttons" onclick="questionFailed();">
+        <div>
+            <span class="material-icons">
+                clear
+            </span>
+            <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Failed</span>
+        </div>
+        </a>
+    </div>
 
-            <a class="custom_button hidable_buttons" style="position:absolute; left: 30px;" onclick="nextQuestion(-1);">
-            <div style="text-align: left;">
-                <span class="material-icons">
-                    navigate_before
-                </span>
-                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif;">Previous</span>
-            </div>
-            </a>
-
-            <a class="custom_button custom_button_right hidable_buttons" style="right: 30px;" onclick="questionSucceeded();">
-            <div style="right: 30px;  color: #f9aa33; text-align: right; font-weight: bold;">
-                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Next</span>
-                <span class="material-icons" id="custom_button_next">
-                    navigate_next
-                </span>
-            </div>
-            <a class="custom_button custom_button_right hidable_buttons" onclick="questionFailed();">
-            <div>
-                <span class="material-icons">
-                    clear
-                </span>
-                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Failed</span>
-            </div>
-            </a>
+    <div id="help_overlay" onclick="showHelp();">
+        <div>
+            <span class="material-icons">navigate_next</span><span class="not-material-icons">Les questions réussies ne reviennent pas.</span><br><br>
+            <span class="material-icons">clear</span><span class="not-material-icons">Les questions échouées résparaissent éventuellement.</span><br><br>
+            <span class="material-icons">refresh</span><span class="not-material-icons">Réinitialiser la progression retire les questions des chapitres sélectionnés des questions réussies.</span><br><br>
+            <span class="material-icons">swap_horiz</span><span class="not-material-icons">Balayez horizontalement pour passer à la question suivante/précédente. Balayez vers le haut pour marquer une question échouée.</span><br><br>
+            <span class="material-icons no-tel">keyboard</span><span class="not-material-icons no-tel">Appuyez sur les touches Entrée, Espace ou &rarr; pour passer à la question suivante. Appuyez sur &uarr; pour marquer une question échouée. Appuyez sur &larr; pour revenir à la question précédente.</span>
         </div>
     </div>
+
 </body>
 </html>

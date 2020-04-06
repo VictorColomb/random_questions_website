@@ -154,7 +154,7 @@ def ps_to_jpg(idx):
     png_out = f'{idx}.png'
 
     # Concatenate all ps files into one jpg
-    process = system(f'convert -colorspace rgb -background none -density 1000 -append *.ps {idx}.png')
+    process = system(f'convert -colorspace rgb -background none -density 600 -append *.ps {idx}.png')
 
     if process != 0:
         raise Exception('Fuck, convert ps to jpg did not work...\nDo you have ImageMagick installed ?')

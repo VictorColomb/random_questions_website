@@ -117,6 +117,17 @@ function show_overlay(bol){
 function show_menus(){
     if (document.getElementById('fab_input').checked){
         document.getElementById('fab_menu').className='shrink';
+
+        if (document.getElementById('help_overlay').style.display == "block") {
+            // trigger help overlay off
+            document.getElementById('help_overlay').style.display = "";
+            Array.from(document.getElementsByClassName('help')).forEach(element => {
+                element.style.display = "";
+            })
+            Array.from(document.getElementsByClassName('hidden_af')).forEach(element => {
+                element.classList.remove('hidden_af');
+            })
+        }
     } else {
         document.getElementById('fab_menu').className='expand';
     }
@@ -448,4 +459,40 @@ function enableSubmit() {
     }
     delete radios;
     delete radioChecked;
+}
+
+
+// HELP OVERLAY
+function showHelp(open=1) {
+    help_overlay_visi = document.getElementById('help_overlay').style.display;
+    if (help_overlay_visi == "" && open) {
+        // if overlay hidden
+
+        // open menu
+        document.getElementById('fab_input').checked = true;
+        document.getElementById('fab_menu').className = "expand";
+
+        // trigger overlay
+        document.getElementById('help_overlay').style.display = "block";
+        Array.from(document.getElementsByClassName('help')).forEach(element => {
+            element.style.display = "block";
+        })
+        Array.from(document.getElementsByClassName('tooltiptext')).forEach(element => {
+            element.classList.add("hidden_af");
+        })
+    }
+    else{
+        // close menu
+        document.getElementById('fab_menu').className = "shrink";
+        document.getElementById('fab_input').checked = false;
+
+        // trigger overlay off
+        document.getElementById('help_overlay').style.display = "";
+        Array.from(document.getElementsByClassName('help')).forEach(element => {
+            element.style.display = "";
+        })
+        Array.from(document.getElementsByClassName('hidden_af')).forEach(element => {
+            element.classList.remove('hidden_af');
+        })
+    }
 }

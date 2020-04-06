@@ -2,6 +2,16 @@
 https://materializecss.com/text-inputs.html
 */
 /* ----- General ---- */
+
+html{
+  height: 100%;
+}
+body{
+  height: 100%;
+  margin: 0;
+  overflow-y: hidden;
+}
+
 @font-face {
     font-family: 'LM-Caps';
     src: url('lmromancaps10-regular-webfont.woff') format('woff'),
@@ -36,7 +46,7 @@ body {
 
 /* ----- Choose chapters to study ----- */
 #fab{
-  z-index: 11;
+  z-index: 4;
   cursor: pointer;
   position: absolute;
   margin: 0;
@@ -77,7 +87,7 @@ input:checked + label #fab:hover{
 }
 #fab_menu{
   display: block;
-  z-index: 10;
+  z-index: 4;
   position: absolute;
   bottom: 5rem; width: 3.5rem;
   right: 1.5rem;
@@ -105,7 +115,7 @@ input:checked + label #fab:hover{
 .mini_fab:hover span.material-icons{
   transform: rotateZ(15deg);
 }
-.mini_fab span{
+.mini_fab span.material-icons,span.tooltiptext{
   position: relative;
   top: .55rem;
   margin: 0;
@@ -139,7 +149,7 @@ input:checked + label #fab:hover{
   visibility: hidden;
   width: 100%; height: 100%;
   top: 0; left: 0;
-  z-index: 12;
+  z-index: 6;
 }
 #scrim{
   position: absolute;
@@ -150,7 +160,7 @@ input:checked + label #fab:hover{
   -moz-khtml: opacity 0.32;
   -ms-khtml: opacity 0.32;
   -o-khtml: opacity 0.32;
-  z-index: 2;
+  z-index: 5;
   transition: .2s ease-in-out;
 }
 #dialog{
@@ -159,7 +169,7 @@ input:checked + label #fab:hover{
   width: 46vh; height: 75vh;
   background-color: white;
   border-radius: 3px;
-  z-index: 3;
+  z-index: 6;
   padding-left: 4vh;
   padding-top: 3vh;
   top: 12vh;
@@ -338,7 +348,6 @@ input:checked + .slider:before {
 .tooltip{
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted var(--secondary-background-color);
 }
 .tooltip .tooltiptext{
   opacity: 90%;
@@ -348,7 +357,7 @@ input:checked + .slider:before {
   border-radius: 6px;
   padding: 5px;
   position: absolute;
-  z-index: 1;
+  z-index: 4;
   right: 120%;
   font-family: 'Work Sans', sans-serif;
   font-size: 13px;
@@ -425,8 +434,12 @@ a.custom_button div:hover{
 }
 
 #button_div{
+  z-index: 0;
   padding-top: 1%;
   position: relative;
+  top: 65%;
+  width: 70%;
+  left: 15%;
 }
 
 a.custom_button_right{
@@ -535,6 +548,7 @@ a.custom_button_right div{
   background-color: var(--secondary-background-color);
   box-shadow: 0px 3px 5px 6px var(--shadow-color);
   display: table;
+  z-index: 3;
 }
 #head_img{
   display: inline-block;
@@ -560,7 +574,7 @@ a.custom_button_right div{
 }
 #suggestion_overlay{
   position: relative;
-  z-index: 1;
+  z-index: 6;
   padding: 15px;
   margin-top: 4%;
   border-radius: 10px;
@@ -671,3 +685,84 @@ a.custom_button_right div{
 .carousel_cell:nth-child(6) { transform: rotateY( 225deg) translateZ(-150em);}
 .carousel_cell:nth-child(7) { transform: rotateY( 270deg) translateZ(-150em);}
 .carousel_cell:nth-child(8) { transform: rotateY( 315deg) translateZ(-150em);}
+
+
+/* HELP OVERLAY */
+.help{
+  color: white !important;
+  display: none;
+  z-index: 7;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: normal;
+  font-size: .8em !important;
+}
+.help.left{
+  position: absolute;
+  right: 160%;
+  height: fit-content;
+  text-align: right;
+  white-space: nowrap;
+  top: .8rem;
+}
+.help.left::after,.help.left::before{
+  content: ".";
+  display: inline-block;
+  background-color: white;
+  overflow: hidden;
+  position: absolute;
+}
+.help.left::after{
+  height: 100%;
+  width: 1px;
+  top: 0%;
+  right: -18px;
+}
+.help.left::before{
+  height: 1px;
+  width: 10px;
+  top: 50%;
+  right: -18px;
+}
+#help_overlay{
+  display: none;
+  opacity: 90%;
+  background-color: black;
+
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+}
+#help_overlay div{
+  position: relative;
+  z-index: 7;
+  left: 2%;
+  top: 10%;
+  width: fit-content;
+  max-width: 50%;
+}
+#help_overlay span{
+  opacity: 100%;
+  color: white;
+}
+#help_overlay span.not-material-icons{
+  font-family: 'Work Sans', sans-serif;
+}
+#help_overlay span.material-icons{
+  font-size: 1.2em;
+  display: inline-flex;
+  vertical-align: bottom;
+  margin-right: 5pt;
+}
+.hidden_af{
+  display: none !important;
+}
+@media screen and (max-height: 400px) {
+  .no-tel{
+    display: none !important;
+  }
+}
+@media screen and (max-width: 550px) {
+  .help{
+    display: none !important;
+  }
+}

@@ -9,7 +9,6 @@ https://materializecss.com/text-inputs.html
     font-weight: normal;
     font-style: normal;
 }
-
 :root{
   --main-background-color : #232F34;
   --secondary-background-color:#344954;
@@ -23,6 +22,9 @@ body a{
 }
 
 body {
+  position: fixed;
+  bottom: 0; top: 0;
+  left: 0; right: 0;
   background-color: var(--main-background-color);
   user-select: none;
 }
@@ -162,6 +164,9 @@ input:checked + label #fab:hover{
   margin-bottom: 1.5rem;
   height: 2.5rem; width: 2.5rem;
   border-radius: 50%;
+  box-shadow: none;
+  border: none;
+  outline: none;
   background-color: white;
   transition: .2s ease-in-out;
 }
@@ -403,7 +408,6 @@ input:checked + .slider:before {
 .tooltip{
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted var(--secondary-background-color);
 }
 .tooltip .tooltiptext{
   opacity: 90%;
@@ -505,7 +509,7 @@ a.custom_button_right div{
 }
 
 #custom_button_next{
-  padding-left: 15pt;
+  padding-left: 3pt;
 }
 
 @media screen and (max-width: 630px) {
@@ -614,7 +618,6 @@ a.custom_button_right div{
   height: 70%;
 }
 
-
 /* ----- Question Carousel ----- */
 #question_div{
   height: 90%; width: 100%;
@@ -628,7 +631,8 @@ a.custom_button_right div{
   position: absolute;
   transform: translateZ(-150em) rotateY(0deg);
   transform-style: preserve-3d;
-  transition: transform 0.3s;
+  transition: transform .5s;
+  -webkit-transition: transform .5s;
   z-index: 1;
 }
 .carousel_cell {
@@ -636,7 +640,8 @@ a.custom_button_right div{
   height: 100%;
   position: absolute;
   text-align: center;
-  transition: transform 0.3s, opacity 1s;
+  transition: all 0;
+  -webkit-transition: all 0;
   background-color: var(--primary-color);
   box-shadow: 1px 1px 2px 2px var(--shadow-color);
   border-radius: 20px;
@@ -666,11 +671,72 @@ a.custom_button_right div{
   max-height: 80%;
 }
 /* tz = 70% * tan(360 / (n * 2)) */
-.carousel_cell:nth-child(1) { transform: rotateY(   0deg) translateZ(-150em);}
-.carousel_cell:nth-child(2) { transform: rotateY(  45deg) translateZ(-150em);}
-.carousel_cell:nth-child(3) { transform: rotateY(  90deg) translateZ(-150em);}
-.carousel_cell:nth-child(4) { transform: rotateY( 135deg) translateZ(-150em);}
-.carousel_cell:nth-child(5) { transform: rotateY( 180deg) translateZ(-150em);}
-.carousel_cell:nth-child(6) { transform: rotateY( 225deg) translateZ(-150em);}
-.carousel_cell:nth-child(7) { transform: rotateY( 270deg) translateZ(-150em);}
-.carousel_cell:nth-child(8) { transform: rotateY( 315deg) translateZ(-150em);}
+.carousel_cell:nth-child(1) {
+  transform:          rotateY(   0deg) translateZ(-150em);
+  -webkit-transform:  rotateY(   0deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(2) {
+  transform:          rotateY(  45deg) translateZ(-150em);
+  -webkit-transform:  rotateY(  45deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(3) {
+  transform:          rotateY(  90deg) translateZ(-150em);
+  -webkit-transform:  rotateY(  90deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(4) {
+  transform:          rotateY( 135deg) translateZ(-150em);
+  -webkit-transform:  rotateY( 135deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(5) {
+  transform:          rotateY( 180deg) translateZ(-150em);
+  -webkit-transform:  rotateY( 180deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(6) {
+  transform:          rotateY( 225deg) translateZ(-150em);
+  -webkit-transform:  rotateY( 225deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(7) {
+  transform:          rotateY( 270deg) translateZ(-150em);
+  -webkit-transform:  rotateY( 270deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(8) {
+  transform:          rotateY( 315deg) translateZ(-150em);
+  -webkit-transform:  rotateY( 315deg) translateZ(-150em);;
+}
+
+.failed.carousel_cell:nth-child(1) {
+  transform:          rotateY( -45deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY( -45deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(2) {
+  transform:          rotateY(   0deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY(   0deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(3) {
+  transform:          rotateY(  45deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY(  45deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(4) {
+  transform:          rotateY(  90deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY(  90deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(5) {
+  transform:          rotateY( 135deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY( 135deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(6) {
+  transform:          rotateY( 180deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY( 180deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(7) {
+  transform:          rotateY( 225deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY( 225deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(8) {
+  transform:          rotateY( 270deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY( 270deg) translateY(-50em) !important;
+}
+.failed{
+  transition: transform .5s !important;
+  -webkit-transition: transform .5s !important;
+}

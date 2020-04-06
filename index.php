@@ -83,19 +83,19 @@
                 <input id='date' type="hidden" name="date">
 
                 <div class="input-field">
-                    <input type="text" id="name" name='name' class='text' onfocus="has_text(this, 1)" onblur="has_text(this, 0)" maxlength="32"></input>
+                    <input type="text" id="name" name='name' class='text' onfocus="has_text(this, 1);" onblur="has_text(this, 0)" maxlength="32"></input>
                     <label for="name" class="text">Nom</label>
                     <p class='word_count text'>32 caractères max</p>
                 </div>
 
                 <div class="input-field">
-                    <input type="text" id="mail"  name='mail' class='text' onfocus="has_text(this, 1)" onblur="has_text(this, 0)" maxlength="32"></input>
+                    <input type="text" id="mail"  name='mail' class='text' onfocus="has_text(this, 1);" onblur="has_text(this, 0)" maxlength="32"></input>
                     <label for="mail" class="text">Mail (Optionnel)</label>
                     <p class='word_count text'>32 caractères max</p>
                 </div>
 
                 <div class="input-field">
-                    <textarea id="comment" name="suggestion_text" class='text' oninput="auto_grow(this)" onfocus="has_text(this, 1)" onblur="has_text(this, 0)" maxlength="256"></textarea>
+                    <textarea id="comment" name="suggestion_text" class='text' oninput="auto_grow(this)" onfocus="has_text(this, 1);" onblur="has_text(this, 0)" maxlength="256"></textarea>
                     <label for="comment" class="text">Commentaire</label>
                     <p class='word_count text'>256 caractères max</p>
                 </div>
@@ -190,31 +190,31 @@
             <span class="material-icons">
                 format_list_bulleted
             </span>
-            <span class="tooltiptext">Chapter selection</span>
+            <span class="tooltiptext">Choix des chapitres</span>
         </div>
         <div class='mini_fab tooltip' onclick='show_overlay("suggestion", 1);'>
             <span class="material-icons">
                 feedback
             </span>
-            <span class="tooltiptext">Suggestions/comments</span>
+            <span class="tooltiptext">Suggestions/commentaires</span>
         </div>
         <div class='mini_fab tooltip' onclick='reset();'>
             <span class="material-icons">
                 refresh
             </span>
-            <span class="tooltiptext">Reset progression</span>
+            <span class="tooltiptext">Réinitialiser la progression</span>
         </div>
         <div class='mini_fab tooltip' onclick='show_buttons()'>
             <span class="material-icons" id='button_visibility'>
                 visibility_off
             </span>
-            <span class="tooltiptext">Hide buttons</span>
+            <span id='button_visibility_tip' class="tooltiptext">Masquer les boutons</span>
         </div>
         <div class='mini_fab tooltip'>
             <span class="material-icons">
                 help
             </span>
-            <span class="tooltiptext">Help</span>
+            <span class="tooltiptext">Aide</span>
         </div>
     </div>
 
@@ -222,14 +222,14 @@
 
         <div id="question_div">
             <div id='carousel'>
-                <div class="carousel_cell"><div class="container"><img id='question_0' width='80%' alt=" Pas de question..."><p id='question_chap_0'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_7' width='80%' alt=" Pas de question..."><p id='question_chap_7'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_6' width='80%' alt=" Pas de question..."><p id='question_chap_6'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_5' width='80%' alt=" Pas de question..."><p id='question_chap_5'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_4' width='80%' alt=" Pas de question..."><p id='question_chap_4'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_3' width='80%' alt=" Pas de question..."><p id='question_chap_3'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_2' width='80%' alt=" Pas de question..."><p id='question_chap_2'></p></div></div>
-                <div class="carousel_cell"><div class="container"><img id='question_1' width='80%' alt=" Pas de question..."><p id='question_chap_1'></p></div></div>
+                <div class="carousel_cell" id='cell_0'><div class="container"><img id='question_0' width='80%' alt=" Pas de question..."><p id='question_chap_0'></p></div></div>
+                <div class="carousel_cell" id='cell_7'><div class="container"><img id='question_7' width='80%' alt=" Pas de question..."><p id='question_chap_7'></p></div></div>
+                <div class="carousel_cell" id='cell_6'><div class="container"><img id='question_6' width='80%' alt=" Pas de question..."><p id='question_chap_6'></p></div></div>
+                <div class="carousel_cell" id='cell_5'><div class="container"><img id='question_5' width='80%' alt=" Pas de question..."><p id='question_chap_5'></p></div></div>
+                <div class="carousel_cell" id='cell_4'><div class="container"><img id='question_4' width='80%' alt=" Pas de question..."><p id='question_chap_4'></p></div></div>
+                <div class="carousel_cell" id='cell_3'><div class="container"><img id='question_3' width='80%' alt=" Pas de question..."><p id='question_chap_3'></p></div></div>
+                <div class="carousel_cell" id='cell_2'><div class="container"><img id='question_2' width='80%' alt=" Pas de question..."><p id='question_chap_2'></p></div></div>
+                <div class="carousel_cell" id='cell_1'><div class="container"><img id='question_1' width='80%' alt=" Pas de question..."><p id='question_chap_1'></p></div></div>
             </div>
         </div>
 
@@ -240,13 +240,13 @@
                 <span class="material-icons">
                     navigate_before
                 </span>
-                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif;">Previous</span>
+                <span class="custom_button_text" style="font-size: .95em; font-family: 'Work Sans', sans-serif;">Precédente</span>
             </div>
             </a>
 
             <a class="custom_button custom_button_right hidable_buttons" style="right: 30px;" onclick="questionSucceeded();">
             <div style="right: 30px;  color: #f9aa33; text-align: right; font-weight: bold;">
-                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Next</span>
+                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Suivante</span>
                 <span class="material-icons" id="custom_button_next">
                     navigate_next
                 </span>
@@ -256,7 +256,7 @@
                 <span class="material-icons">
                     clear
                 </span>
-                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Failed</span>
+                <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Échouée</span>
             </div>
             </a>
         </div>

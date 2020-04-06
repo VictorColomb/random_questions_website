@@ -19,7 +19,6 @@ body{
     font-weight: normal;
     font-style: normal;
 }
-
 :root{
   --main-background-color : #232F34;
   --secondary-background-color:#344954;
@@ -33,6 +32,9 @@ body a{
 }
 
 body {
+  position: fixed;
+  bottom: 0; top: 0;
+  left: 0; right: 0;
   background-color: var(--main-background-color);
   user-select: none;
 }
@@ -43,8 +45,66 @@ body {
   top: 20%; left: 15%;
 }
 
-
-/* ----- Choose chapters to study ----- */
+/* ----- Suggestions -----*/
+form{
+  height: 100%;
+  width: 100%;
+}
+input[type=text], textarea{
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  width: 100%;
+  margin: 0 0 8px 0;
+  border-bottom: 1px solid var(--on-surface);
+  box-shadow: none;
+  line-height: normal;
+  overflow-y: hidden;
+  padding: .8rem 0 .3rem 0;
+  resize: none;
+  min-height: 2.5rem;
+  height: 1.5rem;
+  box-sizing: border-box;
+  transition: box-shadow .3s, border .3s;
+}
+input[type=submit]{
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+}
+input:focus{
+  outline: 0;
+  border: 0;
+}
+input:focus, textarea:focus{
+  border-bottom: 1px solid var(--secondary-color);
+  box-shadow: 0 1px 0 0 var(--secondary-color);
+}
+#suggestion_dialog label{
+  position: absolute;
+  top: .8rem; left: 0;
+  transform-origin: 0 100%;
+  cursor: text;
+  transition: transform .2s ease-out, color .2s ease, font-size .2s;
+}
+#suggestion_dialog textarea:focus + label, #suggestion_dialog input:focus + label{
+  color: var(--secondary-color);
+  box-shadow: none;
+  outline: 0;
+  border: 0;
+}
+#suggestion_dialog .active{
+  transform: translateY(-1.2rem);
+  font-size: small;
+}
+.input-field{
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+/* ----- fab ----- */
 #fab{
   z-index: 4;
   cursor: pointer;
@@ -64,6 +124,14 @@ body {
 }
 #fab_input{
   display: none;
+}
+.dialog .input-field .word_count{
+  position: absolute;
+  font-size: x-small;
+  font-weight: lighter;
+  opacity: .32 ;
+  right: 0;
+  margin: 0;
 }
 input:checked + label #fab{
   background-color: white;
@@ -106,6 +174,9 @@ input:checked + label #fab:hover{
   margin-bottom: 1.5rem;
   height: 2.5rem; width: 2.5rem;
   border-radius: 50%;
+  box-shadow: none;
+  border: none;
+  outline: none;
   background-color: white;
   transition: .2s ease-in-out;
 }
@@ -144,14 +215,15 @@ input:checked + label #fab:hover{
   100% { transform: scale(1,0)      translateY(6rem);   opacity:  0.2;   display: none;}
 }
 
-#chapters_overlay{
+/* ----- Choose chapters too study ----- */
+.overlay{
   position: fixed;
   visibility: hidden;
   width: 100%; height: 100%;
   top: 0; left: 0;
   z-index: 6;
 }
-#scrim{
+.scrim{
   position: absolute;
   width: 100%; height: 100%;
   background-color: var(--on-surface);
@@ -163,7 +235,7 @@ input:checked + label #fab:hover{
   z-index: 5;
   transition: .2s ease-in-out;
 }
-#dialog{
+.dialog{
   right: 0;
   position: absolute;
   width: 46vh; height: 75vh;
@@ -192,16 +264,24 @@ input:checked + label #fab:hover{
   background: var(--primary-color);
   opacity: 60%;
 }
-#dialog .header{
+.dialog .header{
   flex: 0 1 auto;
 }
-#dialog .content{
+.dialog .content{
+  display: inline-block;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 75%;
+  width: 100%;
+  box-sizing: border-box;
   flex: 1 1 auto;
+  padding-right: 1em;
 }
-#dialog .footer{
+.dialog .footer{
   flex: 0 1 2em;
 }
-#dialog .title{
+.dialog .title{
   position: relative;
   font-family: 'Work Sans', sans-serif;
   font-weight: bolder;
@@ -210,7 +290,7 @@ input:checked + label #fab:hover{
   margin-bottom: 9%;
   color: var(--on-surface);
 }
-#dialog .text{
+.dialog .text{
   font-family: 'Work Sans', sans-serif;
   font-weight: normal;
   font-size: medium;
@@ -221,10 +301,7 @@ input:checked + label #fab:hover{
   bottom: 0;
   text-align: right;
 }
-#navigation .button{
-  margin: 1% 0 1% 10%;
-}
-#dialog .button{
+.dialog .button{
   position: relative;
   display: inline-block;
   font-family: 'Work Sans', sans-serif;
@@ -234,27 +311,20 @@ input:checked + label #fab:hover{
   color: var(--primary-color);
   transition: 0.1s ease-in;
 }
-#dialog .button:hover{
+.dialog .button:hover{
   transform: scale(1.1);
 }
-#dialog .button:active{
+.dialog .button:active{
   opacity: 32%;
 }
-#dialog hr{
+.dialog hr{
   position: relative;
   margin: 0;
+  border: none;
   color: var(--on-surface);
   background-color: var(--on-surface);
-  height: 1px;
+  height: 1pt;
   opacity: 32%;
-  width: 100%;
-}
-#chapter_container{
-  display: inline-block;
-  position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 75%;
   width: 100%;
 }
 #chapters_overlay ul{
@@ -453,7 +523,7 @@ a.custom_button_right div{
 }
 
 #custom_button_next{
-  padding-left: 15pt;
+  padding-left: 3pt;
 }
 
 @media screen and (max-width: 630px) {
@@ -639,7 +709,8 @@ a.custom_button_right div{
   position: absolute;
   transform: translateZ(-150em) rotateY(0deg);
   transform-style: preserve-3d;
-  transition: transform 0.3s;
+  transition: transform .5s;
+  -webkit-transition: transform .5s;
   z-index: 1;
 }
 .carousel_cell {
@@ -647,7 +718,8 @@ a.custom_button_right div{
   height: 100%;
   position: absolute;
   text-align: center;
-  transition: transform 0.3s, opacity 1s;
+  transition: all 0;
+  -webkit-transition: all 0;
   background-color: var(--primary-color);
   box-shadow: 1px 1px 2px 2px var(--shadow-color);
   border-radius: 20px;
@@ -677,15 +749,75 @@ a.custom_button_right div{
   max-height: 80%;
 }
 /* tz = 70% * tan(360 / (n * 2)) */
-.carousel_cell:nth-child(1) { transform: rotateY(   0deg) translateZ(-150em);}
-.carousel_cell:nth-child(2) { transform: rotateY(  45deg) translateZ(-150em);}
-.carousel_cell:nth-child(3) { transform: rotateY(  90deg) translateZ(-150em);}
-.carousel_cell:nth-child(4) { transform: rotateY( 135deg) translateZ(-150em);}
-.carousel_cell:nth-child(5) { transform: rotateY( 180deg) translateZ(-150em);}
-.carousel_cell:nth-child(6) { transform: rotateY( 225deg) translateZ(-150em);}
-.carousel_cell:nth-child(7) { transform: rotateY( 270deg) translateZ(-150em);}
-.carousel_cell:nth-child(8) { transform: rotateY( 315deg) translateZ(-150em);}
+.carousel_cell:nth-child(1) {
+  transform:          rotateY(   0deg) translateZ(-150em);
+  -webkit-transform:  rotateY(   0deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(2) {
+  transform:          rotateY(  45deg) translateZ(-150em);
+  -webkit-transform:  rotateY(  45deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(3) {
+  transform:          rotateY(  90deg) translateZ(-150em);
+  -webkit-transform:  rotateY(  90deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(4) {
+  transform:          rotateY( 135deg) translateZ(-150em);
+  -webkit-transform:  rotateY( 135deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(5) {
+  transform:          rotateY( 180deg) translateZ(-150em);
+  -webkit-transform:  rotateY( 180deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(6) {
+  transform:          rotateY( 225deg) translateZ(-150em);
+  -webkit-transform:  rotateY( 225deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(7) {
+  transform:          rotateY( 270deg) translateZ(-150em);
+  -webkit-transform:  rotateY( 270deg) translateZ(-150em);;
+}
+.carousel_cell:nth-child(8) {
+  transform:          rotateY( 315deg) translateZ(-150em);
+  -webkit-transform:  rotateY( 315deg) translateZ(-150em);;
+}
 
+.failed.carousel_cell:nth-child(1) {
+  transform:          rotateY( -45deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY( -45deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(2) {
+  transform:          rotateY(   0deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY(   0deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(3) {
+  transform:          rotateY(  45deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY(  45deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(4) {
+  transform:          rotateY(  90deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY(  90deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(5) {
+  transform:          rotateY( 135deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY( 135deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(6) {
+  transform:          rotateY( 180deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY( 180deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(7) {
+  transform:          rotateY( 225deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY( 225deg) translateY(-50em) !important;
+}
+.failed.carousel_cell:nth-child(8) {
+  transform:          rotateY( 270deg) translateY(-50em) !important;
+  -webkit-transform:  rotateY( 270deg) translateY(-50em) !important;
+}
+.failed{
+  transition: transform .5s !important;
+  -webkit-transition: transform .5s !important;
+}
 
 /* HELP OVERLAY */
 .help{
@@ -766,3 +898,4 @@ a.custom_button_right div{
     display: none !important;
   }
 }
+

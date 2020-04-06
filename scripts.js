@@ -32,7 +32,7 @@ function getCookieValue(name) {
 // SELECTED CHAPTERS
 function fetch_selected_chapters() {
     var selected_chapters_temp = localStorage.getItem('selected_chapters_'+m_or_p);
-    if (selected_chapters_temp == null) {        
+    if (selected_chapters_temp == null) {
         chapters.forEach(() => {
             selected_chapters.push(1);
         })
@@ -82,14 +82,16 @@ function select_all(bol){
 
 function show_buttons() {
     if(buttons_visible){
-        document.getElementById('button_visibility').innerHTML = 'visibility_off';
+        document.getElementById('button_visibility').innerHTML = 'visibility';
+        document.getElementById('button_visibility_tip').innerHTML='Afficher les boutons';
         Array.from(document.getElementsByClassName('hidable_buttons')).forEach(button =>{
             button.style.display = 'none';});
         buttons_visible = 0;
         setCookie('buttons_visible', '1');
     }
     else{
-        document.getElementById('button_visibility').innerHTML = 'visibility';
+        document.getElementById('button_visibility').innerHTML = 'visibility_off';
+        document.getElementById('button_visibility_tip').innerHTML='Masquer les boutons';
         Array.from(document.getElementsByClassName('hidable_buttons')).forEach(button =>{
             button.style.display = 'block';});
         buttons_visible = 1;
@@ -97,20 +99,44 @@ function show_buttons() {
     }
 }
 
-function show_overlay(bol){
+function auto_grow(element){
+    element.style.height = "1pt";
+    element.style.height = (element.scrollHeight) + "px";
+    // Overflow ?
+}
+function has_text(element, bol){
+    if(element.value != '' || bol){
+        var val = element.value; element.value=''; element.value= val;
+        element.labels[0].className='active text';
+    } else {
+        element.labels[0].className='text';
+    }
+}
+
+function show_overlay(name ,bol){
     if(bol == 1){
         // chapters selection overlay
-        document.getElementById('chapters_overlay').style.visibility = 'visible';
+        document.getElementById(name + '_overlay').style.visibility = 'visible';
         document.getElementById('fab').style.opacity = 0;
         document.getElementById('fab_menu').style.opacity = 0;
-        document.getElementById('dialog').style.transform = 'translateX(0em)';
+        document.getElementById(name + '_dialog').style.transform = 'translateX(0em)';
+        if(name=='suggestion'){
+            document.getElementById('question_nb').value = questions[my_position];
+            var now = new Date;
+            var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
+                now.getUTCHours(), now.getUTCMinutes());
+            document.getElementById('date').value = utc_timestamp.toString();
+            document.getElementById('name').focus();
+        }
     }
     else {
         // close all overlays
-        document.getElementById('dialog').style.transform = 'translateX(30em)';
+        document.getElementById(name + '_dialog').style.transform = 'translateX(30em)';
         document.getElementById('fab').style.opacity = 1;
         document.getElementById('fab_menu').style.opacity = 1;
-        document.getElementById('chapters_overlay').style.visibility = 'hidden';
+        document.getElementById(name + '_overlay').style.visibility = 'hidden';
+        show_menus();
+        document.getElementById('fab_input').checked = false;
     }
 }
 
@@ -153,7 +179,7 @@ function confirm_choice(){
         // reload everything
         questions = [];
         get_chapter_menu();
-        show_overlay(0);
+        show_overlay('chapters', 0);
         document.getElementById('fab_menu').className='shrink';
         init();
     }
@@ -205,24 +231,35 @@ function get_questions(){
 function swipes(){
     function unify(e) { return e.changedTouches ? e.changedTouches[0] : e};
     let x0 = null;
+    let y0=null
     function lock(e) {
         e.stopPropagation();
         x0 = unify(e).clientX;
+        y0 = unify(e).clientY;
     }
     function move(e) {
         e.stopPropagation();
         if(x0 || x0 === 0) {
             var dx = unify(e).clientX - x0;
-            if(Math.abs(dx) > 10){
-                if (Math.sign(-dx) > 0) {
-                    questionSucceeded();
-                }
-                else if(Math.sign(-dx) < 0) {
-                    nextQuestion(-1);
+            var dy = unify(e).clientY - y0;
+            console.log(dy);
+            if(Math.abs(dx) > 10 || Math.abs(dy) >10){
+                if(Math.abs(dx) > Math.abs(dy)){
+                    if (Math.sign(-dx) > 0) {
+                        questionSucceeded();
+                    }
+                    else if(Math.sign(-dx) < 0) {
+                        nextQuestion(-1);
+                    }
+                } else {
+                    if (Math.sign(-dy) > 0) {
+                        questionFailed();
+                    }
                 }
             }
         }
         x0=null;
+        y0=null
     }
 
     let m = document.getElementById('main')
@@ -254,6 +291,19 @@ function reset(){
 function modpos(n) {return (n + nb_of_questions) % (nb_of_questions)}
 
 function on_load(){
+    has_text(document.getElementById('name'), 0);
+    has_text(document.getElementById('mail'), 0);
+    document.getElementById('comment').value='';
+
+    document.addEventListener('keydown', function (event) {
+        if (event.keyCode === 13 && event.target.nodeName === 'INPUT') {
+          var form = event.target.form;
+          var index = Array.prototype.indexOf.call(form, event.target);
+          form.elements[index + 1].focus();
+          event.preventDefault();
+        }
+    });
+
     // button visibility cookies stuff
     buttons_visible = getCookieValue('buttons_visible');
     if (buttons_visible == '') {
@@ -339,7 +389,10 @@ function init(){
 
 
 // NEXT QUESTION
-function nextQuestion(direction) {
+function nextQuestion(direction, failed=false) {
+    // remove failed attribute from previous cell
+    document.getElementById('cell_' + ((my_position - 1 + 8)% 8)).className='carousel_cell';
+
     // if going over the number of questions
     if (my_position + direction >= nb_of_questions) {
         questions = [];
@@ -363,6 +416,9 @@ function nextQuestion(direction) {
             which = (my_position + 8 - 2) % 8;
             document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
             document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
+        }
+        if(failed){
+            document.getElementById('cell_' + (modpos(my_position - direction) % 8)).className='failed carousel_cell';
         }
         document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * my_position).toString() + 'deg)';
     }
@@ -411,21 +467,26 @@ function questionFailed() {
     // push progression to local storage
     push_progression();
 
-    nextQuestion(1);
+    nextQuestion(1, true);
 }
 
 
 // KEYS
 function keyDown(e) {
     chapters_overlay = document.getElementById('chapters_overlay').style.visibility;
-    chapters_overlay_visibility = chapters_overlay == "hidden" || chapters_overlay == "";
-    if (chapters_overlay_visibility && keys_active) {
+    suggestion_overlay = document.getElementById('suggestion_overlay').style.visibility;
+    chapters_overlay_visibility = (chapters_overlay == "hidden" || chapters_overlay == "");
+    suggestion_overlay_visibility = (suggestion_overlay == "hidden" || suggestion_overlay == "");
+    if (suggestion_overlay_visibility && chapters_overlay_visibility && keys_active) {
         if (e == 13 || e == 39  || e == 40 || e == 32) {
             // down, right, enter, space
             questionSucceeded();
+        } else if (e==38){
+            // up
+            questionFailed();
         }
-        else if (e == 37 || e == 38) {
-            // up, left
+        else if (e == 37) {
+            // left
             nextQuestion(-1);
         }
     }
@@ -433,9 +494,11 @@ function keyDown(e) {
         // echap
         if (!chapters_overlay_visibility) {
             // if an overlay is visible, close it
-            show_overlay(0);
+            show_overlay('chapters', 0);
         }
-        else {
+        else if(!suggestion_overlay_visibility){
+            show_overlay('suggestion', 0);
+        } else {
             checkbox = document.getElementById('fab_input');
             if (checkbox.checked) {
                 checkbox.checked = false;

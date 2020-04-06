@@ -158,11 +158,16 @@
                     unset($chapter);
                     unset($chapter_name);
                     unset($chapter_name_temp);
+                    $chapters_out = array_map(function ($item) {
+                        $chapters_out_temp = explode('/', $item);
+                        return end($chapters_out_temp);
+                    }, $chapters);
                 ?>
                 <script>
                     var questions_per_chapters = [<?php echo implode(',', $questions_per_chapters) ?>];
                     questions_per_chapter = questions_per_chapters.map(x=>parseInt(x));
                     var chapters = ["<?php echo implode('","', $chapters) ?>"];
+                    var chapters_names = ["<?php echo implode('","', $chapters_out) ?>"];
                 </script>
                 </ul>
             </div>

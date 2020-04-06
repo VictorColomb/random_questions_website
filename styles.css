@@ -464,7 +464,7 @@ a.menu div{
   transition: all .2s ease-in-out;
 }
 a.menu span{
-  font-size: larger;
+  font-size: 1.2em;
   display: inline-block;
   vertical-align: middle;
 }
@@ -623,15 +623,13 @@ a.custom_button_right div{
 }
 #head_img{
   display: inline-block;
-  margin-top: 1%;
   margin-left: 3%;
   margin-right: 1%;
-  margin-bottom: 1%;
 }
 #head_img img{
   position: absolute;
-  top: 15%;
-  height: 70%;
+  top: 20%;
+  height: 60%;
 }
 
 /* ----- Question Carousel ----- */
@@ -671,7 +669,8 @@ a.custom_button_right div{
   position: absolute;
   bottom: 0pt;
   text-align: center;
-  width: 100%;
+  width: 90%;
+  left: 5%;
   font-family: 'LM-Caps';
   font-size: 12pt;
   margin: 0 0 0.5em 0;
@@ -803,12 +802,19 @@ a.custom_button_right div{
   z-index: 2;
 }
 #help_overlay div{
-  position: relative;
+  position: absolute;
   z-index: 7;
   left: 2%;
-  top: 10%;
+  top: 4.5em;
   width: fit-content;
   max-width: 50%;
+  text-align: justify;
+  height: 80%;
+  padding-right: 1em;
+  overflow-y: scroll;
+}
+#help_overlay div::-webkit-scrollbar-track{
+  background: transparent;
 }
 #help_overlay span{
   opacity: 100%;

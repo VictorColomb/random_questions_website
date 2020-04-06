@@ -316,6 +316,7 @@ function on_load(){
 
     fetch_selected_chapters();
     swipes();
+    showHelp_onload();
     init();
 }
 
@@ -400,7 +401,7 @@ function nextQuestion(direction, failed=false) {
     }
     else {
         my_position = modpos(my_position + direction)
-        document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded + 1).toString() + '/' + (real_nb_of_questions).toString() + ' questions';
+        document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded + 1).toString() + '/' + (real_nb_of_questions).toString() + ' questions réussies';
         document.getElementById('progress').style.width = ((real_nb_questions_succeeded + 1) / (real_nb_of_questions) * 100).toString() + '%' ;
 
         // adds the next question on the back side
@@ -557,5 +558,13 @@ function showHelp(open=1) {
         Array.from(document.getElementsByClassName('hidden_af')).forEach(element => {
             element.classList.remove('hidden_af');
         })
+    }
+}
+
+function showHelp_onload() {
+    help_overlay_cookie = getCookieValue('help');
+    if (help_overlay_cookie == '') {
+        setCookie('help', '1');
+        showHelp();
     }
 }

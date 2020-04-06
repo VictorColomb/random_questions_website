@@ -121,7 +121,7 @@ input:focus, textarea:focus{
 #fab span:after{
   content: 'menu_open';
   transition-delay: 0.1s;
-  transition: color 0.2s;
+  transition: color .2s;
 }
 #fab_input{
   display: none;
@@ -641,69 +641,6 @@ a.custom_button_right div{
   top: 20%;
   height: 60%;
 }
-
-
-/*----- Suggestions -----*/
-#suggestions{
-  float: right;
-  margin-right: 3%;
-}
-#suggestions span{
-  margin-right: 3px;
-}
-#suggestion_overlay{
-  position: relative;
-  z-index: 6;
-  padding: 15px;
-  margin-top: 4%;
-  border-radius: 10px;
-  background-color: var(--secondary-background-color);
-  box-shadow: 0px 3px 5px 6px var(--shadow-color);
-  float: right;
-}
-#suggestion_overlay input{
-  margin-top: 5px;
-}
-#suggestion_overlay input[type=text]{
-  color: white;
-  width: 90%;
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  border: 0;
-  padding: 5px;
-  outline: none;
-}
-#suggestion_overlay input[type=text]::-webkit-input-placeholder{
-  color: white;
-}
-#suggestion_overlay input[type=text]:-ms-input-placeholder{
-  color: white;
-}
-#suggestion_overlay input[type=text]::placeholder{
-  color: white;
-}
-#suggestion_overlay input[type=submit]{
-  margin-top: 8px;
-  border: 0;
-  height: 25px;
-  width: 100px;
-  border-radius: 5px;
-  color: white;
-  background-color: var(--secondary-background-color);
-  box-shadow: .5px .5px 1px 1.3px var(--shadow-color);
-  cursor: pointer;
-  outline: none;
-}
-#suggestion_overlay input[type=submit]:disabled{
-  box-shadow: 0 0 0 0;
-  color: gray;
-}
-#suggestion_overlay label{
-  font-family: 'Work Sans', sans-serif;
-  font-size: 11px;
-  color: white;
-}
-
 
 /* ----- Question Carousel ----- */
 #question_div{

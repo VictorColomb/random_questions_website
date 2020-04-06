@@ -181,6 +181,16 @@ input:checked + label #fab:hover{
   background-color: white;
   transition: .2s ease-in-out;
 }
+@media screen and (max-height: 450px) {
+  .mini_fab{
+    margin-bottom: 0.8rem;
+  }
+}
+@media screen and (max-height: 390px) {
+  .mini_fab{
+    margin-bottom: 0.3rem;
+  }
+}
 .mini_fab:hover{
   box-shadow: 1rem 1rem 1rem var(--shadow-color);
 }

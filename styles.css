@@ -57,7 +57,7 @@ input[type=text], textarea{
   outline: none;
   width: 100%;
   margin: 0 0 8px 0;
-  border-bottom: 1px solid var(--on-surface);
+  border-bottom: 1px solid rgba(35,47,52,.8);
   box-shadow: none;
   line-height: normal;
   overflow-y: hidden;
@@ -88,6 +88,8 @@ input:focus, textarea:focus{
   transform-origin: 0 100%;
   cursor: text;
   transition: transform .2s ease-out, color .2s ease, font-size .2s;
+  color: var(--on-surface);
+  opacity: .8;
 }
 #suggestion_dialog textarea:focus + label, #suggestion_dialog input:focus + label{
   color: var(--secondary-color);
@@ -283,7 +285,7 @@ input:checked + label #fab:hover{
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 75%;
+  height: 50vh;
   width: 100%;
   box-sizing: border-box;
   flex: 1 1 auto;
@@ -590,6 +592,14 @@ a.custom_button_right div{
   display: inline-block;
   font-size: x-small;
   color: white;
+  font-family: 'Work Sans', sans-serif;
+}
+#question_succeeded{
+  transition: opacity .2s ease-in-out;
+  -webkit-transition: opacity .2s ease-in-out;
+  -moz-transition: opacity .2s ease-in-out;
+  -ms-transition: opacity .2s ease-in-out;
+  -o-transition: opacity .2s ease-in-out;
 }
 
 
@@ -804,7 +814,12 @@ a.custom_button_right div{
 }
 #help_overlay{
   display: none;
-  opacity: 90%;
+  
+  opacity: 0.9;
+  -webkit-khtml: opacity 0.9;
+  -moz-khtml: opacity 0.9;
+  -ms-khtml: opacity 0.9;
+  -o-khtml: opacity 0.9;
   background-color: black;
 
   height: 100%;
@@ -827,7 +842,6 @@ a.custom_button_right div{
   background: transparent;
 }
 #help_overlay span{
-  opacity: 100%;
   color: white;
 }
 #help_overlay span.not-material-icons{

@@ -6,7 +6,7 @@
 ?>
 
 
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="utf-8">
@@ -53,27 +53,28 @@
                 <span class="material-icons">
                     flash_on
                 </span>
-                <span style="font-family: 'Work Sans', sans-serif;">Physics</span>
+                <span style="font-family: 'Work Sans', sans-serif;">Physique</span>
             </div>
         </a>
     </div>
 
     <div id="progress_bar">
-        <p id="progress_number" style="font-family: 'Work Sans', sans-serif;"></p>
+        <p id="progress_number"></p>
         <div id="empty">
             <div id="progress"></div>
         </div>
+        <p id="question_succeeded" style="opacity: 0;">Question réussie</p>
     </div>
 
 
     <div class='overlay' id='suggestion_overlay'>
-        <div class='scrim'></div>
+        <div class='scrim' onclick='show_overlay("suggestion",0);'></div>
         <div class='dialog' id='suggestion_dialog'>
             <form target="_blank" action="writeToText.php" method="post" onsubmit='show_overlay("suggestion", 0);'>
             <div class='header'>
                 <span class='title'>Suggestions</span>
                 <br>
-                <p class='text'>Votre avis nous interesse !</p>
+                <p class='text'>Commentaire sur la question courante ou autre</p>
                 <hr>
             </div>
             <div class='content'>
@@ -110,7 +111,7 @@
     </div>
 
     <div class ='overlay' id="chapters_overlay">
-    <div class='scrim'></div>
+    <div class='scrim' onclick='show_overlay("chapters",0);'></div>
         <div class='dialog' id='chapters_dialog'>
             <div class='header'>
                 <span class='title'>Chapitres</span>
@@ -271,7 +272,8 @@
             <span class="material-icons">clear</span><span class="not-material-icons">Les questions échouées résparaissent éventuellement.</span><br><br>
             <span class="material-icons">refresh</span><span class="not-material-icons">Réinitialiser la progression retire les questions des chapitres sélectionnés des questions réussies.</span><br><br>
             <span class="material-icons">swap_horiz</span><span class="not-material-icons">Balayez horizontalement pour passer à la question suivante/précédente. Balayez vers le haut pour marquer une question échouée.</span><br><br>
-            <span class="material-icons no-tel">keyboard</span><span class="not-material-icons no-tel">Appuyez sur les touches Entrée, Espace ou &rarr; pour passer à la question suivante. Appuyez sur &uarr; pour marquer une question échouée. Appuyez sur &larr; pour revenir à la question précédente.</span>
+            <span class="material-icons no-tel">keyboard</span><span class="not-material-icons no-tel">Appuyez sur les touches Entrée, Espace ou &rarr; pour passer à la question suivante. Appuyez sur &uarr; pour marquer une question échouée. Appuyez sur &larr; pour revenir à la question précédente.</span><br><br>
+            <span class="material-icons">error</span><span class="not-material-icons">Les navigateurs Edge, Internet Explorer, Duck Duck Go et Écosia ne sont pas supportés (pour l'instant).</span>
         </div>
     </div>
 

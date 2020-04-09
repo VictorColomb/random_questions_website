@@ -388,6 +388,7 @@ function init(){
         else {
             // Just display some crap...
             document.getElementById('progress_number').innerHTML = "Terminé !";
+            document.getElementById('progress').style.width = "100%";
             // disable keys
             keys_active = false;
         }
@@ -407,8 +408,8 @@ function nextQuestion(direction, failed=false) {
     }
     else {
         my_position = modpos(my_position + direction)
-        document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded + 1).toString() + '/' + (real_nb_of_questions).toString() + ' questions réussies';
-        document.getElementById('progress').style.width = ((real_nb_questions_succeeded + 1) / (real_nb_of_questions) * 100).toString() + '%' ;
+        document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded).toString() + '/' + (real_nb_of_questions).toString() + ' questions réussies';
+        document.getElementById('progress').style.width = (real_nb_questions_succeeded / (real_nb_of_questions) * 100).toString() + '%' ;
 
         // adds the next question on the back side
         if (direction > 0){
@@ -426,6 +427,14 @@ function nextQuestion(direction, failed=false) {
         }
         if(failed){
             document.getElementById('cell_' + (modpos(my_position - direction) % 8)).className='failed carousel_cell';
+        }
+        // rotate caroussel and display succeeded marker
+        question = questions[my_position]
+        if (progression[question[0]].includes(question[1])) {
+            document.getElementById('question_succeeded').style.opacity = "";
+        }
+        else {
+            document.getElementById('question_succeeded').style.opacity = "0";
         }
         document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * my_position).toString() + 'deg)';
     }

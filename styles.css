@@ -351,10 +351,8 @@ input:checked + label #fab:hover{
   margin-bottom: 1em;
 }
 #chapters_overlay label{
-  display: inline-block;
   text-align: left;
   vertical-align: middle;
-  float: left;
 }
 .chapter{
   position: relative;
@@ -388,6 +386,7 @@ input:checked + label #fab:hover{
   left: 0; top: -.4em;
   transform: scale(0.6);
   border-radius: 5px;
+  float: left;
 }
 /*hides the vanilla check box*/
 .switch input {
@@ -804,6 +803,10 @@ a.custom_button_right div{
 .failed.carousel_cell:nth-child(8) {
   transform:          rotateY( 270deg) translateY(-50em) !important;
   -webkit-transform:  rotateY( 270deg) translateY(-50em) !important;
+}
+.failed{
+  transition: transform .5s !important;
+  -webkit-transition: transform .5s !important;
 }
 
 /* HELP OVERLAY */

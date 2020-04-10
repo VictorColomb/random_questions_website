@@ -153,8 +153,8 @@
                                     <input type='checkbox' name='check_chapters' id='chap".$i."'>
                                     <span class='slider'></span>
                                 </div>
+                                <p class='chapter'>".$chapter_name."</p>
                             </label>
-                            <p class='chapter'>".$chapter_name."</p>
                             <div class='chapter_progression'>
                                 <div class='empty'>
                                     <div class='progress' id='chapter_progress_bar".$i."'></div>

@@ -228,7 +228,7 @@ input:checked + label #fab:hover{
   100% { transform: scale(1,0)      translateY(6rem);   opacity:  0.2;   display: none;}
 }
 
-/* ----- Choose chapters too study ----- */
+/* ----- Choose chapters to study ----- */
 .overlay{
   position: fixed;
   visibility: hidden;
@@ -351,31 +351,37 @@ input:checked + label #fab:hover{
   margin-bottom: 1em;
 }
 #chapters_overlay label{
+  display: inline-block;
   text-align: left;
   vertical-align: middle;
+  float: left;
 }
 .chapter{
-  position: absolute;
+  position: relative;
   font-family: 'Work Sans', sans-serif;
   color: var(--on-surface);
   word-wrap: break-word;
   word-break: normal;
-  top: 0; left: 60px;
+  top: 1.5px;
+  width: calc(100% - 60px);
+  float: right;
   cursor: pointer;
   font-size: .9em;
   font-weight: normal;
-  margin: 0 0 0 0;
-  display: inline-block;
+  margin: 0 0 3px 0;
   -webkit-transition: .2s;
   transition: .2s;
 }
 .chapter_container{
   position: relative;
-  height: 4em;
+  height: fit-content;
   display: list-item;
 }
+#chapter_container hr{
+  margin: 3px 0 6px 0;
+  opacity: 28%;
+}
 .switch{
-  display: inline-block;
   position: relative;
   width: 60px;
   height: 34px;
@@ -425,6 +431,35 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+/* Chapter progression indicators */
+.chapter_progression{
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+#chapter_container .empty{
+  margin-top: 3pt;
+  position: relative;
+  left: 10%;
+  height: 3px; width: 80%;
+  border-radius: 2px;
+  background-color: var(--secondary-background-color);
+}
+#chapter_container .progress{
+  position: relative;
+  left: 0%;
+  width: 0;
+  height: 3px;
+  background-color: var(--secondary-color);
+  border-radius: 2px;
+  text-align: center;
+}
+#chapter_container .chapter_progression p{
+  margin: 0;
+  font-size: .7em;
+  font-family: 'Work Sans', sans-serif;
 }
 
 /* tooltips */
@@ -703,7 +738,7 @@ a.custom_button_right div{
   -webkit-backface-visibility: hidden;
 }
 .container img{
-  max-height: 80%;
+  max-height: 70%;
 }
 /* tz = 70% * tan(360 / (n * 2)) */
 .carousel_cell:nth-child(1) {

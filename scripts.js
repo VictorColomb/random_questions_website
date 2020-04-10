@@ -116,8 +116,20 @@ function has_text(element, bol){
     }
 }
 
+function updateChapterProgression() {
+    for (let i = 0; i < number_of_chapters; i++) {
+        nb_qu_succeeded = progression[i].length
+        nb_qu_chap = questions_per_chapters[i];
+        document.getElementById('chapter_progress_bar' + i).style.width = ((nb_qu_succeeded / nb_qu_chap) * 100).toString() + "%";
+        document.getElementById('chapter_progression' + i).innerHTML = nb_qu_succeeded + '/' + nb_qu_chap;
+    }
+}
+
 function show_overlay(name ,bol){
     if (document.getElementById('help_overlay').style.display == "") {
+        if (name == "suggestion" && bol) {
+            document.getElementById('comment').value = "";
+        }
         if(bol == 1){
             // chapters selection overlay
             document.getElementById(name + '_overlay').style.visibility = 'visible';
@@ -141,6 +153,9 @@ function show_overlay(name ,bol){
             document.getElementById(name + '_overlay').style.visibility = 'hidden';
             show_menus();
             document.getElementById('fab_input').checked = false;
+        }
+        if (name == "chapters" && bol) {
+            updateChapterProgression();
         }
     }
 }

@@ -175,13 +175,11 @@ no_latex_errors = 0
 
 i = 0
 # Convert all questions in numbered jpg files
-for chapter_questions in questions:
+for ch_nb,chapter_questions in enumerate(questions):
     chapter = chapter_questions[0]
     chapter_questions = chapter_questions[1:]
+    chdir('tmp')
     for idx, question in enumerate(chapter_questions):
-        # Move to tmp directory
-        chdir('tmp')
-
         # Progress bar
         progress_bar = f'Progress : |{"="*(i*30//nb_questions)}{" "*(30-i*30//nb_questions)}| {i*100//nb_questions}% - {i}/{nb_questions}'
         print(progress_bar, ' '*(columns-len(progress_bar)-1), sep='', end='\r')
@@ -193,18 +191,19 @@ for chapter_questions in questions:
         if generate_images:
             ps_to_jpg(idx)
 
-        # Back to output_folder
-        chdir('..')
-
         # increment progress counter
         i += 1
+    
+    # Back to output_folder
+    chdir('..')
 
+    chapter_outname = "%02d" % ch_nb + chapter
     try:
-        mkdir(chapter)
+        mkdir(chapter_outname)
     except FileExistsError:
         raise Exception('Two chapters with the same name')
     for file in glob('*.png'):
-        move(file,chapter)
+        move(file,chapter_outname)
 
 
 progress_bar = f'Progress : |{"="*30}| 100% - {nb_questions}/{nb_questions}'

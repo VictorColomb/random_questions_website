@@ -124,6 +124,7 @@
                 <ul>
                 <?php
                     $chapters = glob($m_or_p.'/*' , GLOB_ONLYDIR);
+                    $chapters_out = [];
 
                     // counts the amount of chapters
                     $number_of_chapters = count($chapters);
@@ -139,30 +140,36 @@
                         $chapter=$chapters[$i];
                         $questions_per_chapters[] = count_questions($chapter);
                         $chapter_name_temp = explode('/', $chapter);
-                        $chapter_name=end($chapter_name_temp);
+                        $chapter_name_temp_temp = end($chapter_name_temp);
+                        $chapter_name=substr($chapter_name_temp_temp,2);
+                        array_push($chapters_out, $chapter_name);
                         //The amount of questions in said chapter
                         $count = count(glob($chapter.'/*'));
 
                         //adds the html
                         echo("<div class='chapter_container'>
-                            <label for='chap".$i."' style='display: inline-block;'>
+                            <label for='chap".$i."'>
                                 <div class='switch'>
                                     <input type='checkbox' name='check_chapters' id='chap".$i."'>
                                     <span class='slider'></span>
                                 </div>
-                                <p class='chapter' for='chap".$i."'>".$chapter_name."</p>
                             </label>
-                        </div>");
+                            <p class='chapter'>".$chapter_name."</p>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar".$i."'></div>
+                                </div>
+                                <p id='chapter_progression".$i."'></p>
+                            </div>
+                        </div>
+                        <hr>");
                     }
                     unset($n);
                     unset($i);
                     unset($chapter);
                     unset($chapter_name);
                     unset($chapter_name_temp);
-                    $chapters_out = array_map(function ($item) {
-                        $chapters_out_temp = explode('/', $item);
-                        return end($chapters_out_temp);
-                    }, $chapters);
+                    unset($chapter_name_temp_temp);
                 ?>
                 <script>
                     var questions_per_chapters = [<?php echo implode(',', $questions_per_chapters) ?>];

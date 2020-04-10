@@ -738,7 +738,6 @@ a.custom_button_right div{
   transform:          rotateY( 315deg) translateZ(-150em);
   -webkit-transform:  rotateY( 315deg) translateZ(-150em);;
 }
-
 .failed.carousel_cell:nth-child(1) {
   transform:          rotateY( -45deg) translateY(-50em) !important;
   -webkit-transform:  rotateY( -45deg) translateY(-50em) !important;
@@ -770,10 +769,6 @@ a.custom_button_right div{
 .failed.carousel_cell:nth-child(8) {
   transform:          rotateY( 270deg) translateY(-50em) !important;
   -webkit-transform:  rotateY( 270deg) translateY(-50em) !important;
-}
-.failed{
-  transition: transform .5s !important;
-  -webkit-transition: transform .5s !important;
 }
 
 /* HELP OVERLAY */
@@ -814,7 +809,7 @@ a.custom_button_right div{
 }
 #help_overlay{
   display: none;
-  
+
   opacity: 0.9;
   -webkit-khtml: opacity 0.9;
   -moz-khtml: opacity 0.9;

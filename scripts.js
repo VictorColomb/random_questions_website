@@ -9,6 +9,7 @@ var real_nb_questions_succeeded = 0;
 var buttons_visible = 1;
 var keys_active = true;
 var selected_chapters = [];
+var angle = 0;
 
 
 // COOKIE STUFF
@@ -374,24 +375,28 @@ function init(){
         nextQuestion(0);
     }
     else { // if there are no questions
-        if (confirm("Vous avez déjà réussi toutes les questions des chapitres sélectionnés. Voulez vous réinitialiser la progression de ces chapitres ? Dans la négative, sélectionnez plus de chapitres pour pouvoir continuer.")) {
-            // remove progression from selected chapters
-            selected_chapters.forEach((if_chapter,chapter_nb) => {
-                if (if_chapter) {
-                    progression.splice(chapter_nb,1,[]);
-                }
-            });
-            push_progression();
-            // reload after progression reset
-            init();
-        }
-        else {
-            // Just display some crap...
-            document.getElementById('progress_number').innerHTML = "Terminé !";
-            document.getElementById('progress').style.width = "100%";
-            // disable keys
-            keys_active = false;
-        }
+        nothing_remains()
+    }
+}
+
+function nothing_remains(){
+    if (confirm("Vous avez déjà réussi toutes les questions des chapitres sélectionnés. Voulez vous réinitialiser la progression de ces chapitres ? Dans la négative, sélectionnez plus de chapitres pour pouvoir continuer.")) {
+        // remove progression from selected chapters
+        selected_chapters.forEach((if_chapter,chapter_nb) => {
+            if (if_chapter) {
+                progression.splice(chapter_nb,1,[]);
+            }
+        });
+        push_progression();
+        // reload after progression reset
+        init();
+    }
+    else {
+        // Just display some crap...
+        document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded).toString() + '/' + (real_nb_of_questions).toString() + ' questions réussies';
+        document.getElementById('progress').style.width = "100%";
+        // disable keys
+        keys_active = false;
     }
 }
 
@@ -402,12 +407,35 @@ function nextQuestion(direction, failed=false) {
     document.getElementById('cell_' + ((my_position - 1 + 8)% 8)).className='carousel_cell';
 
     // if going over the number of questions
-    if (my_position + direction >= nb_of_questions) {
-        questions = [];
-        init();
+    if (my_position + direction >= nb_of_questions || real_nb_of_questions <= real_nb_questions_succeeded) {
+        if (real_nb_of_questions > real_nb_questions_succeeded) {
+
+            real_nb_of_questions = 0;
+            real_nb_questions_succeeded = 0;
+            get_questions();
+            //Shuffles the elements in the array using Fisher-Yates Algorithm
+            for (let i = nb_of_questions - 2; i > my_position + direction; i--) {
+                const j = Math.floor(Math.random() * (i - my_position + direction)) + my_position + direction;
+                const temp = questions[i];
+                questions[i] = questions[j];
+                questions[j] = temp;
+            }
+            for(i=1; i<5; i++){
+                var chap = questions[modpos(my_position + i)][0];
+                var q = questions[modpos(my_position + i)][1];
+                which = (angle + i) % 8;
+                document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
+                document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
+            }
+        }
+        else { // if there are no questions
+            nothing_remains();
+            return;
+        }
     }
-    else {
+    //else {
         my_position = modpos(my_position + direction)
+        angle += direction;
         document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded).toString() + '/' + (real_nb_of_questions).toString() + ' questions réussies';
         document.getElementById('progress').style.width = (real_nb_questions_succeeded / (real_nb_of_questions) * 100).toString() + '%' ;
 
@@ -415,18 +443,18 @@ function nextQuestion(direction, failed=false) {
         if (direction > 0){
             var chap = questions[modpos(my_position + 5)][0];
             var q = questions[modpos(my_position + 5)][1];
-            which = (my_position + 5) % 8;
+            which = (angle + 5) % 8;
             document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
             document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
         } else {
             var chap = questions[modpos(my_position - 2)][0];
             var q = questions[modpos(my_position - 2)][1];
-            which = (my_position + 8 - 2) % 8;
+            which = (angle + 8 - 2) % 8;
             document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
             document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
         }
         if(failed){
-            document.getElementById('cell_' + (modpos(my_position - direction) % 8)).className='failed carousel_cell';
+            document.getElementById('cell_' + ((angle - 1) % 8)).className='failed carousel_cell';
         }
         // rotate caroussel and display succeeded marker
         question = questions[my_position]
@@ -436,8 +464,8 @@ function nextQuestion(direction, failed=false) {
         else {
             document.getElementById('question_succeeded').style.opacity = "0";
         }
-        document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * my_position).toString() + 'deg)';
-    }
+        document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * angle).toString() + 'deg)';
+    //}
 }
 
 function push_progression() {

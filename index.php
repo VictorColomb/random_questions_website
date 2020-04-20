@@ -131,7 +131,7 @@
 
                     // Counts the amount of questions per chapter
                     function count_questions($my_chapter){
-                        return count(glob($my_chapter.'/*'));
+                        return count(glob($my_chapter.'/*.png'));
                     }
                     $questions_per_chapters = [];
 

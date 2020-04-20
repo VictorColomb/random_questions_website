@@ -5,6 +5,7 @@ from random import shuffle
 from tkinter.filedialog import askopenfilename
 from sys import argv
 from os import mkdir, chdir, remove, system
+from os.path import exists
 from shutil import move, rmtree, get_terminal_size
 from glob import glob
 
@@ -92,7 +93,6 @@ if len(argv) <= 2:
         root.destroy()
     button = Button(root, text='Ok', command=output_folder_destroy)
     button.pack(side='right', padx=5,pady=10)
-    Label(root, text='Warning : Folder will be deleted.').pack(side='bottom',padx=5,pady=5)
     root.attributes('-topmost', 1)
     root.focus_force()
     root.attributes('-topmost', 0)
@@ -103,12 +103,10 @@ else:
 
 # Create output and temp folders
 try:
-    rmtree(output_folder)
-except FileNotFoundError:
+    mkdir(output_folder)
+except FileExistsError:
     pass
-mkdir(output_folder)
 chdir(output_folder)
-mkdir('tmp')
 
 
 # Compile single question into ps byte streams
@@ -135,7 +133,7 @@ def on_latex(idx, exprr):
                        viewer="BytesIO", output="ps", outputbuffer=f)
         except RuntimeError:
             no_latex_errors += 1
-            with open('../errors.txt','a') as latex_error_output:
+            with open('errors.txt','a') as latex_error_output:
                 print(f'# Question {idx}', exprr, sep='\n', file=latex_error_output)
             for file in glob('*.ps'):
                 remove(file)
@@ -159,8 +157,6 @@ def ps_to_jpg(idx):
     if process != 0:
         raise Exception('Fuck, convert ps to jpg did not work...\nDo you have ImageMagick installed ?')
 
-    # Move output jpg to parent directory
-    move(png_out, '..')
 
     # Clear temp directory from ps files
     for file in glob('*.ps'):
@@ -169,47 +165,98 @@ def ps_to_jpg(idx):
         except NotImplementedError:
             pass
 
-nb_chapters = len(questions)
 columns = get_terminal_size(fallback=(40,24))[0]
 no_latex_errors = 0
+nb_processed = 0
+
+
+corr_out_string = '\\documentclass[a4paper]{{article}}\n\\usepackage[T1]{{fontenc}}\n\\usepackage[utf8]{{inputenc}}\n\\usepackage{{lmodern}}\n\\usepackage{{amsmath,amssymb}}\n\\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{{geometry}}\n\\usepackage{{fancyhdr}}\n\n\\begin{{document}}\n\n\\pagestyle{{fancy}}\n\\fancyhf{{}}\n\\setlength{{\\headheight}}{{15pt}}\n\\fancyhead[L]{{{0}}}\\fancyhead[R]{{Question {1}}}\n\n% Énoncé\n\\begin{{center}}\n\t\\large{{\\boldmath{{\\textbf{{{2}}}}}}}\n\\end{{center}}\n\n% Correction\n\n\n\\end{{document}}\n'
+corr_out_string_modify = '\t\\large{{\\boldmath{{\\textbf{{{0}}}}}}}\n'
+
+def createCorrLatex(idx, latex_chap, latex_qu):
+    with open(f'{idx}.tex', 'w', encoding='utf-8-sig') as output:
+        output.write( corr_out_string.format(latex_chap, idx+1, latex_qu))
+def modifyLatex(idx, latex_qu):
+    with open(f'{idx}.tex', 'r', encoding='utf-8-sig') as inp:
+        latex_file = inp.readlines()
+    latex_file[17] = corr_out_string_modify.format(latex_qu)
+    with open(f'{idx}.tex', 'w', encoding='utf-8-sig') as output:
+        output.write(latex_file)
+
 
 i = 0
 # Convert all questions in numbered jpg files
 for ch_nb,chapter_questions in enumerate(questions):
+    # get chapter name and questions, move to chapter folder
     chapter = chapter_questions[0]
     chapter_questions = chapter_questions[1:]
-    chdir('tmp')
+    chapter_outname = "%02d" % ch_nb + chapter
+    try:
+        mkdir(chapter_outname)
+    except FileExistsError:
+        pass
+    chdir(chapter_outname)
+
+    # fetch already existing questions
+    try:
+        with open('questions.txt', 'r', encoding='utf-8-sig') as already_questions_input:
+            already_questions = already_questions_input.readlines()
+        for i,al in enumerate(already_questions[:-1]):
+            already_questions[i] = al[:-1]
+    except FileNotFoundError:
+        already_questions = []
+    nb_already_questions = len(already_questions)
+
     for idx, question in enumerate(chapter_questions):
         # Progress bar
         progress_bar = f'Progress : |{"="*(i*30//nb_questions)}{" "*(30-i*30//nb_questions)}| {i*100//nb_questions}% - {i}/{nb_questions}'
         print(progress_bar, ' '*(columns-len(progress_bar)-1), sep='', end='\r')
 
-        # Create ps files from expression
-        generate_images = on_latex(idx, question)
+        # if question has changed
+        if idx >= nb_already_questions or already_questions[idx] != question:
+            #increment counter
+            nb_processed += 1
 
-        # ps files to a single concatenated jpg file
-        if generate_images:
-            ps_to_jpg(idx)
+            if idx < nb_already_questions:
+                # change question
+                already_questions[idx] = question
+                if exists(f'{idx}.tex'):
+                    modifyLatex(idx, question)
+                else:
+                    createCorrLatex(idx, chapter, question)
+            else:
+                # append question
+                already_questions.append(question)
+                createCorrLatex(idx, chapter, question)
+
+            # remove previous question image
+            try:
+                remove(f'{idx}.png')
+            except FileNotFoundError:
+                pass
+
+            # Create ps files from expression
+            generate_images = on_latex(idx, question)
+
+            # ps files to a single concatenated jpg file
+            if generate_images:
+                ps_to_jpg(idx)
 
         # increment progress counter
         i += 1
     
+    # write questions
+    with open('questions.txt', 'w', encoding='utf-8-sig') as output:
+        output.writelines('\n'.join(already_questions))
+
     # Back to output_folder
     chdir('..')
 
-    chapter_outname = "%02d" % ch_nb + chapter
-    try:
-        mkdir(chapter_outname)
-    except FileExistsError:
-        raise Exception('Two chapters with the same name')
-    for file in glob('*.png'):
-        move(file,chapter_outname)
 
 
 progress_bar = f'Progress : |{"="*30}| 100% - {nb_questions}/{nb_questions}'
 print(progress_bar, ' '*(columns-len(progress_bar)-1), sep='')
 
-rmtree('tmp')
 if no_latex_errors:
     if no_latex_errors > 1:
         latex_str = f'\nThere were {no_latex_errors} latex compilation errors.\nThe corresponding questions have been recorded to errors.txt'
@@ -217,7 +264,7 @@ if no_latex_errors:
         latex_str = '\nThere was one latex compilation error.\nThe corresponding question has been recorded to errors.txt'
 else:
     latex_str = ''
-print(f'Successfully rendered {nb_questions-no_latex_errors} questions.{latex_str}')
+print(f'Successfully rendered {nb_processed-no_latex_errors} questions.{latex_str}')
 
 if len(argv) == 1:
     input("Press ENTER to continue...")

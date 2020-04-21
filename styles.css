@@ -750,6 +750,23 @@ a.custom_button_right div{
   font-size: 12pt;
   margin: 0 0 0.5em 0;
 }
+.container .correction{
+    position: absolute;
+    top: .4em;
+    right: .6em;
+    font-size: 2em;
+
+    color: white;
+    cursor: pointer;
+    pointer-events: all;
+}
+.container a.exists{
+  font-family: 'Material Icons';
+}
+.container .tooltiptext{
+  font-size: 11px;
+  top: .6em
+}
 .container{
   height: 90%;
   display: table-cell;
@@ -901,7 +918,7 @@ a.custom_button_right div{
 #help_overlay span.not-material-icons{
   font-family: 'Work Sans', sans-serif;
 }
-#help_overlay span.material-icons{
+#help_overlay span.material-icons,span.material-icons-outlined{
   font-size: 1.2em;
   display: inline-flex;
   vertical-align: bottom;
@@ -921,3 +938,9 @@ a.custom_button_right div{
   }
 }
 
+/* CORRECTIONS SUGGESTION */
+.correction_image{
+  max-height: 15%;
+  max-width: 90%;
+  
+}

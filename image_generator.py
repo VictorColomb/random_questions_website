@@ -174,14 +174,18 @@ corr_out_string = '\\documentclass[a4paper]{{article}}\n\\usepackage[T1]{{fonten
 corr_out_string_modify = '\t\\large{{\\boldmath{{\\textbf{{{0}}}}}}}\n'
 
 def createCorrLatex(idx, latex_chap, latex_qu):
-    with open(f'{idx}.tex', 'w', encoding='utf-8-sig') as output:
+    with open(f'{idx}.bad.tex', 'w', encoding='utf-8-sig') as output:
         output.write( corr_out_string.format(latex_chap, idx+1, latex_qu))
-def modifyLatex(idx, latex_qu):
-    with open(f'{idx}.tex', 'r', encoding='utf-8-sig') as inp:
+def modifyLatex(idx, latex_qu, bad=''):
+    with open(f'{idx}{bad}.tex', 'r', encoding='utf-8-sig') as inp:
         latex_file = inp.readlines()
     latex_file[17] = corr_out_string_modify.format(latex_qu)
-    with open(f'{idx}.tex', 'w', encoding='utf-8-sig') as output:
+    with open(f'{idx}{bad}.tex', 'w', encoding='utf-8-sig') as output:
         output.write(latex_file)
+    if bad == '':
+        system(f'pdflatex -interaction=nonstopmode {idx}.tex')
+        remove(f'{idx}.log')
+        remove(f'{idx}.aux')
 
 
 i = 0
@@ -222,6 +226,8 @@ for ch_nb,chapter_questions in enumerate(questions):
                 already_questions[idx] = question
                 if exists(f'{idx}.tex'):
                     modifyLatex(idx, question)
+                elif exists(f'{idx}.bad.tex'):
+                    modifyLatex(idx, question, '.bad')
                 else:
                     createCorrLatex(idx, chapter, question)
             else:

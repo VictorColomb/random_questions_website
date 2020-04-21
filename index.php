@@ -119,6 +119,14 @@
         </div>
     </div>
 
+    <div class ='overlay' id="correction_overlay">
+        <div class='scrim' onclick='show_overlay("correction",0);'></div>
+        <div class='dialog' id='correction_dialog'>
+        <iframe id='correction_frame' allowtransparency="true" frameborder="0" src="test.pdf#toolbar=0&view=FitH">
+        </iframe>
+        </div>
+    </div>
+
     <div class ='overlay' id="chapters_overlay">
     <div class='scrim' onclick='show_overlay("chapters",0);'></div>
         <div class='dialog' id='chapters_dialog'>
@@ -143,16 +151,27 @@
                         return count(glob($my_chapter.'/*.png'));
                     }
                     $questions_per_chapters = [];
+                    $corrections = [];
 
                     // Enumerates over every available chapter
                     for ($i=0, $n=count($chapters); $i<$n; $i++){
                         $chapter=$chapters[$i];
-                        $questions_per_chapters[] = count_questions($chapter);
+                        $nb_questions = count_questions($chapter);
+                        $questions_per_chapters[] = $nb_questions;
                         $chapter_name_temp = explode('/', $chapter);
                         $chapter_name_temp_temp = end($chapter_name_temp);
                         $chapter_name=substr($chapter_name_temp_temp,2);
                         array_push($chapters_out, $chapter_name);
                         //The amount of questions in said chapter
+
+                        // find available corrections
+                        $corrections_temp = [];
+                        for ($j=0; $j<$nb_questions; $j++) {
+                            if (file_exists($chapter.'/'.$j.'.pdf')) {
+                                $corrections_temp[] = $j;
+                            }
+                        }
+                        $corrections[] = implode(',', $corrections_temp);
 
                         //adds the html
                         echo("<div class='chapter_container'>
@@ -178,12 +197,14 @@
                     unset($chapter_name);
                     unset($chapter_name_temp);
                     unset($chapter_name_temp_temp);
+                    unset($corrections_temp);
                 ?>
                 <script>
                     var questions_per_chapters = [<?php echo implode(',', $questions_per_chapters) ?>];
                     questions_per_chapter = questions_per_chapters.map(x=>parseInt(x));
                     var chapters = ["<?php echo implode('","', $chapters) ?>"];
                     var chapters_names = ["<?php echo implode('","', $chapters_out) ?>"];
+                    var corrections = [[<?php echo implode('],[', $corrections)  ?>]];
                 </script>
                 </ul>
             </div>
@@ -243,14 +264,14 @@
 
         <div id="question_div">
             <div id='carousel'>
-                <div class="carousel_cell" id='cell_0'><div class="container"><img id='question_0' width='80%' alt=" Pas de question..."><p id='question_chap_0'></p></div></div>
-                <div class="carousel_cell" id='cell_7'><div class="container"><img id='question_7' width='80%' alt=" Pas de question..."><p id='question_chap_7'></p></div></div>
-                <div class="carousel_cell" id='cell_6'><div class="container"><img id='question_6' width='80%' alt=" Pas de question..."><p id='question_chap_6'></p></div></div>
-                <div class="carousel_cell" id='cell_5'><div class="container"><img id='question_5' width='80%' alt=" Pas de question..."><p id='question_chap_5'></p></div></div>
-                <div class="carousel_cell" id='cell_4'><div class="container"><img id='question_4' width='80%' alt=" Pas de question..."><p id='question_chap_4'></p></div></div>
-                <div class="carousel_cell" id='cell_3'><div class="container"><img id='question_3' width='80%' alt=" Pas de question..."><p id='question_chap_3'></p></div></div>
-                <div class="carousel_cell" id='cell_2'><div class="container"><img id='question_2' width='80%' alt=" Pas de question..."><p id='question_chap_2'></p></div></div>
-                <div class="carousel_cell" id='cell_1'><div class="container"><img id='question_1' width='80%' alt=" Pas de question..."><p id='question_chap_1'></p></div></div>
+                <div class="carousel_cell" id='cell_0'><div class="container"><img id='question_0' width='80%' alt=" Pas de question..."><p id='question_chap_0'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction0' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip0' class='tooltiptext'>Proposer une correction</span></div></div></div>
+                <div class="carousel_cell" id='cell_7'><div class="container"><img id='question_7' width='80%' alt=" Pas de question..."><p id='question_chap_7'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction7' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip7' class='tooltiptext'>Proposer une correction</span></div></div></div>
+                <div class="carousel_cell" id='cell_6'><div class="container"><img id='question_6' width='80%' alt=" Pas de question..."><p id='question_chap_6'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction6' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip6' class='tooltiptext'>Proposer une correction</span></div></div></div>
+                <div class="carousel_cell" id='cell_5'><div class="container"><img id='question_5' width='80%' alt=" Pas de question..."><p id='question_chap_5'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction5' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip5' class='tooltiptext'>Proposer une correction</span></div></div></div>
+                <div class="carousel_cell" id='cell_4'><div class="container"><img id='question_4' width='80%' alt=" Pas de question..."><p id='question_chap_4'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction4' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip4' class='tooltiptext'>Proposer une correction</span></div></div></div>
+                <div class="carousel_cell" id='cell_3'><div class="container"><img id='question_3' width='80%' alt=" Pas de question..."><p id='question_chap_3'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction3' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip3' class='tooltiptext'>Proposer une correction</span></div></div></div>
+                <div class="carousel_cell" id='cell_2'><div class="container"><img id='question_2' width='80%' alt=" Pas de question..."><p id='question_chap_2'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction2' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip2' class='tooltiptext'>Proposer une correction</span></div></div></div>
+                <div class="carousel_cell" id='cell_1'><div class="container"><img id='question_1' width='80%' alt=" Pas de question..."><p id='question_chap_1'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction1' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip1' class='tooltiptext'>Proposer une correction</span></div></div></div>
             </div>
         </div>
     </div>
@@ -287,6 +308,8 @@
             <span class="material-icons">clear</span><span class="not-material-icons">Les questions échouées résparaissent éventuellement.</span><br><br>
             <span class="material-icons">refresh</span><span class="not-material-icons">Réinitialiser la progression retire les questions des chapitres sélectionnés des questions réussies.</span><br><br>
             <span class="material-icons">swap_horiz</span><span class="not-material-icons">Balayez horizontalement pour passer à la question suivante/précédente. Balayez vers le haut pour marquer une question échouée.</span><br><br>
+            <span class="material-icons">emoji_objects</span><span class="not-material-icons">Certaines questions viennent avec des corrigés.</span><br>
+            <span class="material-icons-outlined">emoji_objects</span><span class="not-material-icons">Pour celles qui n'en n'ont pas, vous pouvez en proposer une.</span><br><br>
             <span class="material-icons no-tel">keyboard</span><span class="not-material-icons no-tel">Appuyez sur les touches Entrée, Espace ou &rarr; pour passer à la question suivante. Appuyez sur &uarr; pour marquer une question échouée. Appuyez sur &larr; pour revenir à la question précédente.</span><br><br>
             <span class="material-icons">error</span><span class="not-material-icons">Les navigateurs Edge, Internet Explorer, Duck Duck Go et Écosia ne sont pas supportés (pour l'instant).</span>
         </div>

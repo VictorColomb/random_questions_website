@@ -127,7 +127,19 @@ function updateChapterProgression() {
     }
 }
 
-function show_overlay(name ,bol, key=false){
+function view_correction(){
+    var chap = questions[my_position][0];
+    var q = questions[my_position][1];
+    if(corrections[chap].includes(q)){
+        var iframe = document.getElementById('correction_frame');
+        iframe.src= chapters[chap] + '/' + q.toString() + '.pdf#toolbar=0&view=FitH';
+        show_overlay('correction', 1);
+
+        gtag('event', 'Opened correction', {'event_category':'Corrections'});
+    }
+}
+
+function show_overlay(name, bol, key=false){
     if (document.getElementById('help_overlay').style.display == "") {
         if(bol == 1){
             if (name == 'suggestion') {
@@ -150,12 +162,18 @@ function show_overlay(name ,bol, key=false){
         }
         else {
             // close all overlays
-            document.getElementById(name + '_dialog').style.transform = 'translateX(30em)';
+            if(name != 'correction'){
+                document.getElementById(name + '_dialog').style.transform = 'translateX(30em)';
+            } else{
+                document.getElementById(name + '_dialog').style.transform = 'translateY(100%)';
+            }
             document.getElementById('fab').style.opacity = 1;
             document.getElementById('fab_menu').style.opacity = 1;
             document.getElementById(name + '_overlay').style.visibility = 'hidden';
-            show_menus();
-            document.getElementById('fab_input').checked = false;
+            if(name != 'correction'){
+                show_menus();
+                document.getElementById('fab_input').checked = false;
+            }
         }
         if (name == "chapters" && bol) {
             updateChapterProgression();
@@ -268,7 +286,6 @@ function swipes(){
         if(x0 || x0 === 0) {
             var dx = unify(e).clientX - x0;
             var dy = unify(e).clientY - y0;
-            console.log(dy);
             if(Math.abs(dx) > 10 || Math.abs(dy) >10){
                 if(Math.abs(dx) > Math.abs(dy)){
                     if (Math.sign(-dx) > 0) {
@@ -314,6 +331,19 @@ function reset(){
 
             init();
         }
+    }
+}
+
+
+// CORRECTIONS
+function displayCorrectionButton(chap, q, which) {
+    if (corrections[chap].includes(q)) {
+        document.getElementById('correction' + which).classList.add('exists');
+        document.getElementById('correction_tooltip' + which).innerHTML = 'Correction';
+    }
+    else {
+        document.getElementById('correction' + which).classList.remove('exists');
+        document.getElementById('correction_tooltip' + which).innerHTML = 'Proposer une correction';
     }
 }
 
@@ -396,6 +426,7 @@ function init(){
             which = ((i - 2 + 8) % 8);
             document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
             document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
+            displayCorrectionButton(chap, q, which);
         }
 
         nextQuestion(0);
@@ -463,6 +494,7 @@ function nextQuestion(direction, failed=false, ga_bool=false) {
                 which = (angle + i) % 8;
                 document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
                 document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
+                displayCorrectionButton(chap, q, which);
             }
         }
         else { // if there are no questions
@@ -481,15 +513,15 @@ function nextQuestion(direction, failed=false, ga_bool=false) {
             var chap = questions[modpos(my_position + 5)][0];
             var q = questions[modpos(my_position + 5)][1];
             which = (angle + 5) % 8;
-            document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
-            document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
         } else {
             var chap = questions[modpos(my_position - 2)][0];
             var q = questions[modpos(my_position - 2)][1];
             which = (angle + 8 - 2) % 8;
-            document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
-            document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
         }
+        document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
+        document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
+        displayCorrectionButton(chap, q, which);
+
         if(failed){
             document.getElementById('cell_' + ((angle - 1) % 8)).className='failed carousel_cell';
         }

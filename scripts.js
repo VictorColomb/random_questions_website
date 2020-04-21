@@ -81,7 +81,7 @@ function select_all(bol){
     })
 }
 
-function show_buttons() {
+function show_buttons(ga=true) {
     if (document.getElementById('help_overlay').style.display == "") {
         if(buttons_visible){
             document.getElementById('button_visibility').innerHTML = 'visibility';
@@ -90,6 +90,7 @@ function show_buttons() {
                 button.style.display = 'none';});
             buttons_visible = 0;
             setCookie('buttons_visible', '1');
+            if (ga) {gtag('event', 'Buttons', {'event_label':'Hidden'});}
         }
         else{
             document.getElementById('button_visibility').innerHTML = 'visibility_off';
@@ -98,6 +99,7 @@ function show_buttons() {
                 button.style.display = 'block';});
             buttons_visible = 1;
             setCookie('buttons_visible', '0');
+            if (ga) {gtag('event', 'Buttons', {'event_label':'Visible'});}
         }
     }
 }
@@ -125,25 +127,26 @@ function updateChapterProgression() {
     }
 }
 
-function show_overlay(name ,bol){
+function show_overlay(name ,bol, key=false){
     if (document.getElementById('help_overlay').style.display == "") {
-        if (name == "suggestion" && bol) {
-            document.getElementById('comment').value = "";
-        }
         if(bol == 1){
-            // chapters selection overlay
+            if (name == 'suggestion') {
+                document.getElementById('question_nb').value = questions[my_position];
+                var now = new Date;
+                var utc_timestamp = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
+                    now.getUTCHours(), now.getUTCMinutes());
+                document.getElementById('date').value = utc_timestamp.toString();
+                document.getElementById('name').focus();
+                document.getElementById('comment').value = "";
+            }
             document.getElementById(name + '_overlay').style.visibility = 'visible';
             document.getElementById('fab').style.opacity = 0;
             document.getElementById('fab_menu').style.opacity = 0;
             document.getElementById(name + '_dialog').style.transform = 'translateX(0em)';
-            if(name=='suggestion'){
-                document.getElementById('question_nb').value = questions[my_position];
-                var now = new Date;
-                var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
-                    now.getUTCHours(), now.getUTCMinutes());
-                document.getElementById('date').value = utc_timestamp.toString();
-                document.getElementById('name').focus();
-            }
+
+            if (key) {ga_action = 'key'}
+            else {ga_action = 'click'}
+            gtag('event', name, {'event_category':'Menus', 'event_label':ga_action});
         }
         else {
             // close all overlays
@@ -176,6 +179,7 @@ function show_menus(){
         }
     } else {
         document.getElementById('fab_menu').className='expand';
+        gtag('event', 'Opened menu', {'event_category':'Menus'});
     }
 }
 
@@ -195,6 +199,8 @@ function confirm_choice(){
         // if at least one chapter has been selected
         // save selected chapters to local storage
         localStorage.setItem('selected_chapters_' + m_or_p, selected_chapters_temp.toString());
+
+        gtag('event', 'Selected chapters', {'event_category':'Progression'});
 
         // reload everything
         questions = [];
@@ -266,14 +272,14 @@ function swipes(){
             if(Math.abs(dx) > 10 || Math.abs(dy) >10){
                 if(Math.abs(dx) > Math.abs(dy)){
                     if (Math.sign(-dx) > 0) {
-                        questionSucceeded();
+                        questionSucceeded(key='swipe');
                     }
                     else if(Math.sign(-dx) < 0) {
-                        nextQuestion(-1);
+                        nextQuestion(-1, ga_bool='swipe');
                     }
                 } else {
                     if (Math.sign(-dy) > 0) {
-                        questionFailed();
+                        questionFailed(key='swipe');
                     }
                 }
             }
@@ -303,6 +309,9 @@ function reset(){
             push_progression();
             questions = [];
             document.getElementById('fab_menu').className = 'shrink';
+
+            gtag('event', 'Progression reset', {'event_category':'Progression'});
+
             init();
         }
     }
@@ -334,12 +343,14 @@ function on_load(){
     else {
         buttons_visible = parseInt(buttons_visible);
     }
-    show_buttons();
+    show_buttons(ga=false);
 
     fetch_selected_chapters();
     swipes();
     init();
     showHelp_onload();
+
+    gtag('event', 'timing_complete', { 'name': 'Done loading', 'value':Math.round(performance.now()), 'event_category': 'Loading' });
 }
 
 function init(){
@@ -403,6 +414,10 @@ function nothing_remains(){
             }
         });
         push_progression();
+
+        // GA event
+        gtag('event', 'End - reset', {'event_category':'Progression'});
+
         // reload after progression reset
         init();
     }
@@ -412,14 +427,21 @@ function nothing_remains(){
         document.getElementById('progress').style.width = "100%";
         // disable keys
         keys_active = false;
+
+        // GA event
+        gtag('event', 'End - not reset', {'event_category':'Progression'});
     }
 }
 
 
 // NEXT QUESTION
-function nextQuestion(direction, failed=false) {
+function nextQuestion(direction, failed=false, ga_bool=false) {
     // remove failed attribute from previous cell
     document.getElementById('cell_' + ((my_position - 1 + 8)% 8)).className='carousel_cell';
+
+    if (direction < 0 && ga_bool) {
+        gtag('event', 'Previous', { 'event_category': 'Questions', 'event_label': ga_bool});
+    }
 
     // if going over the number of questions
     if (my_position + direction >= nb_of_questions || real_nb_of_questions <= real_nb_questions_succeeded) {
@@ -491,7 +513,7 @@ function push_progression() {
     localStorage.setItem('progression_' + m_or_p, progression_temp.join(';'));
 }
 
-function questionSucceeded() {
+function questionSucceeded(key=false) {
     var question = questions[my_position]; // [0] = chapter ; [1] = question
 
     // add question[1] to the question[0] th element of progression
@@ -507,10 +529,14 @@ function questionSucceeded() {
         push_progression();
     }
 
+    // GA event
+    if (!key) {key = 'click';}
+    gtag('event', 'Succeeded', { 'event_category': 'Questions', 'event_label': key});
+
     nextQuestion(1);
 }
 
-function questionFailed() {
+function questionFailed(key=false) {
     var question = questions[my_position];
 
     var progression_chapter = progression[question[0]];
@@ -526,6 +552,10 @@ function questionFailed() {
     // push progression to local storage
     push_progression();
 
+    // GA event
+    if (!key) {key = 'click';}
+    gtag('event', 'Failed', { 'event_category': 'Questions', 'event_label': key});
+
     nextQuestion(1, true);
 }
 
@@ -540,24 +570,24 @@ function keyDown(e) {
     if (suggestion_overlay_visibility && chapters_overlay_visibility && keys_active && help_overlay_visi) {
         if (e == 13 || e == 39 || e == 32) {
             // down, right, enter, space
-            questionSucceeded();
+            questionSucceeded(key='key');
         } else if (e==38){
             // up
-            questionFailed();
+            questionFailed(key='key');
         }
         else if (e == 37) {
             // left
-            nextQuestion(-1);
+            nextQuestion(-1, ga_bool='key');
         }
     }
     if (e == 27) {
         // echap
         if (!chapters_overlay_visibility) {
             // if an overlay is visible, close it
-            show_overlay('chapters', 0);
+            show_overlay('chapters', 0, key=true);
         }
         else if(!suggestion_overlay_visibility){
-            show_overlay('suggestion', 0);
+            show_overlay('suggestion', 0, key=true);
         } else {
             checkbox = document.getElementById('fab_input');
             if (checkbox.checked) {
@@ -565,6 +595,8 @@ function keyDown(e) {
                 document.getElementById('fab_menu').className = 'shrink';
             }
             delete checkbox;
+
+            gtag('event', 'Menus closed', {'event_category':'Menus', 'event_label':'key'});
         }
     }
 }
@@ -590,6 +622,8 @@ function showHelp(open=1) {
     help_overlay_visi = document.getElementById('help_overlay').style.display;
     if (help_overlay_visi == "" && open) {
         // if overlay hidden
+
+        gtag('event', 'help', {'event_category':'Menus', 'event_label':'click'});
 
         // open menu
         document.getElementById('fab_menu').className = "expand";

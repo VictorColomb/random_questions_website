@@ -114,7 +114,7 @@ for ch_nb,chapter_questions in enumerate(questions):
 
     for idx,question in enumerate(chapter_questions):
         if not exists(f'{idx}.tex'):
-            with open(f'{idx}.tex', 'w', encoding='utf-8-sig') as output:
+            with open(f'{idx}.bad.tex', 'w', encoding='utf-8-sig') as output:
                 output.write( out_string.format(chapter, idx + 1, question) )
     
     chdir('..')

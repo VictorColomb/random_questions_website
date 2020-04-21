@@ -20,6 +20,15 @@
     <!-- Title and logo -->
     <title>Revisions</title>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164106797-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-164106797-1');
+    </script>
+
     <!-- External links -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
@@ -31,16 +40,6 @@
 
     <!--Script-->
     <script src="scripts.js"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164106797-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-164106797-1');
-    </script>
-
 </head>
 
 <body onload='on_load();' onkeydown="keyDown(event.keyCode);">
@@ -80,7 +79,7 @@
     <div class='overlay' id='suggestion_overlay'>
         <div class='scrim' onclick='show_overlay("suggestion",0);'></div>
         <div class='dialog' id='suggestion_dialog'>
-            <form target="_blank" action="writeToText.php" method="post" onsubmit='show_overlay("suggestion", 0);'>
+            <form target="_blank" action="writeToText.php" method="post" onsubmit='gtag("event","undefined",{"event_category":"Suggestions"});show_overlay("suggestion", 0);'>
             <div class='header'>
                 <span class='title'>Suggestions</span>
                 <br>
@@ -154,7 +153,6 @@
                         $chapter_name=substr($chapter_name_temp_temp,2);
                         array_push($chapters_out, $chapter_name);
                         //The amount of questions in said chapter
-                        $count = count(glob($chapter.'/*'));
 
                         //adds the html
                         echo("<div class='chapter_container'>
@@ -257,12 +255,12 @@
         </div>
     </div>
     <div id="button_div">
-        <a class="custom_button hidable_buttons" style="position:absolute; left: 30px;" onclick="nextQuestion(-1);">
+        <a class="custom_button hidable_buttons" style="position:absolute; left: 30px;" onclick="nextQuestion(-1,ga_bool='click');">
         <div style="text-align: left;">
             <span class="material-icons">
                 navigate_before
             </span>
-            <span class="custom_button_text" style="font-size: .95em; font-family: 'Work Sans', sans-serif;">Précédente</span>
+            <span class="custom_button_text" style="font-size: .95em; font-family: 'Work Sans', sans-serif;display: none;">Précédente</span>
         </div>
         </a>
 

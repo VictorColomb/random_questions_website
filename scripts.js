@@ -292,7 +292,7 @@ function swipes(){
                         questionSucceeded(key='swipe');
                     }
                     else if(Math.sign(-dx) < 0) {
-                        nextQuestion(-1, ga_bool='swipe');
+                        nextQuestion(-1, false, 'swipe');
                     }
                 } else {
                     if (Math.sign(-dy) > 0) {
@@ -467,6 +467,8 @@ function nothing_remains(){
 
 // NEXT QUESTION
 function nextQuestion(direction, failed=false, ga_bool=false) {
+    if (direction < 0 && angle == 0) {return;}
+
     // remove failed attribute from previous cell
     document.getElementById('cell_' + ((my_position - 1 + 8)% 8)).className='carousel_cell';
 
@@ -513,10 +515,12 @@ function nextQuestion(direction, failed=false, ga_bool=false) {
             var chap = questions[modpos(my_position + 5)][0];
             var q = questions[modpos(my_position + 5)][1];
             which = (angle + 5) % 8;
+            if (buttons_visible) {document.getElementById('previous_button').style.opacity = 1;}
         } else {
             var chap = questions[modpos(my_position - 2)][0];
             var q = questions[modpos(my_position - 2)][1];
             which = (angle + 8 - 2) % 8;
+            if (angle == 0) {document.getElementById('previous_button').style.opacity = 0;}
         }
         document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
         document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
@@ -609,7 +613,7 @@ function keyDown(e) {
         }
         else if (e == 37) {
             // left
-            nextQuestion(-1, ga_bool='key');
+            nextQuestion(-1, false, 'key');
         }
     }
     if (e == 27) {

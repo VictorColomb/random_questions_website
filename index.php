@@ -122,7 +122,7 @@
     <div class ='overlay' id="correction_overlay">
         <div class='scrim' onclick='show_overlay("correction",0);'></div>
         <div class='dialog' id='correction_dialog'>
-        <iframe id='correction_frame' allowtransparency="true" frameborder="0" src="test.pdf#toolbar=0&view=FitH">
+        <iframe id='correction_frame' allowtransparency="true" frameborder="0" src="">
         </iframe>
         </div>
     </div>
@@ -276,12 +276,12 @@
         </div>
     </div>
     <div id="button_div">
-        <a class="custom_button hidable_buttons" style="position:absolute; left: 30px;" onclick="nextQuestion(-1,ga_bool='click');">
+        <a id='previous_button' class="custom_button hidable_buttons" style="position:absolute; left:30px; opacity:0;" onclick="nextQuestion(-1,false,'click');">
         <div style="text-align: left;">
             <span class="material-icons">
                 navigate_before
             </span>
-            <span class="custom_button_text" style="font-size: .95em; font-family: 'Work Sans', sans-serif;display: none;">Précédente</span>
+            <span class="custom_button_text" style="font-size: .95em; font-family: 'Work Sans', sans-serif;">Précédente</span>
         </div>
         </a>
 

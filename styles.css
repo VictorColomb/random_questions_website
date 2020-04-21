@@ -544,7 +544,6 @@ a.menu div:hover{
 .hidable_buttons {
   display: none;
 }
-
 a.custom_button div{
   height: 27px;
   padding-top: 2px;
@@ -560,17 +559,14 @@ a.custom_button div{
   cursor: pointer;
   transition: all .2s ease-in-out;
 }
-
 a.custom_button span{
   display: inline-block;
   vertical-align: middle;
 }
-
 a.custom_button div:hover{
   background-color: #293942;
   transform: scale(1.1)
 }
-
 #button_div{
   z-index: 0;
   padding-top: 1%;
@@ -579,19 +575,23 @@ a.custom_button div:hover{
   width: 70%;
   left: 15%;
 }
-
 a.custom_button_right{
   right: 160px;
 }
-
 a.custom_button_right div{
   position:absolute;
   right: 160px;
   text-align: center;
 }
-
 #custom_button_next{
   padding-left: 3pt;
+}
+#previous_button{
+  transition: opacity .2s ease-in-out;
+  -webkit-transition: opacity .2s ease-in-out;
+  -moz-transition: opacity .2s ease-in-out;
+  -ms-transition: opacity .2s ease-in-out;
+  -o-transition: opacity .2s ease-in-out;
 }
 
 @media screen and (max-width: 630px) {
@@ -942,5 +942,4 @@ a.custom_button_right div{
 .correction_image{
   max-height: 15%;
   max-width: 90%;
-  
 }

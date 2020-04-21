@@ -130,6 +130,11 @@ function show_overlay(name ,bol){
         if (name == "suggestion" && bol) {
             document.getElementById('comment').value = "";
         }
+        if(name == 'correction'){
+            iframe = document.getElementById('correction_frame');
+            iframe.style.background = 'white';
+            iframe.contentWindow.document.body.style.backgroundColor = 'white';
+        }
         if(bol == 1){
             // chapters selection overlay
             document.getElementById(name + '_overlay').style.visibility = 'visible';
@@ -147,12 +152,18 @@ function show_overlay(name ,bol){
         }
         else {
             // close all overlays
-            document.getElementById(name + '_dialog').style.transform = 'translateX(30em)';
+            if(name != 'correction'){
+                document.getElementById(name + '_dialog').style.transform = 'translateX(30em)';
+            } else{
+                document.getElementById(name + '_dialog').style.transform = 'translateY(100%)';
+            }
             document.getElementById('fab').style.opacity = 1;
             document.getElementById('fab_menu').style.opacity = 1;
             document.getElementById(name + '_overlay').style.visibility = 'hidden';
-            show_menus();
-            document.getElementById('fab_input').checked = false;
+            if(name != 'correction'){
+                show_menus();
+                document.getElementById('fab_input').checked = false;
+            }
         }
         if (name == "chapters" && bol) {
             updateChapterProgression();

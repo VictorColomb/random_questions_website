@@ -228,6 +228,27 @@ input:checked + label #fab:hover{
   100% { transform: scale(1,0)      translateY(6rem);   opacity:  0.2;   display: none;}
 }
 
+/* ----- Correction Dialogue ----- */
+#correction_dialog{
+  right: 12.5%; top: 10%;
+  position: absolute;
+  width: 75%; height: 80%;
+  background-color: transparent;
+  border-radius: 3px;
+  z-index: 6;
+  padding-left: 0;
+  padding-top: 0;
+  display: block;
+  transition: transform .3s;
+  transform: translateY(100em);
+}
+#correction_dialog iframe{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background: white;
+}
+
 /* ----- Choose chapters to study ----- */
 .overlay{
   position: fixed;

@@ -120,6 +120,14 @@
         </div>
     </div>
 
+    <div class ='overlay' id="correction_overlay">
+        <div class='scrim' onclick='show_overlay("correction",0);'></div>
+        <div class='dialog' id='correction_dialog'>
+        <iframe id='correction_frame' allowtransparency="true" frameborder="0" src="test.pdf#toolbar=0&view=FitH">
+        </iframe>
+        </div>
+    </div>
+
     <div class ='overlay' id="chapters_overlay">
     <div class='scrim' onclick='show_overlay("chapters",0);'></div>
         <div class='dialog' id='chapters_dialog'>

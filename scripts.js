@@ -125,15 +125,20 @@ function updateChapterProgression() {
     }
 }
 
+function view_correction(){
+    var chap = questions[my_position][0];
+    var q = questions[my_position][1];
+    if(corrections[chap].includes(q)){
+        var iframe = document.getElementById('correction_frame');
+        iframe.src= chapters[chap] + '/' + q.toString() + '.pdf#toolbar=0&view=FitH';
+        show_overlay('correction', 1);
+    }
+}
+
 function show_overlay(name ,bol){
     if (document.getElementById('help_overlay').style.display == "") {
         if (name == "suggestion" && bol) {
             document.getElementById('comment').value = "";
-        }
-        if(name == 'correction'){
-            iframe = document.getElementById('correction_frame');
-            iframe.style.background = 'white';
-            iframe.contentWindow.document.body.style.backgroundColor = 'white';
         }
         if(bol == 1){
             // chapters selection overlay

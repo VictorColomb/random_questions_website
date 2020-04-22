@@ -31,6 +31,7 @@
 
     <!-- External links -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="suggestion_styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap">
 
@@ -79,7 +80,7 @@
     <div class='overlay' id='suggestion_overlay'>
         <div class='scrim' onclick='show_overlay("suggestion",0);'></div>
         <div class='dialog' id='suggestion_dialog'>
-            <form target="_blank" action="writeToText.php" method="post" onsubmit='gtag("event","undefined",{"event_category":"Suggestions"});show_overlay("suggestion", 0);'>
+            <form target="_blank" action="submitsuggestion.php" method="post" onsubmit='gtag("event","Submit",{"event_category":"Suggestions"});show_overlay("suggestion", 0);'>
             <div class='header'>
                 <span class='title'>Suggestions</span>
                 <br>

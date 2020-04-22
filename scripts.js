@@ -127,18 +127,6 @@ function updateChapterProgression() {
     }
 }
 
-function view_correction(){
-    var chap = questions[my_position][0];
-    var q = questions[my_position][1];
-    if(corrections[chap].includes(q)){
-        var iframe = document.getElementById('correction_frame');
-        iframe.src= chapters[chap] + '/' + q.toString() + '.pdf#toolbar=0&view=FitH';
-        show_overlay('correction', 1);
-
-        gtag('event', 'Opened correction', {'event_category':'Corrections'});
-    }
-}
-
 function show_overlay(name, bol, key=false){
     if (document.getElementById('help_overlay').style.display == "") {
         if(bol == 1){
@@ -347,6 +335,23 @@ function displayCorrectionButton(chap, q, which) {
     }
 }
 
+function view_correction() {
+    var chap = questions[my_position][0];
+    var q = questions[my_position][1];
+    if (corrections[chap].includes(q)) {
+        var iframe = document.getElementById('correction_frame');
+        iframe.src = chapters[chap] + '/' + q.toString() + '.pdf#toolbar=0&view=FitH';
+        show_overlay('correction', 1);
+
+        gtag('event', 'Opened correction', { 'event_category': 'Corrections' });
+    }
+    else{
+        window.open('correction/?m=' + m_or_p + '&c=' + chap + '&q=' + q, '_blank')
+
+        gtag('event', 'Opened correction form', { 'event_category': 'Corrections' });
+    }
+}
+
 
 // INIT
 function modpos(n) {return (n + nb_of_questions) % (nb_of_questions)}
@@ -515,12 +520,20 @@ function nextQuestion(direction, failed=false, ga_bool=false) {
             var chap = questions[modpos(my_position + 5)][0];
             var q = questions[modpos(my_position + 5)][1];
             which = (angle + 5) % 8;
-            if (buttons_visible) {document.getElementById('previous_button').style.opacity = 1;}
+            if (buttons_visible) {
+                previous = document.getElementById('previous_button');
+                previous.style.opacity = 1;
+                previous.children[0].style.cursor = "";
+            }
         } else {
             var chap = questions[modpos(my_position - 2)][0];
             var q = questions[modpos(my_position - 2)][1];
             which = (angle + 8 - 2) % 8;
-            if (angle == 0) {document.getElementById('previous_button').style.opacity = 0;}
+            if (angle == 0) {
+                previous = document.getElementById('previous_button');
+                previous.style.opacity = 0;
+                previous.children[0].style.cursor = "default";
+            }
         }
         document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
         document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];

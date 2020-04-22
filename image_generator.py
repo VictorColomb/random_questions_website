@@ -170,7 +170,7 @@ no_latex_errors = 0
 nb_processed = 0
 
 
-corr_out_string = '\\documentclass[a4paper]{{article}}\n\\usepackage[T1]{{fontenc}}\n\\usepackage[utf8]{{inputenc}}\n\\usepackage{{lmodern}}\n\\usepackage{{amsmath,amssymb}}\n\\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{{geometry}}\n\\usepackage{{fancyhdr}}\n\n\\begin{{document}}\n\n\\pagestyle{{fancy}}\n\\fancyhf{{}}\n\\setlength{{\\headheight}}{{15pt}}\n\\fancyhead[L]{{{0}}}\\fancyhead[R]{{Question {1}}}\n\n% Énoncé\n\\begin{{center}}\n\t\\large{{\\boldmath{{\\textbf{{{2}}}}}}}\n\\end{{center}}\n\n% Correction\n\n\n\\end{{document}}\n'
+out_string = '\\documentclass[a4paper]{{article}}\n\\usepackage[T1]{{fontenc}}\n\\usepackage[utf8]{{inputenc}}\n\\usepackage{{lmodern}}\n\\usepackage{{amsmath,amssymb}}\n\\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{{geometry}}\n\\usepackage{{fancyhdr}}\n\\usepackage{{esvect}}\n\\usepackage{{xcolor}}\n\\usepackage{{tikz}}\\usetikzlibrary{{calc}}\n\n\\parskip 1em\\parindent 0pt\n\n\\begin{{document}}\n\n\\pagestyle{{fancy}}\n\\fancyhf{{}}\n\\setlength{{\\headheight}}{{15pt}}\n\\fancyhead[L]{{{0}}}\\fancyhead[R]{{Question {1}}}\n\n% Énoncé\n\\begin{{center}}\n\t\\large{{\\boldmath{{\\textbf{{{2}}}}}}}\n\\end{{center}}\n\n% Correction\n\n\n\\end{{document}}\n'
 corr_out_string_modify = '\t\\large{{\\boldmath{{\\textbf{{{0}}}}}}}\n'
 
 def createCorrLatex(idx, latex_chap, latex_qu):
@@ -179,7 +179,7 @@ def createCorrLatex(idx, latex_chap, latex_qu):
 def modifyLatex(idx, latex_qu, bad=''):
     with open(f'{idx}{bad}.tex', 'r', encoding='utf-8-sig') as inp:
         latex_file = inp.readlines()
-    latex_file[17] = corr_out_string_modify.format(latex_qu)
+    latex_file[22] = corr_out_string_modify.format(latex_qu)
     with open(f'{idx}{bad}.tex', 'w', encoding='utf-8-sig') as output:
         output.write(latex_file)
     if bad == '':

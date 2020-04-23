@@ -263,16 +263,21 @@
 
     <div id="main">
 
+        <div class='correction fake tooltip' onclick='view_correction()'>
+            <a class='material-icons-outlined'>emoji_objects</a>
+            <span id='correction_tooltip' class='tooltiptext'>Proposer une correction</span>
+        </div>
+
         <div id="question_div">
             <div id='carousel'>
-                <div class="carousel_cell" id='cell_0'><div class="container"><img id='question_0' width='80%' alt=" Pas de question..."><p id='question_chap_0'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction0' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip0' class='tooltiptext'>Proposer une correction</span></div></div></div>
-                <div class="carousel_cell" id='cell_7'><div class="container"><img id='question_7' width='80%' alt=" Pas de question..."><p id='question_chap_7'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction7' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip7' class='tooltiptext'>Proposer une correction</span></div></div></div>
-                <div class="carousel_cell" id='cell_6'><div class="container"><img id='question_6' width='80%' alt=" Pas de question..."><p id='question_chap_6'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction6' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip6' class='tooltiptext'>Proposer une correction</span></div></div></div>
-                <div class="carousel_cell" id='cell_5'><div class="container"><img id='question_5' width='80%' alt=" Pas de question..."><p id='question_chap_5'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction5' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip5' class='tooltiptext'>Proposer une correction</span></div></div></div>
-                <div class="carousel_cell" id='cell_4'><div class="container"><img id='question_4' width='80%' alt=" Pas de question..."><p id='question_chap_4'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction4' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip4' class='tooltiptext'>Proposer une correction</span></div></div></div>
-                <div class="carousel_cell" id='cell_3'><div class="container"><img id='question_3' width='80%' alt=" Pas de question..."><p id='question_chap_3'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction3' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip3' class='tooltiptext'>Proposer une correction</span></div></div></div>
-                <div class="carousel_cell" id='cell_2'><div class="container"><img id='question_2' width='80%' alt=" Pas de question..."><p id='question_chap_2'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction2' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip2' class='tooltiptext'>Proposer une correction</span></div></div></div>
-                <div class="carousel_cell" id='cell_1'><div class="container"><img id='question_1' width='80%' alt=" Pas de question..."><p id='question_chap_1'></p><div class='correction tooltip'><a class='material-icons-outlined' id='correction1' onclick='view_correction()'>emoji_objects</a><span id='correction_tooltip1' class='tooltiptext'>Proposer une correction</span></div></div></div>
+                <div class="carousel_cell" id='cell_0'><div class="container"><img id='question_0' width='80%' alt=" Pas de question..."><p id='question_chap_0'></p><div class='correction'><a class='material-icons-outlined' id='correction0' >emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_7'><div class="container"><img id='question_7' width='80%' alt=" Pas de question..."><p id='question_chap_7'></p><div class='correction'><a class='material-icons-outlined' id='correction7' >emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_6'><div class="container"><img id='question_6' width='80%' alt=" Pas de question..."><p id='question_chap_6'></p><div class='correction'><a class='material-icons-outlined' id='correction6' >emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_5'><div class="container"><img id='question_5' width='80%' alt=" Pas de question..."><p id='question_chap_5'></p><div class='correction'><a class='material-icons-outlined' id='correction5' >emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_4'><div class="container"><img id='question_4' width='80%' alt=" Pas de question..."><p id='question_chap_4'></p><div class='correction'><a class='material-icons-outlined' id='correction4' >emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_3'><div class="container"><img id='question_3' width='80%' alt=" Pas de question..."><p id='question_chap_3'></p><div class='correction'><a class='material-icons-outlined' id='correction3' >emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_2'><div class="container"><img id='question_2' width='80%' alt=" Pas de question..."><p id='question_chap_2'></p><div class='correction'><a class='material-icons-outlined' id='correction2' >emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_1'><div class="container"><img id='question_1' width='80%' alt=" Pas de question..."><p id='question_chap_1'></p><div class='correction'><a class='material-icons-outlined' id='correction1' >emoji_objects</a></div></div></div>
             </div>
         </div>
     </div>

@@ -653,6 +653,10 @@ a.custom_button_right div{
   transform-style: preserve-3d;
   position: relative;
   perspective: -50em;
+
+  backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 #carousel {
   width: 100%;
@@ -677,7 +681,8 @@ a.custom_button_right div{
   display: table;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  pointer-events: none;
+  -moz-backface-visibility: hidden;
+  /* pointer-events: none; */
 }
 .container p{
   color: white;
@@ -690,20 +695,29 @@ a.custom_button_right div{
   font-size: 12pt;
   margin: 0 0 0.5em 0;
 }
-.container .correction{
+.correction{
     position: absolute;
     top: .4em;
     right: .6em;
     font-size: 2em;
 
     color: white;
-    cursor: pointer;
-    pointer-events: all;
+}
+.container .correction{
+  display: inline-block;
+}
+.correction.fake{
+  cursor: pointer;
+  pointer-events: all;
+  z-index: 1;
+}
+.correction.fake a{
+  opacity: 0;
 }
 .container a.exists{
   font-family: 'Material Icons';
 }
-.container .tooltiptext{
+.main .tooltiptext{
   font-size: 11px;
   top: .6em
 }

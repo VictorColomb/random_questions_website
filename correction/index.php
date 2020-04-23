@@ -83,6 +83,15 @@
                 <input type="hidden" name="m" value="<?php echo $_GET['m'] ?>">
                 <input type="hidden" name="c" value="<?php echo $_GET['c'] ?>">
                 <input type="hidden" name="q" value="<?php echo $_GET['q'] ?>">
+                <div class="code non_interactive">
+                    <input type="checkbox" id="spoiler2" onchange="openedSpoiler(this);"/>
+                    <label for="spoiler2"><span>Afficher la fin du code</span></label>
+                    <div id="code_before" class="spoiler">
+                        <p>
+                            \end{document}
+                        </p>
+                    </div>
+                </div>
                 <div id="submit_button_div">
                     <div class="input-field">
                         <input type="text" id="name" name="name" class="text" onfocus="has_text(this, 1);" onblur="has_text(this, 0)" length="32" maxlength="32">

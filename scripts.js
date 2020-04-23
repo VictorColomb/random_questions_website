@@ -327,11 +327,17 @@ function reset(){
 function displayCorrectionButton(chap, q, which) {
     if (corrections[chap].includes(q)) {
         document.getElementById('correction' + which).classList.add('exists');
-        document.getElementById('correction_tooltip' + which).innerHTML = 'Correction';
     }
     else {
         document.getElementById('correction' + which).classList.remove('exists');
-        document.getElementById('correction_tooltip' + which).innerHTML = 'Proposer une correction';
+    }
+}
+function displayCorrectionTooltip(chap, q) {
+    if (corrections[chap].includes(q)) {
+        document.getElementById('correction_tooltip').innerHTML = 'Correction';
+    }
+    else {
+        document.getElementById('correction_tooltip').innerHTML = 'Proposer une correction';
     }
 }
 
@@ -509,49 +515,49 @@ function nextQuestion(direction, failed=false, ga_bool=false) {
             return;
         }
     }
-    //else {
-        my_position = modpos(my_position + direction)
-        angle += direction;
-        document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded).toString() + '/' + (real_nb_of_questions).toString() + ' questions réussies';
-        document.getElementById('progress').style.width = (real_nb_questions_succeeded / (real_nb_of_questions) * 100).toString() + '%' ;
+    my_position = modpos(my_position + direction)
+    angle += direction;
+    document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded).toString() + '/' + (real_nb_of_questions).toString() + ' questions réussies';
+    document.getElementById('progress').style.width = (real_nb_questions_succeeded / (real_nb_of_questions) * 100).toString() + '%' ;
 
-        // adds the next question on the back side
-        if (direction > 0){
-            var chap = questions[modpos(my_position + 5)][0];
-            var q = questions[modpos(my_position + 5)][1];
-            which = (angle + 5) % 8;
-            if (buttons_visible) {
-                previous = document.getElementById('previous_button');
-                previous.style.opacity = 1;
-                previous.children[0].style.cursor = "";
-            }
-        } else {
-            var chap = questions[modpos(my_position - 2)][0];
-            var q = questions[modpos(my_position - 2)][1];
-            which = (angle + 8 - 2) % 8;
-            if (angle == 0) {
-                previous = document.getElementById('previous_button');
-                previous.style.opacity = 0;
-                previous.children[0].style.cursor = "default";
-            }
+    // adds the next question on the back side
+    if (direction > 0){
+        var chap = questions[modpos(my_position + 5)][0];
+        var q = questions[modpos(my_position + 5)][1];
+        which = (angle + 5) % 8;
+        if (buttons_visible) {
+            previous = document.getElementById('previous_button');
+            previous.style.opacity = 1;
+            previous.children[0].style.cursor = "";
         }
-        document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
-        document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
-        displayCorrectionButton(chap, q, which);
+    } else {
+        var chap = questions[modpos(my_position - 2)][0];
+        var q = questions[modpos(my_position - 2)][1];
+        which = (angle + 8 - 2) % 8;
+        if (angle == 0) {
+            previous = document.getElementById('previous_button');
+            previous.style.opacity = 0;
+            previous.children[0].style.cursor = "default";
+        }
+    }
+    document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
+    document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
+    displayCorrectionButton(chap, q, which);
 
-        if(failed){
-            document.getElementById('cell_' + ((angle - 1) % 8)).className='failed carousel_cell';
-        }
-        // rotate caroussel and display succeeded marker
-        question = questions[my_position]
-        if (progression[question[0]].includes(question[1])) {
-            document.getElementById('question_succeeded').style.opacity = "";
-        }
-        else {
-            document.getElementById('question_succeeded').style.opacity = "0";
-        }
-        document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * angle).toString() + 'deg)';
-    //}
+    if(failed){
+        document.getElementById('cell_' + ((angle - 1) % 8)).className='failed carousel_cell';
+    }
+
+    // rotate caroussel, display succeeded marker and change correction tooltip
+    question = questions[my_position]
+    if (progression[question[0]].includes(question[1])) {
+        document.getElementById('question_succeeded').style.opacity = "";
+    }
+    else {
+        document.getElementById('question_succeeded').style.opacity = "0";
+    }
+    displayCorrectionTooltip(question[0], question[1]);
+    document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * angle).toString() + 'deg)';
 }
 
 function push_progression() {

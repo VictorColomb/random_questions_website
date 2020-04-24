@@ -619,10 +619,12 @@ function questionFailed(key=false) {
 function keyDown(e) {
     chapters_overlay = document.getElementById('chapters_overlay').style.visibility;
     suggestion_overlay = document.getElementById('suggestion_overlay').style.visibility;
+    correction_overlay = document.getElementById('correction_overlay').style.visibility;
     chapters_overlay_visibility = (chapters_overlay == "hidden" || chapters_overlay == "");
     suggestion_overlay_visibility = (suggestion_overlay == "hidden" || suggestion_overlay == "");
+    correction_overlay_visibility = (correction_overlay == "hidden" || correction_overlay == "");
     help_overlay_visi = document.getElementById('help_overlay').style.display == "";
-    if (suggestion_overlay_visibility && chapters_overlay_visibility && keys_active && help_overlay_visi) {
+    if (suggestion_overlay_visibility && chapters_overlay_visibility && keys_active && help_overlay_visi && correction_overlay_visibility) {
         if (e == 13 || e == 39 || e == 32) {
             // down, right, enter, space
             questionSucceeded(key='key');
@@ -640,6 +642,10 @@ function keyDown(e) {
         if (!chapters_overlay_visibility) {
             // if an overlay is visible, close it
             show_overlay('chapters', 0, key=true);
+        }
+        else if(!correction_overlay_visibility){
+            show_overlay('correction', 0, key=true);
+
         }
         else if(!suggestion_overlay_visibility){
             show_overlay('suggestion', 0, key=true);

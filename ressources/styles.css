@@ -169,6 +169,22 @@ input:checked + label #fab:hover{
 }
 
 /* ----- Correction Dialogue ----- */
+#leave_correction{
+  color: white;
+  position: absolute;
+  z-index: 6;
+  top: 0%;
+  right: -24px;
+  border-radius: 50%;
+  background-color: var(--shadow-color);
+  transition: all .3s;
+}
+#leave_correction:hover{
+  transform: scale(1.1);
+}
+#leave_correction:active{
+  color: var(--primary-color);
+}
 #correction_dialog{
   right: 12.5%; top: 10%;
   position: absolute;

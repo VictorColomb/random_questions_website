@@ -123,6 +123,9 @@
     <div class ='overlay' id="correction_overlay">
         <div class='scrim' onclick='show_overlay("correction",0);'></div>
         <div class='dialog' id='correction_dialog'>
+        <span class="material-icons" id='leave_correction' onclick='show_overlay("correction",0);'>
+            clear
+        </span>
         <iframe id='correction_frame' allowtransparency="true" frameborder="0" src="">
         </iframe>
         </div>

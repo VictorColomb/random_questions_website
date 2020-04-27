@@ -109,7 +109,7 @@
         <p>
             Les corrections sont compilées en LaTeX au format PDF. Il nous est donc bénéfique que les corrections soient écrites directement en LaTeX. Malgré cela, vous êtes libres de les écrire de toute autre façon, pourvu que ce soit lisible, afin que nous puissions le transcrire en LaTeX.<br>
             Pour les intéréssés, vous avez accès, dans le spoiler, au code LaTeX qui précédera et suivera votre code, notamment les packages qui sont inclus.<br>
-            Nous encadrons les résultats en rouge. Vous pouvez faire cela avec la fonction <span style="font-family: monospace;">\fcolorbox{red}{white}{...}</span><br><br>
+            Nous encadrons les résultats en rouge. Vous pouvez faire cela avec la fonction <span>\fcolorbox{red}{white}{...}</span><br><br>
             Votre nom peut être inclus dans la correction, si vous le souhaitez.<br>
             Il suffit de remplir la case correspondante.<br><br>
             Nous nous réservons bien entendu le droit d'éliminer tout envoi non sérieux, que ce soit dans le nom ou dans la correction elle-même.

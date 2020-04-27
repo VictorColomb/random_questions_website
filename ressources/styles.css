@@ -19,6 +19,13 @@ body{
     font-weight: normal;
     font-style: normal;
 }
+@font-face{
+  font-family: 'LM';
+  src: url('lmroman10-regular-webfont.woff') format('woff'),
+       url('lmroman10-regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 :root{
   --main-background-color : #232F34;
   --secondary-background-color:#344954;
@@ -669,10 +676,6 @@ a.custom_button_right div{
   transform-style: preserve-3d;
   position: relative;
   perspective: -50em;
-
-  backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 #carousel {
   width: 100%;
@@ -698,7 +701,7 @@ a.custom_button_right div{
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
-  /* pointer-events: none; */
+  pointer-events: none;
 }
 .container p{
   color: white;
@@ -744,9 +747,52 @@ a.custom_button_right div{
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
-.container img{
-  max-height: 70%;
+.container div.question{
+  position: relative;
+  left: 10%;
+  width: 80%;
+  text-align: center;
 }
+.container span.question{
+  color: white;
+  font-family: 'LM';
+  font-size: 2.5em;
+}
+.container .MathJax{
+  font-size: .95em !important;
+  white-space: nowrap;
+}
+@media screen and (max-width: 1000px) {
+  .container span.question{
+    font-size: 2em;
+  }
+}
+@media screen and (max-width: 800px) {
+  .container span.question{
+    font-size: 1.8em;
+  }
+}
+@media screen and (max-width: 600px) {
+  .container span.question{
+    font-size: 1.6em;
+  }
+  .container p{
+    font-size: 10pt;
+  }
+}
+@media screen and (max-width: 400px) {
+  .container span.question{
+    font-size: 1.4em;
+  }
+  .container p{
+    font-size: 9pt;
+  }
+  .correction{
+    top: .2em;
+    right: .3em;
+  }
+}
+
 /* tz = 70% * tan(360 / (n * 2)) */
 .carousel_cell:nth-child(1) {
   transform:          rotateY(   0deg) translateZ(-150em);

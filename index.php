@@ -1,8 +1,59 @@
 <!DOCTYPE html>
 
 <?php
-    if (isset($_GET['m']) && $_GET['m'] == 'physique') {$maths = false; $m_or_p = 'physique';}
-    else {$maths = true; $m_or_p = 'maths';}
+    if (isset($_GET['m']) && $_GET['m'] == 'physique') {$maths = false; $discipline = 'physique';}
+    else {$maths = true; $discipline = 'maths';}
+
+
+    // SQL CONNECT
+    $sql = new mysqli(
+        'localhost',
+        'phpuser',
+        'RyIh3IdrKhNdzB4T',
+        'random_questions'
+    );
+    if ($sql->connect_error || !$sql->set_charset('utf8')) {
+        header('sqlerror.html', true, 500);
+        exit();
+    }
+
+
+    // FETCH CHAPTERS, QUESTIONS AND CORRECTIONS
+    // Chapters
+    $sql_getchapters_query = 'SELECT chapter FROM chapters_mp WHERE discipline = "' . $discipline . '" ORDER BY id';
+    $sql_getchapters_result =  $sql->query($sql_getchapters_query);
+    while($chapter = $sql_getchapters_result->fetch_array(MYSQLI_NUM)) {
+        $chapters[] = $chapter[0];
+    };
+    $sql_getchapters_result->free(); unset($sql_getchapters_query); unset($sql_getchapters_result);
+
+    // Number of questions per chapter
+    $sql_getnb_query = 'SELECT COUNT(id) FROM (SELECT id,chapter FROM questions_mp WHERE discipline = "' . $discipline . '") as temp GROUP BY chapter ORDER BY chapter';
+    $sql_getnb_result =  $sql->query($sql_getnb_query);
+    while ($nb_qu = $sql_getnb_result->fetch_array(MYSQLI_NUM)) {
+        $questions_per_chapters[] = $nb_qu[0];
+    }
+    $sql_getnb_result->free(); unset($sql_getnb_query); unset($sql_getnb_result);
+
+    // Questions
+    $sql_getquestions_query = 'SELECT id,chapter,question FROM questions_mp WHERE discipline = "' . $discipline . '"';
+    $sql_getquestions_result = $sql->query($sql_getquestions_query);
+    while ($question = $sql_getquestions_result->fetch_array(MYSQLI_NUM)) {
+        $questions[] = $question;
+    }
+    $sql_getquestions_result->free(); unset($sql_getquestions_query); unset($sql_getquestions_result);
+    $questions_print = array_map(function ($elt) {$qu = str_replace('\\','\\\\',$elt[2]); return $elt[0].','.$elt[1].',"'.$qu.'"';}, $questions);
+
+    // Corrections
+    $sql_getcorrections_query = 'SELECT question,name,correction FROM corrections_mp WHERE discipline = "' . $discipline . '"';
+    $sql_getcorrections_result = $sql->query($sql_getcorrections_query);
+    $corrections = [];
+    while ($correction = $sql_getcorrections_result->fetch_array(MYSQLI_NUM)) {
+        $corrections[] = $correction;
+    }
+    $sql_getcorrections_result->free(); unset($sql_getcorrections_query); unset($sql_getcorrections_result);
+    $corrections_print = array_map(function ($elt) {return $elt[1] . ',' . $elt[2];}, $corrections);
+    $available_corrections_print = array_map(function ($elt) {return $elt[0];}, $corrections);
 ?>
 
 
@@ -16,11 +67,9 @@
     <link rel="manifest" href="/site.webmanifest">
     <title>Révisions MP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Title and logo -->
     <title>Revisions</title>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164106797-1"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -29,18 +78,25 @@
     gtag('config', 'UA-164106797-1');
     </script>
 
-    <!-- External links -->
-    <link rel="stylesheet" href="ressources/styles.css">
-    <link rel="stylesheet" href="ressources/suggestion_styles.css">
+
+    <link rel="stylesheet" href="/ressources/styles.css">
+    <link rel="stylesheet" href="/ressources/suggestion_styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap">
 
-    <script>
-        var m_or_p = <?php if ($maths) {echo '"maths"';} else {echo '"physique"';} ?>;
-    </script>
 
-    <!--Script-->
-    <script src="ressources/scripts.js"></script>
+    <script>
+        var discipline = <?php if ($maths) {echo '"maths"';} else {echo '"physique"';} ?>;
+
+        var questions_per_chapters = [<?php echo implode(',', $questions_per_chapters) ?>];
+        questions_per_chapter = questions_per_chapters.map(x=>parseInt(x));
+        var chapters = ["<?php echo implode('","', $chapters) ?>"];
+        var questions_content = [[ <?php echo implode('],[', $questions_print) ?> ]];
+        var corrections = [[ <?php echo implode('],[', $corrections_print) ?> ]];
+        var available_corrections = [ <?php echo implode(',', $available_corrections_print) ?> ];
+    </script>
+    <script src="/ressources/scripts.js"></script>
+    <script src="/ressources/mathjaxloader.js"></script>
 </head>
 
 <body onload='on_load();' onkeydown="keyDown(event.keyCode);">
@@ -89,7 +145,7 @@
             </div>
             <div class='content'>
                 <input type="hidden" name="back" value=".">
-                <input type="hidden" name="maths_or_physics" value="<?php echo $m_or_p; ?>">
+                <input type="hidden" name="maths_or_physics" value="<?php echo $discipline; ?>">
                 <input id="question_nb" type="hidden" name="question_nb">
                 <input id='date' type="hidden" name="date">
 
@@ -144,47 +200,14 @@
             <div id='chapter_container' class='content'>
                 <ul>
                 <?php
-                    $chapters = glob($m_or_p.'/*' , GLOB_ONLYDIR);
-                    $chapters_out = [];
-
-                    // counts the amount of chapters
-                    $number_of_chapters = count($chapters);
-
-                    // Counts the amount of questions per chapter
-                    function count_questions($my_chapter){
-                        return count(glob($my_chapter.'/*.png'));
-                    }
-                    $questions_per_chapters = [];
-                    $corrections = [];
-
-                    // Enumerates over every available chapter
                     for ($i=0, $n=count($chapters); $i<$n; $i++){
-                        $chapter=$chapters[$i];
-                        $nb_questions = count_questions($chapter);
-                        $questions_per_chapters[] = $nb_questions;
-                        $chapter_name_temp = explode('/', $chapter);
-                        $chapter_name_temp_temp = end($chapter_name_temp);
-                        $chapter_name=substr($chapter_name_temp_temp,2);
-                        array_push($chapters_out, $chapter_name);
-                        //The amount of questions in said chapter
-
-                        // find available corrections
-                        $corrections_temp = [];
-                        for ($j=0; $j<$nb_questions; $j++) {
-                            if (file_exists($chapter.'/'.$j.'.pdf')) {
-                                $corrections_temp[] = $j;
-                            }
-                        }
-                        $corrections[] = implode(',', $corrections_temp);
-
-                        //adds the html
                         echo("<div class='chapter_container'>
                             <label for='chap".$i."'>
                                 <div class='switch'>
                                     <input type='checkbox' name='check_chapters' id='chap".$i."'>
                                     <span class='slider'></span>
                                 </div>
-                                <p class='chapter'>".$chapter_name."</p>
+                                <p class='chapter'>".$chapters[$i]."</p>
                             </label>
                             <div class='chapter_progression'>
                                 <div class='empty'>
@@ -195,21 +218,7 @@
                         </div>
                         <hr>");
                     }
-                    unset($n);
-                    unset($i);
-                    unset($chapter);
-                    unset($chapter_name);
-                    unset($chapter_name_temp);
-                    unset($chapter_name_temp_temp);
-                    unset($corrections_temp);
                 ?>
-                <script>
-                    var questions_per_chapters = [<?php echo implode(',', $questions_per_chapters) ?>];
-                    questions_per_chapter = questions_per_chapters.map(x=>parseInt(x));
-                    var chapters = ["<?php echo implode('","', $chapters) ?>"];
-                    var chapters_names = ["<?php echo implode('","', $chapters_out) ?>"];
-                    var corrections = [[<?php echo implode('],[', $corrections)  ?>]];
-                </script>
                 </ul>
             </div>
             <hr>
@@ -265,7 +274,6 @@
     </div>
 
     <div id="main">
-
         <div class='correction fake tooltip' onclick='view_correction()'>
             <a class='material-icons-outlined'>emoji_objects</a>
             <span id='correction_tooltip' class='tooltiptext'>Proposer une correction</span>
@@ -273,14 +281,14 @@
 
         <div id="question_div">
             <div id='carousel'>
-                <div class="carousel_cell" id='cell_0'><div class="container"><img id='question_0' width='80%' alt=" Pas de question..."><p id='question_chap_0'></p><div class='correction'><a class='material-icons-outlined' id='correction0' >emoji_objects</a></div></div></div>
-                <div class="carousel_cell" id='cell_7'><div class="container"><img id='question_7' width='80%' alt=" Pas de question..."><p id='question_chap_7'></p><div class='correction'><a class='material-icons-outlined' id='correction7' >emoji_objects</a></div></div></div>
-                <div class="carousel_cell" id='cell_6'><div class="container"><img id='question_6' width='80%' alt=" Pas de question..."><p id='question_chap_6'></p><div class='correction'><a class='material-icons-outlined' id='correction6' >emoji_objects</a></div></div></div>
-                <div class="carousel_cell" id='cell_5'><div class="container"><img id='question_5' width='80%' alt=" Pas de question..."><p id='question_chap_5'></p><div class='correction'><a class='material-icons-outlined' id='correction5' >emoji_objects</a></div></div></div>
-                <div class="carousel_cell" id='cell_4'><div class="container"><img id='question_4' width='80%' alt=" Pas de question..."><p id='question_chap_4'></p><div class='correction'><a class='material-icons-outlined' id='correction4' >emoji_objects</a></div></div></div>
-                <div class="carousel_cell" id='cell_3'><div class="container"><img id='question_3' width='80%' alt=" Pas de question..."><p id='question_chap_3'></p><div class='correction'><a class='material-icons-outlined' id='correction3' >emoji_objects</a></div></div></div>
-                <div class="carousel_cell" id='cell_2'><div class="container"><img id='question_2' width='80%' alt=" Pas de question..."><p id='question_chap_2'></p><div class='correction'><a class='material-icons-outlined' id='correction2' >emoji_objects</a></div></div></div>
-                <div class="carousel_cell" id='cell_1'><div class="container"><img id='question_1' width='80%' alt=" Pas de question..."><p id='question_chap_1'></p><div class='correction'><a class='material-icons-outlined' id='correction1' >emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_0'><div class="container"><div class='question'><span id='question_0' class='question'></span></div><p id='question_chap_0'></p><div class='correction'><a class='material-icons-outlined' id='correction0'>emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_7'><div class="container"><div class='question'><span id='question_7' class='question'></span></div><p id='question_chap_7'></p><div class='correction'><a class='material-icons-outlined' id='correction7'>emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_6'><div class="container"><div class='question'><span id='question_6' class='question'></span></div><p id='question_chap_6'></p><div class='correction'><a class='material-icons-outlined' id='correction6'>emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_5'><div class="container"><div class='question'><span id='question_5' class='question'></span></div><p id='question_chap_5'></p><div class='correction'><a class='material-icons-outlined' id='correction5'>emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_4'><div class="container"><div class='question'><span id='question_4' class='question'></span></div><p id='question_chap_4'></p><div class='correction'><a class='material-icons-outlined' id='correction4'>emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_3'><div class="container"><div class='question'><span id='question_3' class='question'></span></div><p id='question_chap_3'></p><div class='correction'><a class='material-icons-outlined' id='correction3'>emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_2'><div class="container"><div class='question'><span id='question_2' class='question'></span></div><p id='question_chap_2'></p><div class='correction'><a class='material-icons-outlined' id='correction2'>emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id='cell_1'><div class="container"><div class='question'><span id='question_1' class='question'></span></div><p id='question_chap_1'></p><div class='correction'><a class='material-icons-outlined' id='correction1'>emoji_objects</a></div></div></div>
             </div>
         </div>
     </div>

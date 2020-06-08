@@ -494,6 +494,21 @@ a.menu span{
 a.menu div:hover{
   transform: scale(1.2)
 }
+.github{
+  position: absolute;
+  right: 1%;
+  height: 100%;
+  margin: 0 !important;
+  transition: all .1s ease-in-out;
+}
+.github svg{
+  position: absolute;
+  top: 20%; right:0;
+  height: 60%;
+}
+.github:hover{
+  transform: scale(1.1);
+}
 
 
 /* ----- Custom Button ----- */

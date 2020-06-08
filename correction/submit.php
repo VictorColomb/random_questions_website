@@ -21,13 +21,23 @@
     $question = $_POST['q'];
 
     // Fetch tex code
-    $tex_file_path = $chapter.'/'.$question.'.bad.tex';
-    if (!file_exists($tex_file_path)) {
-        http_response_code(400);
-        exit('<h2>400- Mauvaise requête</h2><p>La question n\'existe pas ou est déjà corrigée.</p>');
+    $bad_tex_file_path = $chapter.'/'.$question.'.bad.tex';
+    $tex_file_path = $chapter.'/'.$question.'.tex';
+    if (!file_exists($bad_tex_file_path)) {
+        if (!file_exists($tex_file_path)) {
+            http_response_code(400);
+            exit('<h2>400- Mauvaise requête</h2><p>La question n\'existe pas ou alors on a merdé....</p>');
+        }
+        else{
+            $tex_contents = file($tex_file_path);
+            array_splice($tex_contents, 27);
+            array_push($tex_contents, $tex_code.PHP_EOL, PHP_EOL, "\\end{document}".PHP_EOL);
+        }
     }
-    $tex_contents = file($tex_file_path);
-    array_splice($tex_contents, 27, 0, $tex_code.PHP_EOL);
+    else{
+        $tex_contents = file($bad_tex_file_path);
+        array_splice($tex_contents, 27, 0, $tex_code.PHP_EOL);
+    }
 
     // Add credit if name set
     if ( isset($_POST['name']) ) {
@@ -57,13 +67,33 @@
     // Write tex file
     file_put_contents($output_filename, $tex_contents);
 
+    // Compile latex
+    exec('pdflatex -interaction=nonstopmode -output-directory="'.$chapter.'" "'.$output_filename.'"', $compil_output, $compil_returncode);
+    if ($compil_returncode == 0){
+        exec('pdflatex -interaction=nonstopmode -output-directory="'.$chapter.'" "'.$output_filename.'"');
+        $compil_success = "";
+    }
+    else{
+        $compil_success = ". Compilation failed !!!";
+    }
+
+    // Delete auxiliary files
+    $latex_jobname = substr($output_filename, 0, -4);
+    if (file_exists($latex_jobname.'.aux')) {
+        unlink($latex_jobname.'.aux');
+    }
+    if (file_exists($latex_jobname.'.log')) {
+        unlink($latex_jobname.'.log');
+    }
+
     // Write txt file
     $text_output = fopen('../'.$m_or_p.'/corrections.txt', 'a');
     fwrite($text_output, 'Chapter '.$_POST['c'].' - Question '.$question.'. Submitted on '.date('Y/m/d-g:i a'));
     if (!$empty_name) {
         fwrite($text_output, ' by '.$name);
     }
-    fwrite($text_output, '. File name : '.$question.'.bad'.$i.'.tex'.PHP_EOL);
+    fwrite($text_output, '. File name : '.$question.'.bad'.$i.'.tex'.$compil_success.PHP_EOL);
+    fclose($text_output);
 ?>
 
 <html>
@@ -92,6 +122,8 @@
         function onSubmit() {
             gtag('event', 'Submitted correction', {'event_category':'Corrections', 'event_label':'<?php echo $name_or_not ?>'} );
         }
+
+        console.log('Tried to compile <?php echo $output_filename; ?>, return code <?php echo $compil_returncode; ?>')
     </script>
 
     <style>

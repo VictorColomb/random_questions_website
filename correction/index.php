@@ -28,10 +28,13 @@
         }
         else{
             $tex_file_contents = file($tex_file_path);
+            $tex_existing_code = array_slice($tex_file_contents, 27, -2);
+            $codeInside = implode('', $tex_existing_code);
         }
     }
     else{
         $tex_file_contents = file($bad_tex_file_path);
+        $codeInside = '';
     }
     // Code before
     $tex_file_contents_before = array_slice($tex_file_contents, 0, 26);
@@ -87,7 +90,7 @@
 
         <div id="code_div" class="code">
             <form action="submit.php" method='post'>
-                <textarea name="code" id="code"></textarea>
+                <textarea name="code" id="code"><?php echo $codeInside; ?></textarea>
                 <input type="hidden" name="m" value="<?php echo $_GET['m'] ?>">
                 <input type="hidden" name="c" value="<?php echo $_GET['c'] ?>">
                 <input type="hidden" name="q" value="<?php echo $_GET['q'] ?>">

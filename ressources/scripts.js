@@ -14,7 +14,6 @@ var angle = 0;
 
 // COOKIE STUFF
 
-//sets a cookie value given a cookie name
 function setCookie(name, value) {
     var now = new Date();
     var time = now.getTime();
@@ -23,7 +22,6 @@ function setCookie(name, value) {
     document.cookie = name + "=" + (value || "") + ';expires=' + now.toGMTString() + ';';
 }
 
-//gets a cookie value given a cookie name
 function getCookieValue(name) {
     var b = document.cookie.match('(^|[^;]+)\\s*' + name + '\\s*=\\s*([^;]+)');
     return b ? b.pop() : '';
@@ -56,7 +54,6 @@ else {
     var progression = [];
     progression_temp.forEach(progression_temp_i => {
         if (progression_temp_i == "") {
-            // no progression in chapter
             progression.push([]);
         }
         else {
@@ -107,7 +104,6 @@ function show_buttons(ga=true) {
 function auto_grow(element){
     element.style.height = "1pt";
     element.style.height = (element.scrollHeight) + "px";
-    // Overflow ?
 }
 function has_text(element, bol){
     if(element.value != '' || bol){
@@ -149,11 +145,12 @@ function show_overlay(name, bol, key=false){
             gtag('event', name, {'event_category':'Menus', 'event_label':ga_action});
         }
         else {
-            // close all overlays
             if(name != 'correction'){
                 document.getElementById(name + '_dialog').style.transform = 'translateX(30em)';
-            } else{
+            }
+            else{
                 document.getElementById(name + '_dialog').style.transform = 'translateY(100%)';
+                document.getElementById('correction_frame').src = "";
             }
             document.getElementById('fab').style.opacity = 1;
             document.getElementById('fab_menu').style.opacity = 1;

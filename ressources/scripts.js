@@ -341,10 +341,10 @@ function displayCorrectionTooltip(chap, q) {
     }
 }
 
-function view_correction() {
+function view_correction(open=1) {
     var chap = questions[my_position][0];
     var q = questions[my_position][1];
-    if (corrections[chap].includes(q)) {
+    if (corrections[chap].includes(q) && open) {
         var iframe = document.getElementById('correction_frame');
         iframe.src = chapters[chap] + '/' + q.toString() + '.pdf#toolbar=0&view=FitH';
         show_overlay('correction', 1);

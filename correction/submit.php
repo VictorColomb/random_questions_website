@@ -71,7 +71,7 @@
     exec('pdflatex -interaction=nonstopmode -output-directory="'.$chapter.'" "'.$output_filename.'"', $compil_output, $compil_returncode);
     if ($compil_returncode == 0){
         exec('pdflatex -interaction=nonstopmode -output-directory="'.$chapter.'" "'.$output_filename.'"');
-        $compil_success = "";
+        $compil_success = ". Compilation succeeded :)";
     }
     else{
         $compil_success = ". Compilation failed !!!";
@@ -86,7 +86,7 @@
         unlink($latex_jobname.'.log');
     }
 
-    // Write txt file
+    // Write log file
     $text_output = fopen('../'.$m_or_p.'/corrections.txt', 'a');
     fwrite($text_output, 'Chapter '.$_POST['c'].' - Question '.$question.'. Submitted on '.date('Y/m/d-g:i a'));
     if (!$empty_name) {

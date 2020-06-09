@@ -169,21 +169,28 @@ input:checked + label #fab:hover{
 }
 
 /* ----- Correction Dialogue ----- */
-#leave_correction{
+.correction_overlay_buttons{
   color: white;
   position: absolute;
   z-index: 6;
-  top: 0%;
-  right: -24px;
+  right: -26px;
+  font-size: 24px !important;
   border-radius: 50%;
   background-color: var(--shadow-color);
   transition: all .3s;
 }
-#leave_correction:hover{
+.correction_overlay_buttons:hover{
   transform: scale(1.1);
 }
-#leave_correction:active{
+.correction_overlay_buttons:active{
   color: var(--primary-color);
+}
+#leave_correction{
+  top: 0%;
+}
+#new_correction{
+  top: 30px;
+  margin: 0 !important;
 }
 #correction_dialog{
   right: 12.5%; top: 10%;
@@ -505,6 +512,7 @@ a.menu div:hover{
   position: absolute;
   top: 20%; right:0;
   height: 60%;
+  fill: #242f35;
 }
 .github:hover{
   transform: scale(1.1);

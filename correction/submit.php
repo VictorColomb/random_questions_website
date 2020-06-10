@@ -60,9 +60,10 @@
     }
 
     // Fetch output tex filename
-    $i = 0;
-    while (file_exists($chapter.'/'.$question.'.bad'.$i.'.tex')) {$i += 1;}
-    $output_filename = $chapter.'/'.$question.'.bad'.$i.'.tex';
+    $output_filename = $chapter.'/'.$question.'.tex';
+    $bad_filename = $chapter.'/'.$question.'.bad.tex';
+    if (file_exists($output_filename)) {unlink($output_filename);}
+    if (file_exists($bad_filename)) {unlink($bad_filename);}
 
     // Write tex file
     file_put_contents($output_filename, $tex_contents);
@@ -72,9 +73,12 @@
     if ($compil_returncode == 0){
         exec('pdflatex -interaction=nonstopmode -output-directory="'.$chapter.'" "'.$output_filename.'"');
         $compil_success = ". Compilation succeeded :)";
+        $pdf_filename = $chapter.'/'.$question.'.pdf';
+        $user_output = '<iframe id="iframe" src="'.$pdf_filename.'?'.filemtime($pdf_filename).'" frameborder="0">';
     }
     else{
         $compil_success = ". Compilation failed !!!";
+        $user_output = '<p>La compilation a échoué... T\'es un peu nul mais c\'est pas grave.</p><br><div id="button" onclick="location.href=\'.?m='.$_POST['m'].'&c='.$_POST['c'].'&q='.$_POST['q'].'\'"><span>Réessayer</span></div>';
     }
 
     // Delete auxiliary files
@@ -133,16 +137,16 @@
         h2,p{
             color: white;
             font-family: 'Work Sans', sans-serif;
-            margin-left: 1rem;
+            margin-left: 1em;
         }
         h2{
-            margin-top: 1rem;
+            margin-top: 1em;
         }
 
-        #button div{
+        #button{
             width: fit-content;
             border-radius: 5px;
-            margin-left: 1rem;
+            margin-left: 1em;
 
             color: white;
             text-align: center;
@@ -158,17 +162,24 @@
             padding: 5px 10px;
             display: inline-block;
             margin: auto 0;
+            font-family: 'Work Sans', sans-serif;
         }
-        #button div:hover{
+        #button:hover{
             background-color: #293942;
             transform: scale(1.1)
+        }
+
+        iframe{
+            width: 100%;
+            height: calc(100% - 76px - 3em);
         }
     </style>
 </head>
 
 <body onload="onSubmit();">
     <h2>Votre correction a bien été enregistrée.</h2>
-    <p>Merci de votre contribution !<br>Nous allons relire votre correction puis l'ajouter.</p><br>
+    <p>Merci de votre contribution !<br>Nous allons relire votre correction puis l'ajouter.</p>
+    <?php echo $user_output; ?>
 </body>
 
 </html>

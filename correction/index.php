@@ -21,20 +21,20 @@
 
     $bad_tex_file_path = $chapter.'/'.$question.'.bad.tex';
     $tex_file_path = $chapter.'/'.$question.'.tex';
-    if (!file_exists($bad_tex_file_path)) {
-        if (!file_exists($tex_file_path)) {
+    if (!file_exists($tex_file_path)) {
+        if (!file_exists($bad_tex_file_path)) {
             http_response_code(400);
-            exit('<h2>400- Mauvaise requête</h2><p>La question n\'existe pas ou est déjà corrigée.</p>');
+            exit('<h2>400- Mauvaise requête</h2><p>La question n\'existe pas ou on a merdé (déso).</p>');
         }
         else{
-            $tex_file_contents = file($tex_file_path);
-            $tex_existing_code = array_slice($tex_file_contents, 27, -2);
-            $codeInside = implode('', $tex_existing_code);
+            $tex_file_contents = file($bad_tex_file_path);
+            $codeInside = '';
         }
     }
     else{
-        $tex_file_contents = file($bad_tex_file_path);
-        $codeInside = '';
+        $tex_file_contents = file($tex_file_path);
+        $tex_existing_code = array_slice($tex_file_contents, 27, -2);
+        $codeInside = implode('', $tex_existing_code);
     }
     // Code before
     $tex_file_contents_before = array_slice($tex_file_contents, 0, 26);

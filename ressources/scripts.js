@@ -11,6 +11,16 @@ var keys_active = true;
 var selected_chapters = [];
 var angle = 0;
 
+// FIREWORKS <3
+function easteregg1(){
+    canvas = document.getElementById('canvasFireworks');
+    canvas.style.display="block"
+    var easteregg = document.createElement("script");
+    easteregg.src = "ressources\\firework.js";
+    easteregg.id = "fireworkscript"
+    document.body.appendChild(easteregg);
+}
+
 
 // COOKIE STUFF
 
@@ -442,6 +452,10 @@ function init(){
     else { // if there are no questions
         nothing_remains()
     }
+
+    // deletes fireworks
+    if (document.getElementById("fireworkscript") != null){document.getElementById("fireworkscript").remove()};
+    document.getElementById("canvasFireworks").style.display="none";
 }
 
 function nothing_remains(){
@@ -464,11 +478,13 @@ function nothing_remains(){
         // Just display some crap...
         document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded).toString() + '/' + (real_nb_of_questions).toString() + ' questions réussies';
         document.getElementById('progress').style.width = "100%";
+
         // disable keys
         keys_active = false;
 
         // GA event
         gtag('event', 'End - not reset', {'event_category':'Progression'});
+        easteregg1();
     }
 }
 

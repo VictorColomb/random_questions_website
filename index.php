@@ -331,5 +331,7 @@
         </div>
     </div>
 
+    <canvas id="canvasFireworks">Canvas is not supported in your browser.</canvas>
+
 </body>
 </html>

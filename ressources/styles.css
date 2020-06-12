@@ -12,6 +12,15 @@ body{
   overflow-y: hidden;
 }
 
+canvas{
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%; width: 100%;
+  z-index: 3;
+  cursor: crosshair;
+  display: none;
+}
+
 @font-face {
     font-family: 'LM-Caps';
     src: url('lmromancaps10-regular-webfont.woff') format('woff'),

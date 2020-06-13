@@ -8,8 +8,8 @@
     }
 
     // Fetch chapter & question
-    $m_or_p = $_GET['m'];
-    $chapter = glob('../'.$m_or_p.'/*', GLOB_ONLYDIR)[$_GET['c']];
+    $discipline = $_GET['m'];
+    $chapter = glob('../'.$discipline.'/*', GLOB_ONLYDIR)[$_GET['c']];
     $question = $_GET['q'];
     $question_src = $chapter.'/'.$question.'.png';
 
@@ -74,7 +74,7 @@
 
 <body onload="onLoad();">
     <div id="main">
-        <h2>Proposer une correction de <?php echo $m_or_p ?></h2>
+        <h2>Proposer une correction de <?php echo $discipline ?></h2>
         <h3><?php echo $chapter_name?></h3>
         <h4>Question <?php echo ($_GET['q'] + 1)?></h4>
         <img id='correction_image' src="<?php echo $question_src ?>" alt="Question image">

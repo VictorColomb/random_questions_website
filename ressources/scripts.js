@@ -40,7 +40,7 @@ function getCookieValue(name) {
 
 // SELECTED CHAPTERS
 function fetch_selected_chapters() {
-    var selected_chapters_temp = localStorage.getItem('selected_chapters_'+m_or_p);
+    var selected_chapters_temp = localStorage.getItem('selected_chapters_'+discipline);
     if (selected_chapters_temp == null) {
         chapters.forEach(() => {
             selected_chapters.push(1);
@@ -55,7 +55,7 @@ function fetch_selected_chapters() {
 }
 
 // PROGRESSION
-progression_temp = localStorage.getItem('progression_'+m_or_p);
+progression_temp = localStorage.getItem('progression_'+discipline);
 if (progression_temp == null) {
     var progression = [];
 }
@@ -211,7 +211,7 @@ function confirm_choice(){
     if (selected_chapters_temp.includes(1)) {
         // if at least one chapter has been selected
         // save selected chapters to local storage
-        localStorage.setItem('selected_chapters_' + m_or_p, selected_chapters_temp.toString());
+        localStorage.setItem('selected_chapters_' + discipline, selected_chapters_temp.toString());
 
         gtag('event', 'Selected chapters', {'event_category':'Progression'});
 
@@ -359,7 +359,7 @@ function view_correction(open=1) {
         gtag('event', 'Opened correction', { 'event_category': 'Corrections' });
     }
     else{
-        window.open('correction/?m=' + m_or_p + '&c=' + chap + '&q=' + q, '_blank')
+        window.open('correction/?m=' + discipline + '&c=' + chap + '&q=' + q, '_blank')
 
         gtag('event', 'Opened correction form', { 'event_category': 'Corrections' });
     }
@@ -578,7 +578,7 @@ function push_progression() {
     for (var i = 0; i < number_of_chapters; i++) {
         progression_temp.push(progression[i].toString())
     }
-    localStorage.setItem('progression_' + m_or_p, progression_temp.join(';'));
+    localStorage.setItem('progression_' + discipline, progression_temp.join(';'));
 }
 
 function questionSucceeded(key=false) {

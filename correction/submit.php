@@ -16,8 +16,8 @@
     }
 
     // Fetch chapter and question
-    $m_or_p = $_POST['m'];
-    $chapter = glob('../'.$m_or_p.'/*', GLOB_ONLYDIR)[$_POST['c']];
+    $discipline = $_POST['m'];
+    $chapter = glob('../'.$discipline.'/*', GLOB_ONLYDIR)[$_POST['c']];
     $question = $_POST['q'];
 
     // Fetch tex code
@@ -91,7 +91,7 @@
     }
 
     // Write log file
-    $text_output = fopen('../'.$m_or_p.'/corrections.txt', 'a');
+    $text_output = fopen('../'.$discipline.'/corrections.txt', 'a');
     fwrite($text_output, 'Chapter '.$_POST['c'].' - Question '.$question.'. Submitted on '.date('Y/m/d-g:i a'));
     if (!$empty_name) {
         fwrite($text_output, ' by '.$name);

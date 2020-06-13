@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 
 <?php
-    if (isset($_GET['m']) && $_GET['m'] == 'physique') {$maths = false; $m_or_p = 'physique';}
-    else {$maths = true; $m_or_p = 'maths';}
+    if (isset($_GET['m']) && $_GET['m'] == 'physique') {$discipline = 'physique';}
+    elseif ($_GET['m'] == 'SI') {$discipline = 'SI';}
+    else {$discipline = 'maths';}
 ?>
 
 
@@ -36,7 +37,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap">
 
     <script>
-        var m_or_p = <?php if ($maths) {echo '"maths"';} else {echo '"physique"';} ?>;
+        var discipline = <?php echo '"'.$discipline.'"' ?>;
     </script>
 
     <!--Script-->
@@ -50,7 +51,7 @@
         </a>
 
         <a class="menu" href="?m=maths">
-            <div style="text-align: center;<?php if ($maths) echo ' color: #f9aa33;' ?>">
+            <div style="text-align: center;<?php if ($discipline == 'maths') {echo ' color: #f9aa33;';} ?>">
                 <span class="material-icons">
                     functions
                 </span>
@@ -59,11 +60,20 @@
         </a>
 
         <a class="menu" href="?m=physique">
-            <div style="text-align: center;<?php if (!$maths) echo ' color: #f9aa33;' ?>">
+            <div style="text-align: center;<?php if ($discipline == 'physique') {echo ' color: #f9aa33;';} ?>">
                 <span class="material-icons">
                     flash_on
                 </span>
                 <span style="font-family: 'Work Sans', sans-serif;">Physique</span>
+            </div>
+        </a>
+
+        <a class="menu" href="?m=SI">
+            <div style="text-align: center;<?php if ($discipline == 'SI') {echo ' color: #f9aa33;';} ?>">
+                <span class="material-icons">
+                    miscellaneous_services
+                </span>
+                <span style="font-family: 'Work Sans', sans-serif;">SI</span>
             </div>
         </a>
 
@@ -93,7 +103,7 @@
             </div>
             <div class='content'>
                 <input type="hidden" name="back" value=".">
-                <input type="hidden" name="maths_or_physics" value="<?php echo $m_or_p; ?>">
+                <input type="hidden" name="maths_or_physics" value="<?php echo $discipline; ?>">
                 <input id="question_nb" type="hidden" name="question_nb">
                 <input id='date' type="hidden" name="date">
 
@@ -151,7 +161,7 @@
             <div id='chapter_container' class='content'>
                 <ul>
                 <?php
-                    $chapters = glob($m_or_p.'/*' , GLOB_ONLYDIR);
+                    $chapters = glob($discipline.'/*' , GLOB_ONLYDIR);
                     $chapters_out = [];
 
                     // counts the amount of chapters

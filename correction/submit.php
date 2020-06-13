@@ -72,13 +72,13 @@
     exec('pdflatex -interaction=nonstopmode -output-directory="'.$chapter.'" "'.$output_filename.'"', $compil_output, $compil_returncode);
     if ($compil_returncode == 0){
         exec('pdflatex -interaction=nonstopmode -output-directory="'.$chapter.'" "'.$output_filename.'"');
-        $compil_success = ". Compilation succeeded :)";
+        $compil_success = true;
         $pdf_filename = $chapter.'/'.$question.'.pdf';
         $user_output = '<iframe id="iframe" src="'.$pdf_filename.'?'.filemtime($pdf_filename).'" frameborder="0">';
     }
     else{
-        $compil_success = ". Compilation failed !!!";
-        $user_output = '<p>La compilation a échoué... T\'es un peu nul mais c\'est pas grave.</p><br><div id="button" onclick="location.href=\'.?m='.$_POST['m'].'&c='.$_POST['c'].'&q='.$_POST['q'].'\'"><span>Réessayer</span></div>';
+        $compil_success = false;
+        $user_output = '<p>La compilation a échoué... T\'es un peu nul mais c\'est pas grave.</p><br><div class="button" onclick="location.href=\'.?m='.$_POST['m'].'&c='.$_POST['c'].'&q='.$_POST['q'].'\'"><span>Réessayer</span></div><div class="button" onclick="window.open(\''.$chapter.'/'.$question.'.log\',\'_blank\')"><span>Ouvrir  le log</span></div>';
     }
 
     // Delete auxiliary files
@@ -86,7 +86,7 @@
     if (file_exists($latex_jobname.'.aux')) {
         unlink($latex_jobname.'.aux');
     }
-    if (file_exists($latex_jobname.'.log')) {
+    if ($compil_success && file_exists($latex_jobname.'.log')) {
         unlink($latex_jobname.'.log');
     }
 
@@ -96,7 +96,8 @@
     if (!$empty_name) {
         fwrite($text_output, ' by '.$name);
     }
-    fwrite($text_output, '. File name : '.$question.'.bad'.$i.'.tex'.$compil_success.PHP_EOL);
+    if ($compil_success) { fwrite($text_output, ". Compilation succeeded :)".PHP_EOL); }
+    else { fwrite($text_output, ". Compilation failed !!!".PHP_EOL); }
     fclose($text_output);
 ?>
 
@@ -143,10 +144,10 @@
             margin-top: 1em;
         }
 
-        #button{
+        .button{
             width: fit-content;
             border-radius: 5px;
-            margin-left: 1em;
+            margin: 0 0 5pt 1em;
 
             color: white;
             text-align: center;
@@ -158,13 +159,13 @@
             cursor: pointer;
             transition: all .2s ease-in-out;
         }
-        #button span{
+        .button span{
             padding: 5px 10px;
             display: inline-block;
             margin: auto 0;
             font-family: 'Work Sans', sans-serif;
         }
-        #button:hover{
+        .button:hover{
             background-color: #293942;
             transform: scale(1.1)
         }
@@ -178,7 +179,7 @@
 
 <body onload="onSubmit();">
     <h2>Votre correction a bien été enregistrée.</h2>
-    <p>Merci de votre contribution !<br>Nous allons relire votre correction puis l'ajouter.</p>
+    <p>Merci de votre contribution !</p>
     <?php echo $user_output; ?>
 </body>
 

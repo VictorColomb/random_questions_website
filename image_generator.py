@@ -149,7 +149,6 @@ def on_latex(idx, exprr):
 # Convert ps files into single jpg
 def ps_to_jpg(idx):
     # Assumes we are in the temp folder...
-    png_out = f'{idx}.png'
 
     # Concatenate all ps files into one jpg
     process = system(f'convert -colorspace rgb -background none -density 600 -append *.ps {idx}.png')

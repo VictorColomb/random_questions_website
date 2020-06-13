@@ -2,7 +2,7 @@
 
 <?php
     if (isset($_GET['m']) && $_GET['m'] == 'physique') {$discipline = 'physique';}
-    elseif ($_GET['m'] == 'SI') {$discipline = 'SI';}
+    elseif (isset($_GET['m']) && $_GET['m'] == 'SI') {$discipline = 'SI';}
     else {$discipline = 'maths';}
 ?>
 

@@ -74,6 +74,9 @@ h1,h2,h3,h4,p,label{
 #side_panel p{
   text-align: justify;
 }
+#side_panel span{
+  user-select: text;
+}
 @media screen and (max-width: 600px) {
   html{
     overflow-y: scroll;

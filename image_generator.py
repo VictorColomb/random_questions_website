@@ -1,8 +1,6 @@
-from tkinter import Tk, Label, Entry, Button, StringVar, Canvas
 import sympy as sp
 from io import BytesIO
 from random import shuffle
-from tkinter.filedialog import askopenfilename
 from sys import argv
 from os import mkdir, chdir, remove, system
 from os.path import exists
@@ -60,46 +58,21 @@ def init_question_list(filename):
 
 
 # Fetch input file and output folder from arguments or prompts
-questions = []
-nb_questions = 0
-if len(argv) == 1:
-    print('Not enough arguments, opening file prompt.')
-    root = Tk()
-    root.withdraw()
-    root.wm_iconbitmap('favicon.ico')
-    input_filename = askopenfilename()
-    init_question_list(input_filename)
-    root.attributes('-topmost', 1)
-    root.focus_force()
-    root.attributes('-topmost', 0)
-    root.destroy()
-    del root
-else:
+questions, nb_questions = [], 0
+
+if len(argv) == 3:
+    output_folder = argv[2]
     input_filename = argv[1]
     init_question_list(input_filename)
-output_folder = 'output'
-if len(argv) <= 2:
-    print("Not enough arguments, opening output folder prompt.")
-    root = Tk()
-    root.wm_iconbitmap('favicon.ico')
-    root.title('Output folder')
-    entry_text = StringVar()
-    entry = Entry(root, textvariable=entry_text)
-    entry_text.set(input_filename.split('\\')[-1].split('/')[-1].split('.')[0])
-    entry.pack(side="left",padx=5,pady=10)
-    def output_folder_destroy(*args):
-        global output_folder
-        print(f'Setting output folder to {entry_text.get()}')
-        output_folder = entry_text.get()
-        root.destroy()
-    button = Button(root, text='Ok', command=output_folder_destroy)
-    button.pack(side='right', padx=5,pady=10)
-    root.attributes('-topmost', 1)
-    root.focus_force()
-    root.attributes('-topmost', 0)
-    root.mainloop()
+elif len(argv) < 1:
+    print('Not enough arguments')
+    print(f'Usage : {argv[0]} filename output_directory')
+    exit(1)
 else:
-    output_folder = argv[2]
+    print('Too many arguments')
+    print(f'Usage : {argv[0]} filename output_directory')
+    exit(1)
+
 
 
 # Create output and temp folders
@@ -251,7 +224,7 @@ for ch_nb,chapter_questions in enumerate(questions):
 
         # increment progress counter
         i += 1
-    
+
     # write questions
     with open('questions.txt', 'w', encoding='utf-8-sig') as output:
         output.writelines('\n'.join(already_questions))

@@ -34,7 +34,8 @@
     else{
         $tex_file_contents = file($tex_file_path);
         $tex_existing_code = array_slice($tex_file_contents, 27, -2);
-        $codeInside = implode('', $tex_existing_code);
+        $codeInside_temp = implode('', $tex_existing_code);
+	$codeInside = trim($codeInside_temp).PHP_EOL;
     }
     // Code before
     $tex_file_contents_before = array_slice($tex_file_contents, 0, 26);

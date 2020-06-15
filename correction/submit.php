@@ -23,20 +23,20 @@
     // Fetch tex code
     $bad_tex_file_path = $chapter.'/'.$question.'.bad.tex';
     $tex_file_path = $chapter.'/'.$question.'.tex';
-    if (!file_exists($bad_tex_file_path)) {
-        if (!file_exists($tex_file_path)) {
+    if (!file_exists($tex_file_path)) {
+        if (!file_exists($bad_tex_file_path)) {
             http_response_code(400);
             exit('<h2>400- Mauvaise requête</h2><p>La question n\'existe pas ou alors on a merdé....</p>');
         }
         else{
-            $tex_contents = file($tex_file_path);
-            array_splice($tex_contents, 27);
-            array_push($tex_contents, $tex_code.PHP_EOL, PHP_EOL, "\\end{document}".PHP_EOL);
+            $tex_contents = file($bad_tex_file_path);
+            array_splice($tex_contents, 27, 0, $tex_code.PHP_EOL);
         }
     }
     else{
-        $tex_contents = file($bad_tex_file_path);
-        array_splice($tex_contents, 27, 0, $tex_code.PHP_EOL);
+        $tex_contents = file($tex_file_path);
+        array_splice($tex_contents, 27);
+        array_push($tex_contents, $tex_code.PHP_EOL, PHP_EOL, "\\end{document}".PHP_EOL);
     }
 
     // Add credit if name set
@@ -48,9 +48,8 @@
             $empty_name = substr($name, $i, 1) == ' ';
         }
         if (!$empty_name) {
-            $name_line_temp = $tex_contents[17];
-            $name_line = $name_line_temp . '\\fancyfoot[R]{\\small{Correction proposée par '.$name.'}}';
-            array_splice($tex_contents, 17, 1, $name_line);
+            $name_line = '\\fancyfoot[R]{\\small{Correction proposée par '.$name.'}}';
+            array_splice($tex_contents, 18, 1, $name_line);
 
             $name_or_not = 'Name';
         }

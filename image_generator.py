@@ -8,6 +8,7 @@ from os import mkdir, chdir, remove, system
 from os.path import exists
 from shutil import move, rmtree, get_terminal_size
 from glob import glob
+from subprocess import Popen, STDOUT, DEVNULL
 
 
 # Fetch questions (discard empty lines and comments)
@@ -46,7 +47,7 @@ def init_question_list(filename):
                         nb_questions += 1
                         break
             line_idx += 1
-    if temp_questions[-1][0] != '#':
+    if temp_questions[-1][0] != '#' and temp_questions[-1] != '':
         for chr in temp_questions[-1]:
             if chr != ' ':
                 chapter_questions.append(temp_questions[-1])
@@ -182,7 +183,8 @@ def modifyLatex(idx, latex_qu, bad=''):
     with open(f'{idx}{bad}.tex', 'w', encoding='utf-8') as output:
         output.writelines(latex_file)
     if bad == '':
-        system(f'pdflatex -interaction=nonstopmode {idx}.tex')
+        compil_job = Popen(['pdflatex','-interaction=nonstopmode',f'{idx}.tex'], stdout=DEVNULL, stderr=STDOUT)
+        compil_job.wait()
         remove(f'{idx}.log')
         remove(f'{idx}.aux')
 

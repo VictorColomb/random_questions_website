@@ -353,6 +353,7 @@ function view_correction(open=1) {
     var q = questions[my_position][1];
     if (corrections[chap].includes(q) && open) {
         var iframe = document.getElementById('correction_frame');
+	iframe.src = '';
         iframe.src = chapters[chap] + '/' + q.toString() + '.pdf#toolbar=0&view=FitH';
         show_overlay('correction', 1);
 

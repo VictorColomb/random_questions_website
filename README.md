@@ -1,8 +1,13 @@
 # random_questions_website
 
+[![Releases](https://img.shields.io/github/v/release/viccol961/random_questions_website?sort=semver)](https://github.com/viccol961/random_questions_website/releases)
+[![Issues](https://img.shields.io/github/issues/viccol961/random_questions_website)](https://github.com/viccol961/random_questions_website/issues)
+[![License](https://img.shields.io/github/license/viccol961/random_questions_website)](https://github.com/viccol961/random_questions_website/blob/master/LICENSE)
+[![Website](https://img.shields.io/website?down_message=down&up_color=green&up_message=up&url=http%3A%2F%2F78.193.98.200)](http://78.193.98.200)
+
 Site de révisions du programme de MP
 
-![See preview : https://i.imgur.com/gN97psS.jpg](https://i.imgur.com/gN97psS.jpg)
+![See preview : [https://i.imgur.com/gN97psS.jpg](https://i.imgur.com/gN97psS.jpg)](https://i.imgur.com/gN97psS.jpg)
 
 ## Generate questions with `image_generator.py`
 

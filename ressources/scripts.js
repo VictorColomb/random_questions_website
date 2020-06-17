@@ -642,7 +642,8 @@ function keyDown(e) {
         if (e == 13 || e == 39 || e == 32) {
             // down, right, enter, space
             questionSucceeded(key='key');
-        } else if (e==38){
+        }
+	else if (e == 38){
             // up
             questionFailed(key='key');
         }
@@ -650,11 +651,13 @@ function keyDown(e) {
             // left
             nextQuestion(-1, false, 'key');
         }
+	else if (e == 67) {
+            view_correction();	
+	}
     }
-    if (e == 27) {
+    else if (e == 27) {
         // echap
         if (!chapters_overlay_visibility) {
-            // if an overlay is visible, close it
             show_overlay('chapters', 0, key=true);
         }
         else if(!correction_overlay_visibility){
@@ -673,6 +676,9 @@ function keyDown(e) {
 
             gtag('event', 'Menus closed', {'event_category':'Menus', 'event_label':'key'});
         }
+    }
+    else if (e == 67 && !correction_overlay_visibility) {
+        show_overlay('correction', 0, key=true);
     }
 }
 

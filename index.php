@@ -334,7 +334,7 @@
             <span class="material-icons">clear</span><span class="not-material-icons">Les questions échouées résparaissent éventuellement.</span><br><br>
             <span class="material-icons">refresh</span><span class="not-material-icons">Réinitialiser la progression retire les questions des chapitres sélectionnés des questions réussies.</span><br><br>
             <span class="material-icons">swap_horiz</span><span class="not-material-icons">Balayez horizontalement pour passer à la question suivante/précédente. Balayez vers le haut pour marquer une question échouée.</span><br><br>
-            <span class="material-icons">emoji_objects</span><span class="not-material-icons">Certaines questions viennent avec des corrigés.</span><br>
+            <span class="material-icons">emoji_objects</span><span class="not-material-icons">Certaines questions viennent avec des corrigés. Appuyez sur C pour ouvrir la correction plus rapidement.</span><br>
             <span class="material-icons-outlined">emoji_objects</span><span class="not-material-icons">Pour celles qui n'en n'ont pas, vous pouvez en proposer une.</span><br><br>
             <span class="material-icons no-tel">keyboard</span><span class="not-material-icons no-tel">Appuyez sur les touches Entrée, Espace ou &rarr; pour passer à la question suivante. Appuyez sur &uarr; pour marquer une question échouée. Appuyez sur &larr; pour revenir à la question précédente.</span><br><br>
             <span class="material-icons">error</span><span class="not-material-icons">Les navigateurs Edge, Internet Explorer, Duck Duck Go et Écosia ne sont pas supportés (pour l'instant).</span>

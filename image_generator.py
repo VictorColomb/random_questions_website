@@ -179,8 +179,8 @@ for ch_nb,chapter_questions in enumerate(questions):
     try:
         with open('questions.txt', 'r', encoding='utf-8-sig') as already_questions_input:
             already_questions = already_questions_input.readlines()
-        for i,al in enumerate(already_questions[:-1]):
-            already_questions[i] = al[:-1]
+        for j,al in enumerate(already_questions[:-1]):
+            already_questions[j] = al[:-1]
     except FileNotFoundError:
         already_questions = []
     nb_already_questions = len(already_questions)
@@ -226,7 +226,7 @@ for ch_nb,chapter_questions in enumerate(questions):
         i += 1
 
     # write questions
-    with open('questions.txt', 'w', encoding='utf-8-sig') as output:
+    with open('questions.txt', 'w', encoding='utf-8') as output:
         output.writelines('\n'.join(already_questions))
 
     # Back to output_folder

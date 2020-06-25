@@ -198,7 +198,7 @@ function createParticles( x, y ) {
 // main demo loop
 function loop() {
     // this function will run with requestAnimationFrame as long as fireworkscript remains
-    if (document.getElementById("fireworkscript") != null){requestAnimFrame( loop )};
+    if (document.getElementById("fireworkscript") != null){requestAnimFrame( loop )}
 
 	// increase the hue to get different colored fireworks over time
 	//hue += 0.5;

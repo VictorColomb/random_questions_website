@@ -1,7 +1,5 @@
 var my_position = 0;
 var questions = [];
-var flips = 1;
-var sensitivity = 1;
 var number_of_chapters = 0;
 var nb_of_questions = 0;
 var real_nb_of_questions = 0;
@@ -73,13 +71,9 @@ else {
                 progression_chapter_questions.push(parseInt(progression_question));
             })
             progression.push(progression_chapter_questions);
-            delete progression_chapter_questions;
-            delete progression_questions;
         }
     })
 }
-delete progression_temp;
-
 
 //SELECT CHAPTER
 function select_all(bol){
@@ -230,11 +224,6 @@ function confirm_choice(){
 
 
 // UTILITIES
-function random(seed) {
-    var x = Math.sin(seed++ * 10000);
-    return x - Math.floor(x);
-}
-
 function set_chapter_menu(){
     selected_chapters.forEach((selected_chapter, i) => {
         document.getElementById('chap' + i).checked = selected_chapter;
@@ -268,7 +257,7 @@ function get_questions(){
 
 // SWIPES
 function swipes(){
-    function unify(e) { return e.changedTouches ? e.changedTouches[0] : e};
+    function unify(e) { return e.changedTouches ? e.changedTouches[0] : e}
     let x0 = null;
     let y0=null
     function lock(e) {
@@ -455,7 +444,7 @@ function init(){
     }
 
     // deletes fireworks
-    if (document.getElementById("fireworkscript") != null){document.getElementById("fireworkscript").remove()};
+    if (document.getElementById("fireworkscript") != null){document.getElementById("fireworkscript").remove()}
     document.getElementById("canvasFireworks").style.display="none";
 }
 
@@ -672,7 +661,6 @@ function keyDown(e) {
                 checkbox.checked = false;
                 document.getElementById('fab_menu').className = 'shrink';
             }
-            delete checkbox;
 
             gtag('event', 'Menus closed', {'event_category':'Menus', 'event_label':'key'});
         }
@@ -682,20 +670,6 @@ function keyDown(e) {
     }
 }
 
-
-// suggestion overlay
-function enableSubmit() {
-    radios = document.getElementsByName('suggestion_or_comment');
-    radioChecked = radios[0].checked || radios[1].checked;
-    if (radioChecked && (document.getElementById('name_input').value != '') && (document.getElementById('sugg_input').value != '')) {
-        document.getElementById("submit_button").disabled = "";
-    }
-    else {
-        document.getElementById("submit_button").disabled = "disabled";
-    }
-    delete radios;
-    delete radioChecked;
-}
 
 
 // HELP OVERLAY

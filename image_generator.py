@@ -1,12 +1,12 @@
-import sympy as sp
-from io import BytesIO
-from random import shuffle
-from sys import argv
-from os import mkdir, chdir, remove, system
-from os.path import exists
-from shutil import move, rmtree, get_terminal_size
 from glob import glob
-from subprocess import Popen, STDOUT, DEVNULL
+from io import BytesIO
+from os import chdir, mkdir, remove
+from os.path import exists
+from shutil import get_terminal_size, move
+from subprocess import DEVNULL, STDOUT, Popen
+from sys import argv
+
+import sympy as sp
 
 
 # Fetch questions (discard empty lines and comments)
@@ -14,8 +14,8 @@ def init_question_list(filename):
     temp_questions = []
     global questions, nb_questions
     try:
-        with open(filename, 'r', encoding='utf-8-sig') as input:
-            for line in input:
+        with open(filename, 'r', encoding='utf-8-sig') as inp:
+            for line in inp:
                 temp_questions.append(line)
     except FileNotFoundError:
         print('No such file. Exiting...')
@@ -26,8 +26,8 @@ def init_question_list(filename):
     while line_idx < len(temp_questions) - 1 and temp_questions[line_idx][:2] != '##' :
         line = temp_questions[line_idx]
         if line[0] != '#':
-            for chr in line[:-1]:
-                if chr != ' ':
+            for char in line[:-1]:
+                if char != ' ':
                     chapter_questions.append(line[:-1])
                     nb_questions += 1
                     break
@@ -39,15 +39,15 @@ def init_question_list(filename):
         while line_idx < len(temp_questions) - 1 and temp_questions[line_idx][:2] != '##':
             line = temp_questions[line_idx]
             if line[0] != '#':
-                for chr in line[:-1]:
-                    if chr != ' ':
+                for char in line[:-1]:
+                    if char != ' ':
                         chapter_questions.append(line[:-1])
                         nb_questions += 1
                         break
             line_idx += 1
     if temp_questions[-1][0] != '#' and temp_questions[-1] != '':
-        for chr in temp_questions[-1]:
-            if chr != ' ':
+        for char in temp_questions[-1]:
+            if char != ' ':
                 chapter_questions.append(temp_questions[-1])
                 nb_questions += 1
                 break
@@ -125,7 +125,12 @@ def ps_to_jpg(idx):
     # Assumes we are in the temp folder...
 
     # Concatenate all ps files into one jpg
-    process = system(f'convert -colorspace rgb -background none -density 600 -append *.ps {idx}.png')
+    process = Popen(
+        ['convert','-colorspace rgb','-background','none','-density','600','-append','*.ps',f'{idx}.png'],
+        stdout = DEVNULL,
+        stderr = STDOUT
+    )
+    process.wait()
 
     if process != 0:
         raise Exception('Fuck, convert ps to jpg did not work...\nDo you have ImageMagick installed ?')

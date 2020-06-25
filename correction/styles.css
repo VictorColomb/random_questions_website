@@ -134,7 +134,7 @@ input[id^="spoiler"] ~ .spoiler {
   height: 0;
   overflow: hidden;
   opacity: 0;
-  padding: 5px; 
+  padding: 5px;
   transition: all .3s;
 }
 input[id^="spoiler"]:checked + label + .spoiler{
@@ -181,12 +181,12 @@ input[type=text]{
   border: none;
   border-radius: 0;
   outline: none;
-  margin: 0 0 8px 0;
+  margin: 0 0 8px;
   border-bottom: 1px solid white;
   box-shadow: none;
   line-height: normal;
   overflow-y: hidden;
-  padding: .8rem 0 .3rem 0;
+  padding: .8rem 0 .3rem;
   resize: none;
   min-height: 2.5rem;
   height: 1.5rem;

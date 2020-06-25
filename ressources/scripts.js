@@ -268,7 +268,7 @@ function get_questions(){
 
 // SWIPES
 function swipes(){
-    function unify(e) { return e.changedTouches ? e.changedTouches[0] : e};
+    function unify(e) { return e.changedTouches ? e.changedTouches[0] : e}
     let x0 = null;
     let y0=null
     function lock(e) {
@@ -455,7 +455,7 @@ function init(){
     }
 
     // deletes fireworks
-    if (document.getElementById("fireworkscript") != null){document.getElementById("fireworkscript").remove()};
+    if (document.getElementById("fireworkscript") != null){document.getElementById("fireworkscript").remove()}
     document.getElementById("canvasFireworks").style.display="none";
 }
 

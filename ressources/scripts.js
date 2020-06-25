@@ -224,11 +224,6 @@ function confirm_choice(){
 
 
 // UTILITIES
-function random(seed) {
-    var x = Math.sin(seed++ * 10000);
-    return x - Math.floor(x);
-}
-
 function set_chapter_menu(){
     selected_chapters.forEach((selected_chapter, i) => {
         document.getElementById('chap' + i).checked = selected_chapter;
@@ -675,18 +670,6 @@ function keyDown(e) {
     }
 }
 
-
-// suggestion overlay
-function enableSubmit() {
-    radios = document.getElementsByName('suggestion_or_comment');
-    radioChecked = radios[0].checked || radios[1].checked;
-    if (radioChecked && (document.getElementById('name_input').value != '') && (document.getElementById('sugg_input').value != '')) {
-        document.getElementById("submit_button").disabled = "";
-    }
-    else {
-        document.getElementById("submit_button").disabled = "disabled";
-    }
-}
 
 
 // HELP OVERLAY

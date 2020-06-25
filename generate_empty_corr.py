@@ -8,8 +8,8 @@ def init_question_list(filename):
     temp_questions = []
     global questions, nb_questions
     try:
-        with open(filename, 'r', encoding='utf-8-sig') as input:
-            for line in input:
+        with open(filename, 'r', encoding='utf-8-sig') as inp:
+            for line in inp:
                 temp_questions.append(line)
     except FileNotFoundError:
         print('No such file. Exiting...')
@@ -20,8 +20,8 @@ def init_question_list(filename):
     while line_idx < len(temp_questions) - 1 and temp_questions[line_idx][:2] != '##':
         line = temp_questions[line_idx]
         if line[0] != '#':
-            for chr in line[:-1]:
-                if chr != ' ':
+            for char in line[:-1]:
+                if char != ' ':
                     chapter_questions.append(line[:-1])
                     nb_questions += 1
                     break
@@ -33,15 +33,15 @@ def init_question_list(filename):
         while line_idx < len(temp_questions) - 1 and temp_questions[line_idx][:2] != '##':
             line = temp_questions[line_idx]
             if line[0] != '#':
-                for chr in line[:-1]:
-                    if chr != ' ':
+                for char in line[:-1]:
+                    if char != ' ':
                         chapter_questions.append(line[:-1])
                         nb_questions += 1
                         break
             line_idx += 1
     if temp_questions[-1][0] != '#':
-        for chr in temp_questions[-1]:
-            if chr != ' ':
+        for char in temp_questions[-1]:
+            if char != ' ':
                 chapter_questions.append(temp_questions[-1])
                 nb_questions += 1
                 break

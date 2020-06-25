@@ -1,25 +1,4 @@
-/*MINE
-https://materializecss.com/text-inputs.html
-*/
 /* ----- General ---- */
-
-html{
-  height: 100%;
-}
-body{
-  height: 100%;
-  margin: 0;
-  overflow-y: hidden;
-}
-
-canvas{
-  position: absolute;
-  top: 0; left: 0;
-  height: 100%; width: 100%;
-  z-index: 3;
-  cursor: crosshair;
-  display: none;
-}
 
 @font-face {
     font-family: 'LM-Caps';
@@ -36,16 +15,32 @@ canvas{
   --shadow-color : #182024;
   --on-surface : #232F34;
 }
-body a{
-  text-decoration:none;
-}
 
-body {
+
+html{
+  height: 100%;
+}
+body{
+  height: 100%;
+  margin: 0;
+  overflow-y: hidden;
+
   position: fixed;
   bottom: 0; top: 0;
   left: 0; right: 0;
   background-color: var(--main-background-color);
   user-select: none;
+}
+body a{
+  text-decoration:none;
+}
+canvas{
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%; width: 100%;
+  z-index: 3;
+  cursor: crosshair;
+  display: none;
 }
 
 #main{
@@ -359,7 +354,7 @@ input:checked + label #fab:hover{
   cursor: pointer;
   font-size: .9em;
   font-weight: normal;
-  margin: 0 0 3px 0;
+  margin: 0 0 3px;
   -webkit-transition: .2s;
   transition: .2s;
 }
@@ -369,7 +364,7 @@ input:checked + label #fab:hover{
   display: list-item;
 }
 #chapter_container hr{
-  margin: 3px 0 6px 0;
+  margin: 3px 0 6px;
   opacity: 28%;
 }
 .switch{
@@ -680,7 +675,7 @@ a.custom_button_right div{
   width: 100%;
   top: 0%; left: 0%;
   background-color: var(--secondary-background-color);
-  box-shadow: 0px 3px 5px 6px var(--shadow-color);
+  box-shadow: 0 3px 5px 6px var(--shadow-color);
   display: table;
   z-index: 3;
 }
@@ -735,13 +730,13 @@ a.custom_button_right div{
 .container p{
   color: white;
   position: absolute;
-  bottom: 0pt;
+  bottom: 0;
   text-align: center;
   width: 90%;
   left: 5%;
   font-family: 'LM-Caps';
   font-size: 12pt;
-  margin: 0 0 0.5em 0;
+  margin: 0 0 0.5em;
 }
 .correction{
     position: absolute;
@@ -782,35 +777,35 @@ a.custom_button_right div{
 /* tz = 70% * tan(360 / (n * 2)) */
 .carousel_cell:nth-child(1) {
   transform:          rotateY(   0deg) translateZ(-150em);
-  -webkit-transform:  rotateY(   0deg) translateZ(-150em);;
+  -webkit-transform:  rotateY(   0deg) translateZ(-150em);
 }
 .carousel_cell:nth-child(2) {
   transform:          rotateY(  45deg) translateZ(-150em);
-  -webkit-transform:  rotateY(  45deg) translateZ(-150em);;
+  -webkit-transform:  rotateY(  45deg) translateZ(-150em);
 }
 .carousel_cell:nth-child(3) {
   transform:          rotateY(  90deg) translateZ(-150em);
-  -webkit-transform:  rotateY(  90deg) translateZ(-150em);;
+  -webkit-transform:  rotateY(  90deg) translateZ(-150em);
 }
 .carousel_cell:nth-child(4) {
   transform:          rotateY( 135deg) translateZ(-150em);
-  -webkit-transform:  rotateY( 135deg) translateZ(-150em);;
+  -webkit-transform:  rotateY( 135deg) translateZ(-150em);
 }
 .carousel_cell:nth-child(5) {
   transform:          rotateY( 180deg) translateZ(-150em);
-  -webkit-transform:  rotateY( 180deg) translateZ(-150em);;
+  -webkit-transform:  rotateY( 180deg) translateZ(-150em);
 }
 .carousel_cell:nth-child(6) {
   transform:          rotateY( 225deg) translateZ(-150em);
-  -webkit-transform:  rotateY( 225deg) translateZ(-150em);;
+  -webkit-transform:  rotateY( 225deg) translateZ(-150em);
 }
 .carousel_cell:nth-child(7) {
   transform:          rotateY( 270deg) translateZ(-150em);
-  -webkit-transform:  rotateY( 270deg) translateZ(-150em);;
+  -webkit-transform:  rotateY( 270deg) translateZ(-150em);
 }
 .carousel_cell:nth-child(8) {
   transform:          rotateY( 315deg) translateZ(-150em);
-  -webkit-transform:  rotateY( 315deg) translateZ(-150em);;
+  -webkit-transform:  rotateY( 315deg) translateZ(-150em);
 }
 .failed.carousel_cell:nth-child(1) {
   transform:          rotateY( -45deg) translateY(-50em) !important;

@@ -66,7 +66,6 @@ canvas{
 }
 #fab span:after{
   content: 'menu_open';
-  transition-delay: 0.1s;
   transition: color .2s;
 }
 #fab_input{

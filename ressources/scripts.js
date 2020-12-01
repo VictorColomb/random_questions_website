@@ -1,6 +1,8 @@
 var my_position = 0;
-var questions = [];
-var number_of_chapters = 0;
+var flips = 1;
+var sensitivity = 1;
+var all_nb_of_questions = questions_content.length;
+var number_of_chapters = chapters.length;
 var nb_of_questions = 0;
 var real_nb_of_questions = 0;
 var real_nb_questions_succeeded = 0;
@@ -8,6 +10,17 @@ var buttons_visible = 1;
 var keys_active = true;
 var selected_chapters = [];
 var angle = 0;
+var questions = [];
+
+
+// PARSE QUESTIONS LIST
+var all_questions = [];
+chapters.forEach(_ => {
+    all_questions.push([]);
+});
+questions_content.forEach((question,question_nb) => {
+    all_questions[question[1]].push(question_nb);
+});
 
 // FIREWORKS <3
 function easteregg1(){
@@ -38,7 +51,7 @@ function getCookieValue(name) {
 
 // SELECTED CHAPTERS
 function fetch_selected_chapters() {
-    var selected_chapters_temp = localStorage.getItem('selected_chapters_'+discipline);
+    var selected_chapters_temp = localStorage.getItem('selected_chapters_mp_'+discipline);
     if (selected_chapters_temp == null) {
         chapters.forEach(() => {
             selected_chapters.push(1);
@@ -52,27 +65,16 @@ function fetch_selected_chapters() {
     }
 }
 
+
 // PROGRESSION
-progression_temp = localStorage.getItem('progression_'+discipline);
+progression_temp = localStorage.getItem('progression_mp_'+discipline);
 if (progression_temp == null) {
     var progression = [];
 }
 else {
-    progression_temp = progression_temp.split(';');
-    var progression = [];
-    progression_temp.forEach(progression_temp_i => {
-        if (progression_temp_i == "") {
-            progression.push([]);
-        }
-        else {
-            progression_questions = progression_temp_i.split(',');
-            progression_chapter_questions = []
-            progression_questions.forEach(progression_question => {
-                progression_chapter_questions.push(parseInt(progression_question));
-            })
-            progression.push(progression_chapter_questions);
-        }
-    })
+    var progression = progression_temp.split(',').map(elt => {
+        return parseInt(elt);
+    });
 }
 
 //SELECT CHAPTER
@@ -109,6 +111,7 @@ function auto_grow(element){
     element.style.height = "1pt";
     element.style.height = (element.scrollHeight) + "px";
 }
+
 function has_text(element, bol){
     if(element.value != '' || bol){
         var val = element.value; element.value=''; element.value= val;
@@ -119,8 +122,18 @@ function has_text(element, bol){
 }
 
 function updateChapterProgression() {
+    succeeded_per_chapter = [];
+    chapters.forEach(_ => {
+        succeeded_per_chapter.push(0);
+    });
+    progression.forEach(question_id => {
+        for (i = 0; i < all_nb_of_questions && question_id != questions_content[i][0]; i++) {}
+        if (!(i == all_nb_of_questions)) {
+            succeeded_per_chapter[questions_content[i][1]] += 1;
+        }
+    })
     for (let i = 0; i < number_of_chapters; i++) {
-        nb_qu_succeeded = progression[i].length
+        nb_qu_succeeded = succeeded_per_chapter[i];
         nb_qu_chap = questions_per_chapters[i];
         document.getElementById('chapter_progress_bar' + i).style.width = ((nb_qu_succeeded / nb_qu_chap) * 100).toString() + "%";
         document.getElementById('chapter_progression' + i).innerHTML = nb_qu_succeeded + '/' + nb_qu_chap;
@@ -131,13 +144,16 @@ function show_overlay(name, bol, key=false){
     if (document.getElementById('help_overlay').style.display == "") {
         if(bol == 1){
             if (name == 'suggestion') {
-                document.getElementById('question_nb').value = questions[my_position];
+                document.getElementById('question_nb').value = questions[my_position][1];
                 var now = new Date;
                 var utc_timestamp = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
                     now.getUTCHours(), now.getUTCMinutes());
                 document.getElementById('date').value = utc_timestamp.toString();
                 document.getElementById('name').focus();
                 document.getElementById('comment').value = "";
+            }
+            if (name == 'chapters') {
+                updateChapterProgression();
             }
             document.getElementById(name + '_overlay').style.visibility = 'visible';
             document.getElementById('fab').style.opacity = 0;
@@ -163,9 +179,6 @@ function show_overlay(name, bol, key=false){
                 show_menus();
                 document.getElementById('fab_input').checked = false;
             }
-        }
-        if (name == "chapters" && bol) {
-            updateChapterProgression();
         }
     }
 }
@@ -205,13 +218,12 @@ function confirm_choice(){
     if (selected_chapters_temp.includes(1)) {
         // if at least one chapter has been selected
         // save selected chapters to local storage
-        localStorage.setItem('selected_chapters_' + discipline, selected_chapters_temp.toString());
+        localStorage.setItem('selected_chapters_mp_' + discipline, selected_chapters_temp.toString());
 
         gtag('event', 'Selected chapters', {'event_category':'Progression'});
 
         // reload everything
-        questions = [];
-        get_chapter_menu();
+        selected_chapters = selected_chapters_temp;
         show_overlay('chapters', 0);
         document.getElementById('fab_menu').className='shrink';
         init();
@@ -230,27 +242,19 @@ function set_chapter_menu(){
     })
 }
 
-function get_chapter_menu(){
-    for(i=0; i<number_of_chapters; i++){
-        selected_chapters[i] = document.getElementById('chap' + i).checked;
-    }
-}
-
 function get_questions(){
-    selected_chapters.forEach((selected_chapter, i) => {
-        if(selected_chapter){
-            for(j=0; j< questions_per_chapters[i]; j++){
-                real_nb_of_questions += 1;
-                if (!progression[i].includes(j)) {
-                    // if question not in progression
-                    questions.push([i, j])
-                }
-                else {
-                    real_nb_questions_succeeded += 1;
-                }
+    questions = [];
+    questions_content.forEach((question,question_nb) => {
+        if (selected_chapters[question[1]]) {
+            real_nb_of_questions += 1;
+            if (!progression.includes(question[0])) {
+                questions.push([question[1], question_nb]);
+            }
+            else {
+                real_nb_questions_succeeded += 1;
             }
         }
-    })
+    });
     nb_of_questions = questions.length;
 }
 
@@ -301,14 +305,14 @@ function swipes(){
 // RESET
 function reset(){
     if (document.getElementById('help_overlay').style.display == "") {
-        if (confirm('Attention ! Vous êtes sur le point de réinitialiser la progression des chapitres sélectionnés . Voulez vous poursuivre ?')) {
-            selected_chapters.forEach((if_chapter, chapter_nb) => {
-                if (if_chapter) {
-                    progression.splice(chapter_nb, 1, []);
+        if (confirm('Attention ! Vous êtes sur le point de réinitialiser la progression des chapitres sélectionnés. Voulez vous poursuivre ?')) {
+            progression.forEach((id,nb) => {
+                for (i=0; i<all_nb_of_questions && id!= all_questions[i][0]; i++) {}
+                if (!i == all_nb_of_questions && selected_chapters.includes(all_questions[i][1])) {
+                    progression.splice(nb,1);
                 }
             });
             push_progression();
-            questions = [];
             document.getElementById('fab_menu').className = 'shrink';
 
             gtag('event', 'Progression reset', {'event_category':'Progression'});
@@ -320,16 +324,17 @@ function reset(){
 
 
 // CORRECTIONS
-function displayCorrectionButton(chap, q, which) {
-    if (corrections[chap].includes(q)) {
+function displayCorrectionButton(q, which) {
+    if (available_corrections.includes(questions_content[q][0])) {
         document.getElementById('correction' + which).classList.add('exists');
+        document.getElementById('correction_tooltip' + which).innerHTML = 'Correction';
     }
     else {
         document.getElementById('correction' + which).classList.remove('exists');
     }
 }
-function displayCorrectionTooltip(chap, q) {
-    if (corrections[chap].includes(q)) {
+function displayCorrectionTooltip(q) {
+    if (available_corrections.includes(questions_content[q][0])) {
         document.getElementById('correction_tooltip').innerHTML = 'Correction';
     }
     else {
@@ -337,10 +342,9 @@ function displayCorrectionTooltip(chap, q) {
     }
 }
 
-function view_correction(open=1) {
-    var chap = questions[my_position][0];
+function view_correction() {
     var q = questions[my_position][1];
-    if (corrections[chap].includes(q) && open) {
+    /* if (available_corrections.includes(questions_content[q][0])) {
         var iframe = document.getElementById('correction_frame');
 	iframe.src = '';
         iframe.src = chapters[chap] + '/' + q.toString() + '.pdf#toolbar=0&view=FitH';
@@ -352,7 +356,8 @@ function view_correction(open=1) {
         window.open('correction/?m=' + discipline + '&c=' + chap + '&q=' + q, '_blank')
 
         gtag('event', 'Opened correction form', { 'event_category': 'Corrections' });
-    }
+    } */
+    alert('En développement...');
 }
 
 
@@ -400,13 +405,6 @@ function init(){
     // Finds the amount of chapters
     number_of_chapters = questions_per_chapters.length;
 
-    // init progression if empty
-    if (progression.length < number_of_chapters) {
-        for (var i = 0; i < number_of_chapters; i++) {
-            progression.push([]);
-        }
-    }
-
     document.getElementById('fab_input').checked = false;
 
     // Selects the chapters
@@ -432,9 +430,9 @@ function init(){
             var chap = questions[modpos(i - 2)][0];
             var q = questions[modpos(i - 2)][1];
             which = ((i - 2 + 8) % 8);
-            document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
-            document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
-            displayCorrectionButton(chap, q, which);
+            document.getElementById('question_' + which).innerHTML = questions_content[q][2].replace('\\\\', '');
+            document.getElementById('question_chap_' + which).innerHTML = chapters[chap];
+            displayCorrectionButton(q, which);
         }
 
         nextQuestion(0);
@@ -451,9 +449,10 @@ function init(){
 function nothing_remains(){
     if (confirm("Vous avez déjà réussi toutes les questions des chapitres sélectionnés. Voulez vous réinitialiser la progression de ces chapitres ? Dans la négative, sélectionnez plus de chapitres pour pouvoir continuer.")) {
         // remove progression from selected chapters
-        selected_chapters.forEach((if_chapter,chapter_nb) => {
-            if (if_chapter) {
-                progression.splice(chapter_nb,1,[]);
+        progression.forEach((id, nb) => {
+            for (i = 0; i < all_nb_of_questions && id != all_questions[i][0]; i++) { }
+            if (!i == all_nb_of_questions && selected_chapters.includes(all_questions[i][1])) {
+                progression.splice(nb, 1);
             }
         });
         push_progression();
@@ -461,18 +460,14 @@ function nothing_remains(){
         // GA event
         gtag('event', 'End - reset', {'event_category':'Progression'});
 
-        // reload after progression reset
+        // Reload after progression reset
         init();
     }
     else {
-        // Just display some crap...
-        document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded).toString() + '/' + (real_nb_of_questions).toString() + ' questions réussies';
+        document.getElementById('progress_number').innerHTML = real_nb_questions_succeeded.toString() + '/' + real_nb_of_questions.toString() + ' questions réussies';
         document.getElementById('progress').style.width = "100%";
-
-        // disable keys
         keys_active = false;
 
-        // GA event
         gtag('event', 'End - not reset', {'event_category':'Progression'});
         easteregg1();
     }
@@ -483,21 +478,19 @@ function nothing_remains(){
 function nextQuestion(direction, failed=false, ga_bool=false) {
     if (direction < 0 && angle == 0) {return;}
 
-    // remove failed attribute from previous cell
     document.getElementById('cell_' + ((my_position - 1 + 8)% 8)).className='carousel_cell';
 
     if (direction < 0 && ga_bool) {
         gtag('event', 'Previous', { 'event_category': 'Questions', 'event_label': ga_bool});
     }
 
-    // if going over the number of questions
     if (my_position + direction >= nb_of_questions || real_nb_of_questions <= real_nb_questions_succeeded) {
         if (real_nb_of_questions > real_nb_questions_succeeded) {
 
             real_nb_of_questions = 0;
             real_nb_questions_succeeded = 0;
             get_questions();
-            //Shuffles the elements in the array using Fisher-Yates Algorithm
+
             for (let i = nb_of_questions - 2; i > my_position + direction; i--) {
                 const j = Math.floor(Math.random() * (i - my_position + direction)) + my_position + direction;
                 const temp = questions[i];
@@ -508,22 +501,22 @@ function nextQuestion(direction, failed=false, ga_bool=false) {
                 var chap = questions[modpos(my_position + i)][0];
                 var q = questions[modpos(my_position + i)][1];
                 which = (angle + i) % 8;
-                document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
-                document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
-                displayCorrectionButton(chap, q, which);
+                document.getElementById('question_' + which).innerHTML = questions_content[q][2].replace('\\\\', '');
+                document.getElementById('question_chap_' + which).innerHTML = chapters[chap];
+                displayCorrectionButton(q, which);
             }
         }
-        else { // if there are no questions
+        else {
             nothing_remains();
             return;
         }
     }
-    my_position = modpos(my_position + direction)
+
+    my_position = modpos(my_position + direction);
     angle += direction;
     document.getElementById('progress_number').innerHTML = (real_nb_questions_succeeded).toString() + '/' + (real_nb_of_questions).toString() + ' questions réussies';
     document.getElementById('progress').style.width = (real_nb_questions_succeeded / (real_nb_of_questions) * 100).toString() + '%' ;
 
-    // adds the next question on the back side
     if (direction > 0){
         var chap = questions[modpos(my_position + 5)][0];
         var q = questions[modpos(my_position + 5)][1];
@@ -543,76 +536,62 @@ function nextQuestion(direction, failed=false, ga_bool=false) {
             previous.children[0].style.cursor = "default";
         }
     }
-    document.getElementById('question_' + which).src = chapters[chap] + '/' + q.toString() + '.png';
-    document.getElementById('question_chap_' + which).innerHTML = chapters_names[chap];
-    displayCorrectionButton(chap, q, which);
+    document.getElementById('question_' + which).innerHTML = questions_content[q][2].replace('\\\\', '');
+    document.getElementById('question_chap_' + which).innerHTML = chapters[chap];
+    displayCorrectionButton(q, which);
 
     if(failed){
         document.getElementById('cell_' + ((angle - 1) % 8)).className='failed carousel_cell';
     }
 
-    // rotate caroussel, display succeeded marker and change correction tooltip
-    question = questions[my_position]
-    if (progression[question[0]].includes(question[1])) {
+    q = questions[my_position][1];
+    if (progression.includes(questions_content[q][0])) {
         document.getElementById('question_succeeded').style.opacity = "";
     }
     else {
         document.getElementById('question_succeeded').style.opacity = "0";
     }
-    displayCorrectionTooltip(question[0], question[1]);
+    displayCorrectionTooltip(q);
+
+    try {
+        MathJax.typeset();
+    } catch (_) {
+        MathJax.typesetPromise();
+    }
     document.getElementById('carousel').style.transform = 'translateZ(-150em) rotateY(' + (45 * angle).toString() + 'deg)';
 }
 
 function push_progression() {
-    var progression_temp = [];
-    for (var i = 0; i < number_of_chapters; i++) {
-        progression_temp.push(progression[i].toString())
-    }
-    localStorage.setItem('progression_' + discipline, progression_temp.join(';'));
+    localStorage.setItem('progression_mp_' + discipline, progression.join(','));
 }
 
 function questionSucceeded(key=false) {
-    var question = questions[my_position]; // [0] = chapter ; [1] = question
+    var qid = questions_content[questions[my_position][1]][0];
 
-    // add question[1] to the question[0] th element of progression
-    var progression_chapter = progression[question[0]];
-    if (!progression_chapter.includes(question[1])) {
-        progression_chapter.push(question[1]);
-        // remove question[0] th element of the progression list and replace with progression_chapter
-        progression.splice(question[0],1,progression_chapter);
-
+    if (!progression.includes(qid)) {
+        progression.push(qid);
         real_nb_questions_succeeded += 1;
-
-        // push progression to localstorage
         push_progression();
     }
 
-    // GA event
     if (!key) {key = 'click';}
-    gtag('event', 'Succeeded', { 'event_category': 'Questions', 'event_label': key});
+    gtag('event', 'Succeeded', { 'event_category': 'Questions', 'event_label': key} );
 
     nextQuestion(1);
 }
 
 function questionFailed(key=false) {
-    var question = questions[my_position];
-
-    var progression_chapter = progression[question[0]];
-    if (progression_chapter.includes(question[1])) {
-        // delete question[1] from progression_chapter
-        progression_chapter.splice(progression_chapter.indexOf(question[1]),1);
-        // replace in progression
-        progression.splice(question[0], 1, progression_chapter);
-
+    var qid = questions_content[questions[my_position]][0];
+    
+    pos = progression.lastIndexOff(qid);
+    if (pos != -1) {
+        progression.splice(pos,1);
         real_nb_questions_succeeded -= 1;
+        push_progression();
     }
 
-    // push progression to local storage
-    push_progression();
-
-    // GA event
     if (!key) {key = 'click';}
-    gtag('event', 'Failed', { 'event_category': 'Questions', 'event_label': key});
+    gtag('event', 'Failed', { 'event_category': 'Questions', 'event_label': key} );
 
     nextQuestion(1, true);
 }
@@ -622,12 +601,10 @@ function questionFailed(key=false) {
 function keyDown(e) {
     chapters_overlay = document.getElementById('chapters_overlay').style.visibility;
     suggestion_overlay = document.getElementById('suggestion_overlay').style.visibility;
-    correction_overlay = document.getElementById('correction_overlay').style.visibility;
     chapters_overlay_visibility = (chapters_overlay == "hidden" || chapters_overlay == "");
     suggestion_overlay_visibility = (suggestion_overlay == "hidden" || suggestion_overlay == "");
-    correction_overlay_visibility = (correction_overlay == "hidden" || correction_overlay == "");
     help_overlay_visi = document.getElementById('help_overlay').style.display == "";
-    if (suggestion_overlay_visibility && chapters_overlay_visibility && keys_active && help_overlay_visi && correction_overlay_visibility) {
+    if (suggestion_overlay_visibility && chapters_overlay_visibility && keys_active && help_overlay_visi) {
         if (e == 13 || e == 39 || e == 32) {
             // down, right, enter, space
             questionSucceeded(key='key');
@@ -641,17 +618,13 @@ function keyDown(e) {
             nextQuestion(-1, false, 'key');
         }
 	else if (e == 67) {
-            view_correction();	
+            view_correction();
 	}
     }
     else if (e == 27) {
         // echap
         if (!chapters_overlay_visibility) {
             show_overlay('chapters', 0, key=true);
-        }
-        else if(!correction_overlay_visibility){
-            show_overlay('correction', 0, key=true);
-
         }
         else if(!suggestion_overlay_visibility){
             show_overlay('suggestion', 0, key=true);

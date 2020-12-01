@@ -76,6 +76,7 @@ h1,h2,h3,h4,p,label{
 }
 #side_panel span{
   user-select: text;
+  font-family: monospace;
 }
 @media screen and (max-width: 600px) {
   html{

@@ -16,4 +16,4 @@ Site de révision du programme de MP
 
 `chapters.csv` : id | discipline | name
 
-`questions.csv` : id | discipline | chapter | content | corr | suggested_corr
+`questions.csv` : id | discipline | chapter | content | corr

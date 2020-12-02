@@ -374,21 +374,17 @@ function displayCorrectionTooltip(q) {
 }
 
 function view_correction() {
-  var q = questions[my_position][1];
-  /* if (available_corrections.includes(questions_content[q][0])) {
-        var iframe = document.getElementById('correction_frame');
-	iframe.src = '';
-        iframe.src = chapters[chap] + '/' + q.toString() + '.pdf#toolbar=0&view=FitH';
-        show_overlay('correction', 1);
-
-        gtag('event', 'Opened correction', { 'event_category': 'Corrections' });
-    }
-    else{
-        window.open('correction/?m=' + discipline + '&c=' + chap + '&q=' + q, '_blank')
-
-        gtag('event', 'Opened correction form', { 'event_category': 'Corrections' });
-    } */
-  alert("En développement...");
+  var qid = questions_content[questions[my_position][1]][0];
+  if (available_corrections.includes(qid)) {
+    var iframe = document.getElementById("correction_frame");
+    iframe.src = "";
+    iframe.src = "corrections/" + qid + ".pdf#toolbar=0&view=FitH";
+    show_overlay("correction", 1);
+    gtag("event", "Opened correction", { event_category: "Corrections" });
+  } else {
+    window.open("correction/?q=" + qid, "_blank");
+    gtag("event", "Opened correction form", { event_category: "Corrections" });
+  }
 }
 
 // INIT
@@ -465,9 +461,8 @@ function init() {
       var chap = questions[modpos(i - 2)][0];
       var q = questions[modpos(i - 2)][1];
       which = (i - 2 + 8) % 8;
-      document.getElementById(
-        "question_" + which
-      ).innerHTML = questions_content[q][2];
+      document.getElementById("question_" + which).innerHTML =
+        questions_content[q][2];
       document.getElementById("question_chap_" + which).innerHTML =
         chapters[chap];
       displayCorrectionButton(questions_content[q][0], which);
@@ -561,9 +556,8 @@ function nextQuestion(direction, failed = false, ga_bool = false) {
         var chap = questions[modpos(my_position + i)][0];
         var q = questions[modpos(my_position + i)][1];
         which = (angle + i) % 8;
-        document.getElementById(
-          "question_" + which
-        ).innerHTML = questions_content[q][2];
+        document.getElementById("question_" + which).innerHTML =
+          questions_content[q][2];
         document.getElementById("question_chap_" + which).innerHTML =
           chapters[chap];
         displayCorrectionButton(questions_content[q][0], which);
@@ -604,7 +598,8 @@ function nextQuestion(direction, failed = false, ga_bool = false) {
       previous.children[0].style.cursor = "default";
     }
   }
-  document.getElementById("question_" + which).innerHTML = questions_content[q][2];
+  document.getElementById("question_" + which).innerHTML =
+    questions_content[q][2];
   document.getElementById("question_chap_" + which).innerHTML = chapters[chap];
   displayCorrectionButton(questions_content[q][0], which);
 
@@ -613,8 +608,7 @@ function nextQuestion(direction, failed = false, ga_bool = false) {
       "failed carousel_cell";
   }
 
-  q = questions[my_position][1];
-  qid = questions_content[q][0]
+  qid = questions_content[questions[my_position][1]][0];
   if (progression.includes(qid)) {
     document.getElementById("question_succeeded").style.opacity = "";
   } else {

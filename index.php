@@ -59,7 +59,6 @@
 
 
     <link rel="stylesheet" href="/ressources/styles.css">
-    <link rel="stylesheet" href="/ressources/suggestion_styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap">
 
@@ -135,11 +134,6 @@
                 <hr>
             </div>
             <div class="content">
-                <input type="hidden" name="back" value=".">
-                <input type="hidden" name="maths_or_physics" value="<?php echo $discipline; ?>">
-                <input id="question_nb" type="hidden" name="question_nb">
-                <input id="date" type="hidden" name="date">
-
                 <div class="input-field">
                     <input type="text" id="name" name="name" class="text" onfocus="has_text(this, 1);" onblur="has_text(this, 0)" maxlength="32"></input>
                     <label for="name" class="text">Nom</label>
@@ -161,7 +155,7 @@
             <hr>
             <div id="navigation" class="footer">
                 <div class="button" onclick="show_overlay('suggestion', 0);">Annuler</div>
-                <input class="button" style="color:var(--secondary-color)" type="submit" id="submit_button" value="Envoyer"></input>
+                <div class="button" style="color:var(--secondary-color)" onclick="send_comment();">Envoyer</div>
             </div>
             </form>
         </div>
@@ -322,7 +316,7 @@
             <span class="material-icons">emoji_objects</span><span class="not-material-icons">Certaines questions viennent avec des corrigés. Appuyez sur C pour ouvrir la correction plus rapidement.</span><br>
             <span class="material-icons-outlined">emoji_objects</span><span class="not-material-icons">Pour celles qui n'en n'ont pas, vous pouvez en proposer une.</span><br><br>
             <span class="material-icons no-tel">keyboard</span><span class="not-material-icons no-tel">Appuyez sur les touches Entrée, Espace ou &rarr; pour passer à la question suivante. Appuyez sur &uarr; pour marquer une question échouée. Appuyez sur &larr; pour revenir à la question précédente.</span><br><br>
-            <span class="material-icons">error</span><span class="not-material-icons">Les navigateurs Edge, Internet Explorer, Duck Duck Go et Écosia ne sont pas supportés (pour l'instant).</span>
+            <span class="material-icons">error</span><span class="not-material-icons">Les navigateurs Internet Explorer, Duck Duck Go et Écosia ne sont pas supportés (pour l'instant).</span>
         </div>
     </div>
 

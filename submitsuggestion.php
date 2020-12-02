@@ -1,21 +1,13 @@
-<!DOCTYPE html>
-
 <?php
-if (!is_dir('suggestions')) {
-    mkdir('suggestions');
+if (file_exists('comments.csv')) {
+    $comments_file_handler = fopen('comments.csv', 'a');
+} else {
+    $comments_file_handler = fopen('comments.csv', 'x');
 }
-if (file_exists("suggestions/" . $_POST['maths_or_physics'] . ".txt")) {
-    $fp = fopen('suggestions/' . $_POST['maths_or_physics'] . '.txt', 'a');
-}
-else {
-    $fp = fopen('suggestions/' . $_POST['maths_or_physics'] . '.txt', 'x');
-}
-fwrite($fp, "Sent on ".$_POST["date"]."UTC; Question " . $_POST["question_nb"] . " (" . $_POST['name'] .' | '. $_POST['mail'].") : " . $_POST['suggestion_text'] . "\n");
-fclose($fp);
-?>
 
-<html lang="en">
-    <script type='text/javascript'>
-        self.close();
-    </script>
-</html>
+fwrite(
+    $comments_file_handler,
+    $_POST['timestamp'] . "\t" . $_POST['name'] . "\t" . $_POST['email'] . "\t" . str_replace("\n", '\n', str_replace("\t", " ", $_POST['comment'])) . "\t" . $_POST['qid'] . "\n"
+);
+
+?>

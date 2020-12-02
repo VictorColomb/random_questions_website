@@ -17,3 +17,5 @@ Site de révision du programme de MP
 `chapters.csv` : id | discipline | name
 
 `questions.csv` : id | discipline | chapter | content | corr
+
+`comments.csv` : timestamp | qid | name | email | comment

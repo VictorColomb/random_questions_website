@@ -157,17 +157,6 @@ function show_overlay(name, bol, key = false) {
   if (document.getElementById("help_overlay").style.display == "") {
     if (bol == 1) {
       if (name == "suggestion") {
-        document.getElementById("question_nb").value =
-          questions[my_position][1];
-        var now = new Date();
-        var utc_timestamp = Date.UTC(
-          now.getUTCFullYear(),
-          now.getUTCMonth(),
-          now.getUTCDate(),
-          now.getUTCHours(),
-          now.getUTCMinutes()
-        );
-        document.getElementById("date").value = utc_timestamp.toString();
         document.getElementById("name").focus();
         document.getElementById("comment").value = "";
       }
@@ -204,6 +193,30 @@ function show_overlay(name, bol, key = false) {
       }
     }
   }
+}
+
+function send_comment() {
+  qid = questions_content[questions[my_position][1]][0];;
+  timestamp = Date.now();
+  name = document.getElementById("name").value;
+  email = document.getElementById("mail").value;
+  comment = document.getElementById("comment").value;
+
+  var xmlhttprequest = new XMLHttpRequest();
+  xmlhttprequest.open("POST", "submitsuggestion.php", true);
+  var params = "qid=" + qid + "&timestamp=" + timestamp + "&name=" + name + "&comment=" + comment + "&email=" + email;
+  xmlhttprequest.setRequestHeader(
+    "Content-Type",
+    "application/x-www-form-urlencoded"
+  );
+  xmlhttprequest.onreadystatechange = function() {
+    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+      alert("Commentaire envoyé !");
+    }
+  }
+  xmlhttprequest.send(params);
+
+  show_overlay("suggestion", 0);
 }
 
 function show_menus() {
@@ -670,17 +683,22 @@ function keyDown(e) {
     .visibility;
   suggestion_overlay = document.getElementById("suggestion_overlay").style
     .visibility;
+  correction_overlay = document.getElementById("correction_overlay").style
+    .visibility;
   chapters_overlay_visibility =
     chapters_overlay == "hidden" || chapters_overlay == "";
   suggestion_overlay_visibility =
     suggestion_overlay == "hidden" || suggestion_overlay == "";
+  correction_overlay_visibility =
+    correction_overlay == "hidden" || correction_overlay == "";
   help_overlay_visi =
     document.getElementById("help_overlay").style.display == "";
   if (
     suggestion_overlay_visibility &&
     chapters_overlay_visibility &&
     keys_active &&
-    help_overlay_visi
+    help_overlay_visi &&
+    correction_overlay_visibility
   ) {
     if (e == 13 || e == 39 || e == 32) {
       // down, right, enter, space
@@ -692,6 +710,7 @@ function keyDown(e) {
       // left
       nextQuestion(-1, false, "key");
     } else if (e == 67) {
+      // c
       view_correction();
     }
   } else if (e == 27) {
@@ -700,6 +719,8 @@ function keyDown(e) {
       show_overlay("chapters", 0, (key = true));
     } else if (!suggestion_overlay_visibility) {
       show_overlay("suggestion", 0, (key = true));
+    } else if (!correction_overlay_visibility) {
+      show_overlay("correction", 0, (key = true));
     } else {
       checkbox = document.getElementById("fab_input");
       if (checkbox.checked) {

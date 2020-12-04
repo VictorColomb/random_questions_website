@@ -7,8 +7,8 @@ from csv import DictWriter
 def init_question_list(filename):
     questions, temp_questions = [], []
     try:
-        with open(filename, 'r', encoding='utf-8-sig') as input:
-            for line in input:
+        with open(filename, 'r', encoding='utf-8-sig') as inp:
+            for line in inp:
                 temp_questions.append(line)
     except FileNotFoundError:
         print('No such file. Exiting...')
@@ -19,8 +19,8 @@ def init_question_list(filename):
     while line_idx < len(temp_questions) - 1 and temp_questions[line_idx][:2] != '##' :
         line = temp_questions[line_idx]
         if line[0] != '#':
-            for chr in line[:-1]:
-                if chr != ' ':
+            for char in line[:-1]:
+                if char != ' ':
                     chapter_questions.append(line[:-1])
                     break
         line_idx += 1
@@ -31,8 +31,8 @@ def init_question_list(filename):
         while line_idx < len(temp_questions) - 1 and temp_questions[line_idx][:2] != '##':
             line = temp_questions[line_idx]
             if line[0] != '#':
-                for chr in line[:-1]:
-                    if chr != ' ':
+                for char in line[:-1]:
+                    if char != ' ':
                         chapter_questions.append(line[:-1])
                         break
             line_idx += 1
@@ -72,7 +72,8 @@ for discipline in ['maths','physique','SI'] :
                 rename(correction_path, f'corrections_new/{question_idx}.pdf')
                 try:
                     rename(correction_path[:-4] + '.tex', f'corrections_new/{question_idx}.tex')
-                except FileNotFoundError: pass
+                except FileNotFoundError:
+                    pass
 
             dict_questions.append({
                 'id': question_idx,

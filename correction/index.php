@@ -107,7 +107,7 @@
         <h3>Instructions</h3>
         <hr>
         <p>
-            Les corrections sont compilées en LaTeX au format PDF. Vous disposez ci-contre d'un template que vous pouvez remplir, après <span>% Correction</span>. Cela permet d'avoit un style uniforme sur toutes les corrections.<br><br>
+            Les corrections sont compilées en LaTeX au format PDF. Vous disposez ci-contre d'un template que vous pouvez remplir, après <span>% Correction</span>. Cela permet d'avoir un style uniforme sur toutes les corrections.<br><br>
             Vous pouvez faire apparaître votre nom dans votre correction en enlevant le commentaire <span>%</span> en ligne 20 et remplaçant <span>!== Votre nom ici ==!</span> par votre nom.<br><br>
             Nous vous proposons également de nous fournir directement un ficher LaTeX ou un fichier PDF (5MB max). Le code LaTeX ci-contre ne sera alors pas pris en compte.<br><br>
             Nous relirons votre correction avant de la proposer à tout le monde. Nous nous réservons le droit de retirer toute correction non sérieuse, incomplète ou erronée.

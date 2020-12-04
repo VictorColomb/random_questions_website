@@ -196,15 +196,15 @@ function show_overlay(name, bol, key = false) {
 }
 
 function send_comment() {
-  qid = questions_content[questions[my_position][1]][0];;
+  qid = questions_content[questions[my_position][1]][0];
   timestamp = Date.now();
-  name = document.getElementById("name").value;
+  name_input = document.getElementById("name").value;
   email = document.getElementById("mail").value;
   comment = document.getElementById("comment").value;
 
   var xmlhttprequest = new XMLHttpRequest();
   xmlhttprequest.open("POST", "submitsuggestion.php", true);
-  var params = "qid=" + qid + "&timestamp=" + timestamp + "&name=" + name + "&comment=" + comment + "&email=" + email;
+  var params = "qid=" + qid + "&timestamp=" + timestamp + "&name=" + name_input + "&comment=" + comment + "&email=" + email;
   xmlhttprequest.setRequestHeader(
     "Content-Type",
     "application/x-www-form-urlencoded"

@@ -1,45 +1,52 @@
 <!DOCTYPE html>
 
 <?php
-    // Check if discipline, chapter and question get vars exist
-    if (!( isset($_GET['m']) && isset($_GET['c']) && isset($_GET['q']) )) {
+    const LATEX_1 = "\\documentclass[a4paper]{article}\n\\usepackage[T1]{fontenc}\n\\usepackage[utf8]{inputenc}\n\\usepackage{lmodern}\n\\usepackage{amsmath,amssymb}\n\\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}\n\\usepackage{fancyhdr}\n\\usepackage{esvect}\n\\usepackage{xcolor}\n\\usepackage{tikz}\\usetikzlibrary{calc}\n\n\\parskip1em\\parindent0pt\n\n\\begin{document}\n\n\\pagestyle{fancy}\n\\fancyhf{}\n\\setlength{\\headheight}{15pt}\n\\fancyhead[L]{";
+    // Chapter name
+    const LATEX_2 = "}\\fancyhead[R]{Question ";
+    // Question id
+    const LATEX_3 = "}\n% \\fancyfoot[L]{Correction proposée par !== Votre nom ici ==!}\n\n% Énoncé\n\\begin{center}\n\t\\large{\\boldmath{\\textbf{";
+    // Question
+    const LATEX_4 = "}}\n\\end{center}\n\n% Correction (!=== type below ===!)\n\n\n\n\\end{document}\n";
+
+    // Check question get variable
+    if (!isset($_GET['q'])) {
         http_response_code(400);
         exit('<h2>400 - Mauvaise requête</h2><p>Argument(s) GET manquant(s)</p>');
     }
 
-    // Fetch chapter & question
-    $discipline = $_GET['m'];
-    $chapter = glob('../'.$discipline.'/*', GLOB_ONLYDIR)[$_GET['c']];
-    $question = $_GET['q'];
-    $question_src = $chapter.'/'.$question.'.png';
+    $qid = $_GET['q'];
 
-    // Chapter name for display
-    $chapter_name_temp = explode('/', $chapter);
-    $chapter_name_temp_temp = end($chapter_name_temp);
-    $chapter_name = substr($chapter_name_temp_temp, 2);
-    unset($chapter_name_temp); unset($chapter_name_temp_temp);
-
-    $bad_tex_file_path = $chapter.'/'.$question.'.bad.tex';
-    $tex_file_path = $chapter.'/'.$question.'.tex';
-    if (!file_exists($tex_file_path)) {
-        if (!file_exists($bad_tex_file_path)) {
-            http_response_code(400);
-            exit('<h2>400- Mauvaise requête</h2><p>La question n\'existe pas ou on a merdé (déso).</p>');
-        }
-        else{
-            $tex_file_contents = file($bad_tex_file_path);
-            $codeInside = '';
+    // Fetch question data
+    $questions_file_handle = fopen('../data/questions.csv', 'r');
+    while (($data = fgetcsv($questions_file_handle, 0, "\t")) !== false) {
+        if ($data[0] == $qid) {
+            $discipline = $data[1];
+            $chapterid = $data[2];
+            $question_content = $data[3];
+            $correction_available = $data[4];
+            break;
         }
     }
-    else{
-        $tex_file_contents = file($tex_file_path);
-        $tex_existing_code = array_slice($tex_file_contents, 27, -2);
-        $codeInside_temp = implode('', $tex_existing_code);
-	$codeInside = trim($codeInside_temp).PHP_EOL;
+    fclose($questions_file_handle);
+
+    // Fetch chapter name
+    $chapters_file_handle = fopen('../data/chapters.csv', 'r');
+    $chapters = [];
+    $nb_chapters = 0;
+    while (($data = fgetcsv($chapters_file_handle, 0, "\t")) !== false) {
+        if ($data[1] == $discipline && $data[0] == $chapterid) {
+            $chapter = $data[2];
+            break;
+        }
     }
-    // Code before
-    $tex_file_contents_before = array_slice($tex_file_contents, 0, 26);
-    $codeBefore = implode('<br>', $tex_file_contents_before);
+    fclose($chapters_file_handle);
+
+    // Establish textarea prefill
+    $tex_path = '../corrections/' . $qid . '.tex';
+    if (!($correction_available && file_exists($tex_path) && ($textarea_prefill = file_get_contents($tex_path)))) {
+        $textarea_prefill = LATEX_1 . $chapter . LATEX_2 . $qid . LATEX_3 . $question_content . LATEX_4;
+    }
 ?>
 
 <html>
@@ -71,43 +78,24 @@
     <link rel="stylesheet" href="/ressources/styles.css">
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js"></script>
+    <script src="/ressources/mathjaxloader.js"></script>
 </head>
 
 <body onload="onLoad();">
     <div id="main">
         <h2>Proposer une correction de <?php echo $discipline ?></h2>
-        <h3><?php echo $chapter_name?></h3>
-        <h4>Question <?php echo ($_GET['q'] + 1)?></h4>
-        <img id='correction_image' src="<?php echo $question_src ?>" alt="Question image">
-        <div class="code non_interactive">
-            <input type="checkbox" id="spoiler1" onchange="openedSpoiler(this);"/>
-            <label for="spoiler1"><span>Afficher le début du code</span></label>
-            <div id="code_before" class="spoiler">
-                <p>
-                    <?php echo $codeBefore ?>
-                </p>
-            </div>
-        </div>
+        <h3><?php echo $chapter?></h3>
+        <h4>Question <?php echo $qid; ?></h4>
+        <p id="question"><?php echo $question_content; ?></p>
 
         <div id="code_div" class="code">
-            <form action="submit.php" method='post'>
-                <textarea name="code" id="code"><?php echo $codeInside; ?></textarea>
-                <input type="hidden" name="m" value="<?php echo $_GET['m'] ?>">
-                <input type="hidden" name="c" value="<?php echo $_GET['c'] ?>">
-                <input type="hidden" name="q" value="<?php echo $_GET['q'] ?>">
-                <div class="code non_interactive">
-                    <input type="checkbox" id="spoiler2" onchange="openedSpoiler(this);"/>
-                    <label for="spoiler2"><span>Afficher la fin du code</span></label>
-                    <div id="code_before" class="spoiler">
-                        <p>
-                            \end{document}
-                        </p>
-                    </div>
-                </div>
+            <form enctype="multipart/form-data" action="submit.php" method='post'>
+                <textarea name="code" id="code"><?php echo $textarea_prefill; ?></textarea>
+                <input type="hidden" name="q" value="<?php echo $qid; ?>">
                 <div id="submit_button_div">
                     <div class="input-field">
-                        <input type="text" id="name" name="name" class="text" onfocus="has_text(this, 1);" onblur="has_text(this, 0)" length="32" maxlength="32">
-                        <label for="name" class="text">Nom</label>
+                        <input id="file" name="file" type="file" onchange="updatelabel();" />
+                        <label for="file">Choisir un fichier</label>
                     </div>
                     <input id="submit" type="submit" value="Envoyer">
                 </div>
@@ -119,12 +107,10 @@
         <h3>Instructions</h3>
         <hr>
         <p>
-            Les corrections sont compilées en LaTeX au format PDF. Il nous est donc bénéfique que les corrections soient écrites directement en LaTeX. Malgré cela, vous êtes libres de les écrire de toute autre façon, pourvu que ce soit lisible, afin que nous puissions le transcrire en LaTeX.<br>
-            Pour les intéréssés, vous avez accès, dans le spoiler, au code LaTeX qui précédera et suivera votre code, notamment les packages qui sont inclus.<br>
-            Nous encadrons les résultats en rouge. Vous pouvez faire cela avec la fonction <span>\fcolorbox{red}{white}{...}</span><br><br>
-            Votre nom peut être inclus dans la correction, si vous le souhaitez.<br>
-            Il suffit de remplir la case correspondante.<br><br>
-            Nous nous réservons bien entendu le droit d'éliminer tout envoi non sérieux, que ce soit dans le nom ou dans la correction elle-même.
+            Les corrections sont compilées en LaTeX au format PDF. Vous disposez ci-contre d'un template que vous pouvez remplir, après <span>% Correction</span>. Cela permet d'avoit un style uniforme sur toutes les corrections.<br><br>
+            Vous pouvez faire apparaître votre nom dans votre correction en enlevant le commentaire <span>%</span> en ligne 20 et remplaçant <span>!== Votre nom ici ==!</span> par votre nom.<br><br>
+            Nous vous proposons également de nous fournir directement un ficher LaTeX ou un fichier PDF (5MB max). Le code LaTeX ci-contre ne sera alors pas pris en compte.<br><br>
+            Nous relirons votre correction avant de la proposer à tout le monde. Nous nous réservons le droit de retirer toute correction non sérieuse, incomplète ou erronée.
         </p>
     </div>
 </body>

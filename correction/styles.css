@@ -1,5 +1,12 @@
-/* Main division */
-#main{
+@font-face {
+  font-family: "LM";
+  src: url("/ressources/lmroman10-regular-webfont.woff") format("woff"),
+    url("/ressources/lmroman10-regular-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+#main {
   width: calc(70%-10px);
   height: 100%;
   position: absolute;
@@ -9,22 +16,26 @@
 
   overflow-y: scroll;
 }
-#correction_image{
+#correction_image {
   width: 80%;
   margin-bottom: 10px;
 }
-#code_before p{
-  margin: 0;
-  padding-left: 29px;
-}
 
-
-/* Fonts and font sizes */
-h1,h2,h3,h4,p,label{
-  font-family: 'Work Sans', sans-serif;
+h2,
+h3,
+h4,
+p {
+  font-family: "Work Sans", sans-serif;
   color: white;
 }
-
+h4 {
+  margin: 0;
+}
+#question {
+  color: white;
+  font-family: "LM" !important;
+  font-size: 2em;
+}
 
 /* Scrollbar */
 ::-webkit-scrollbar {
@@ -42,56 +53,46 @@ h1,h2,h3,h4,p,label{
   background: var(--primary-color);
   opacity: 60%;
 }
-#code_div ::-webkit-scrollbar-thumb{
+#code_div ::-webkit-scrollbar-thumb {
   background: #aaa !important;
 }
 
-.code.non_interactive p{
-  font-family: monospace;
-  font-variant-ligatures: contextual;
-  font-size: 13px;
-
-  margin-bottom: 1em;
-  cursor: text;
-  user-select: text;
-}
-
-
 /* Side panel */
-#side_panel{
-    width: calc(27% - 5px - 4em);
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
+#side_panel {
+  width: calc(27% - 5px - 4em);
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
 
-    background: var(--secondary-background-color);
-    box-shadow: .3rem var(--shadow-color);
+  background: var(--secondary-background-color);
+  box-shadow: 0.3rem var(--shadow-color);
 
-    padding: 1em;
-    overflow-y: scroll;
+  padding: 1em;
+  overflow-y: scroll;
 }
-#side_panel p{
+#side_panel p {
   text-align: justify;
+  padding-bottom: 1em;
 }
-#side_panel span{
+#side_panel span {
   user-select: text;
   font-family: monospace;
 }
 @media screen and (max-width: 600px) {
-  html{
+  html {
     overflow-y: scroll;
   }
-  body{
+  body {
     overflow-y: scroll;
   }
-  #main{
+  #main {
     position: relative;
     width: calc(100% - 2em);
     overflow: hidden;
     height: fit-content;
   }
-  #side_panel{
+  #side_panel {
     position: relative;
     left: 0;
     width: calc(100% - 2em);
@@ -99,127 +100,53 @@ h1,h2,h3,h4,p,label{
   }
 }
 
-
-/* Code spoilers */
-input[id^="spoiler"]{
- display: none;
-}
-input[id^="spoiler"] + label {
-  display: block;
-  width: fit-content;
-  margin: 10px 0;
-  border-radius: 8px;
-  padding: 3px 10px;
-
-  background: #293942;
-  color: var(--secondary-color);
-  text-align: center;
-  font-size: .9em;
-
-  cursor: pointer;
-  transition: all .3s;
-}
-input[id^="spoiler"]:checked + label {
-  color: #333;
-  background: #ccc;
-}
-input[id^="spoiler"]:checked + label span{
-  display: none;
-}
-input[id^="spoiler"]:checked + label:after{
-  content: "Cacher";
-  font-size: .8em;
-}
-input[id^="spoiler"] ~ .spoiler {
-  width: 90%;
-  height: 0;
-  overflow: hidden;
-  opacity: 0;
-  padding: 5px;
-  transition: all .3s;
-}
-input[id^="spoiler"]:checked + label + .spoiler{
-  height: auto;
-  opacity: 1;
-  padding: 5px;
-}
-
-#submit_button_div{
+#submit_button_div {
   position: relative;
   margin: 1.5em 0;
 }
-#submit{
+#submit,
+#file + label {
   font-size: 1em;
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
 
   display: inline-block;
   width: fit-content;
   padding: 5px 10px;
   position: absolute;
-  top: 0;right: 0;
+  top: 0;
 
   border: 0;
   border-radius: 5px;
   outline: none;
 
   background-color: var(--secondary-background-color);
-  color: var(--secondary-color);
   box-shadow: 1.5px 1.5px 2.5px 3px var(--shadow-color);
 
-  transition: .1s ease-in;
+  transition: 0.1s ease-in;
 }
-#submit:hover{
+#submit {
+  color: var(--secondary-color);
+  right: 0;
+}
+#submit:hover,
+#file + label:hover {
   background-color: #293942;
   transform: scale(1.1);
 }
-
-.input-field{
+.input-field {
   width: fit-content;
-  margin: 0 .5em;
+  margin: 0 0.5em;
 }
-input[type=text]{
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
-  outline: none;
-  margin: 0 0 8px;
-  border-bottom: 1px solid white;
-  box-shadow: none;
-  line-height: normal;
-  overflow-y: hidden;
-  padding: .8rem 0 .3rem;
-  resize: none;
-  min-height: 2.5rem;
-  height: 1.5rem;
-  box-sizing: border-box;
-  transition: box-shadow .3s, border .3s;
-  color: white;
-}
-input[type=text]:focus{
-  border-bottom: 1px solid var(--secondary-color);
-  box-shadow: 0 1px 0 0 var(--secondary-color);
-}
-input[type=text]:focus + label{
-  color: var(--secondary-color);
-  outline: 0; border: 0;
-}
-label.active{
-  transform: translateY(-1.2rem);
-  font-size: small !important;
-}
-label.text{
+#file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
   position: absolute;
-  top: .8rem;
-  left: .5em;
-  transform-origin: 0 100%;
-  cursor: text;
-  transition: transform .2s ease-out, color .2s ease, font-size .2s;
-  opacity: .8;
-
-  font-family: 'Work Sans', sans-serif;
-  font-weight: normal;
-  font-size: medium;
+  z-index: -1;
+}
+#file + label {
+  cursor: pointer;
+  white-space: nowrap;
   color: white;
-
-  box-shadow: none !important;
 }

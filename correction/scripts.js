@@ -1,29 +1,30 @@
-// NAME TEXT INPUT
-function has_text(element, bol) {
-  if (element.value != "" || bol) {
-    var val = element.value;
-    element.value = "";
-    element.value = val;
-    element.labels[0].className = "active text";
-  } else {
-    element.labels[0].className = "text";
-  }
-}
-
-// ON LOAD
 function onLoad() {
   // Interactive codemirror instance
-  var code_textarea = CodeMirror.fromTextArea(document.getElementById("code"), {
+  CodeMirror.fromTextArea((textarea = document.getElementById("code")), {
     mode: "stex",
     lineNumbers: true,
   });
-
-  has_text(document.getElementById("name"), 0);
 }
 
-// GA
-function openedSpoiler(obj) {
-  if (this.checked) {
-    gtag("event", "Opened spoiler", { event_category: "Corrections" });
+function updatelabel() {
+  var label = document.getElementsByTagName("LABEL")[0];
+
+  var input = document.getElementById("file");
+  var filename = input.value.split(/(\\|\/)/g).pop();
+  var ext = filename.split(".").pop();
+
+  if ((ext == "pdf" || ext == "tex")) {
+    label.innerHTML = filename;
+  } else {
+    alert("Le fichier doit être un fichier .tex ou .pdf !");
+    input.value = null;
+    label.innerHTML = "Choisir un fichier";
+    return;
+  }
+  if (input.files[0].size > 5242880) {
+    // if filesize > 5MB
+    alert("Le fichier ne doit pas faire plus de 5MB !");
+    input.value = null;
+    label.innerHTML = "Choisir un fichier";
   }
 }

@@ -386,9 +386,9 @@ function displayCorrectionTooltip(q) {
   }
 }
 
-function view_correction() {
+function view_correction(allow_open = 1) {
   var qid = questions_content[questions[my_position][1]][0];
-  if (available_corrections.includes(qid)) {
+  if (available_corrections.includes(qid) && allow_open) {
     var iframe = document.getElementById("correction_frame");
     iframe.src = "";
     iframe.src = "corrections/" + qid + ".pdf#toolbar=0&view=FitH";

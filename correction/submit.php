@@ -1,103 +1,102 @@
 <?php
-    if ( !isset($_POST['m']) || !isset($_POST['q']) || !isset($_POST['c']) || !isset($_POST['code']) ) {
+    const FILE_UPLOAD_SUCCESSFUL = '<h2>Votre correction a bien été enregistrée.</h2><p>Merci de votre contribution !</p>';
+    const FILE_UPLOAD_UNSUCCESSFUL = '<h2>Le téléversement de votre correction n\'a pas fonctionné</h2><p>Veuillez réessayer ou nous contacter si l\'erreur se produit répétitivement.';
+
+    const BAD_REQUEST = '<h2>400 - Mauvaise requête</h2>';
+    const NO_QUESTION = '<h2>400- Mauvaise requête</h2><p>La question n\'existe pas.</p>';
+    const WRONG_EXTENSION = '<h2>Wrong file extension</h2><p>Only .tex and .pdf extensions are allowed !</p>';
+    const FILE_TOO_LARGE = '<h2>Uploaded file size is too big</h2><p>The maximum file size allowed is 5MB !</p>';
+    const EMPTY_CORRECTION = '<h2>400 - Mauvaise requête</h2><p>La correction proposée est vide.</p>';
+
+
+    // Check post variables
+    if (!isset($_POST['q']) || !isset($_POST['code']) ) {
         http_response_code(400);
-        exit('<h3>400 - Mauvaise requête</h3>');
-    }
-    $empty_code = true;
-    $tex_code = $_POST['code'];
-    $l = strlen($tex_code);
-    for ($i=0; $i<$l && $empty_code; $i++) {
-        $temp = substr($tex_code, $i, 1);
-        $empty_code = $temp == ' ' || $temp == '\n';
-    }
-    if ($empty_code) {
-        http_response_code(400);
-        exit('<h3>400 - Mauvaise requête</h3><p>La correction proposée est vide.</p>');
+        exit(BAD_REQUEST);
     }
 
-    // Fetch chapter and question
-    $discipline = $_POST['m'];
-    $chapter = glob('../'.$discipline.'/*', GLOB_ONLYDIR)[$_POST['c']];
-    $question = $_POST['q'];
+    $qid = $_POST['q'];
 
-    // Fetch tex code
-    $bad_tex_file_path = $chapter.'/'.$question.'.bad.tex';
-    $tex_file_path = $chapter.'/'.$question.'.tex';
-    if (!file_exists($tex_file_path)) {
-        if (!file_exists($bad_tex_file_path)) {
+
+    // Check if the question exists
+    $questions_file_handle = fopen('../data/questions.csv', 'r');
+    $found_question = false;
+    while (($data = fgetcsv($questions_file_handle, 0, "\t")) !== false) {
+        if ($data[0] == $qid) {
+            $found_question = true;
+            break;
+        }
+    }
+    fclose($questions_file_handle);
+    if (!$found_question) {
+        http_response_code(400);
+        exit(NO_QUESTION);
+    }
+
+
+    // Find correction suggestion index
+    $corrections_file_handler = fopen('../data/corrections.csv', 'r');
+    $existing_corrections = [];
+    while (($data = fgetcsv($corrections_file_handler, 0, "\t")) !== false) {
+        if ($data[1] == $qid) {
+            array_push($existing_corrections, $data[2]);
+        }
+    }
+    $cid = $existing_corrections == [] ? 1 : max($existing_corrections) + 1;
+
+
+    // Figure out output filename (incl extension)
+    $input_file = $_FILES['file'];
+    if ($file_uploaded = ($input_file != null && $input_file['size'] != 0)) {
+        $ext = pathinfo($input_file['name'], PATHINFO_EXTENSION);
+        if (!($ext == 'pdf' || $ext == 'tex')) {
+            http_response_code(403);
+            exit(WRONG_EXTENSION);
+        }
+
+        $file_upload_successful = move_uploaded_file(
+            $input_file['tmp_name'],
+            "../corrections/${qid}_$cid.$ext"
+        );
+    } else if ($input_file['error'] == 1) {
+        http_response_code(400);
+        exit(FILE_TOO_LARGE);
+    } else if ($input_file['error'] != 1) {
+        $file_uploaded = true;
+        $file_upload_successful = false;
+    } else {
+        $tex_code = $_POST['code'];
+        $l = strlen($tex_code);
+        $empty_code = true;
+        for ($i=0; $i<$l && $empty_code; $i++) {
+            $temp = substr($tex_code, $i, 1);
+            $empty_code = $temp == ' ' || $temp == "\n";
+        }
+        if ($empty_code) {
             http_response_code(400);
-            exit('<h2>400- Mauvaise requête</h2><p>La question n\'existe pas ou alors on a merdé....</p>');
+            exit(EMPTY_CORRECTION);
         }
-        else{
-            $tex_contents = file($bad_tex_file_path);
-            array_splice($tex_contents, 27, 0, $tex_code.PHP_EOL);
-        }
-    }
-    else{
-        $tex_contents = file($tex_file_path);
-        array_splice($tex_contents, 27);
-        array_push($tex_contents, $tex_code.PHP_EOL, PHP_EOL, "\\end{document}".PHP_EOL);
+
+        $ext = 'tex';
+        file_put_contents(
+            "../corrections/${qid}_$cid.tex",
+            $_POST['code']
+        );
     }
 
-    // Add credit if name set
-    if ( isset($_POST['name']) ) {
-        $name = $_POST['name'];
-        $l = strlen($name);
-        $empty_name = true;
-        for ($i=0; $empty_name && $i < $l; $i++) {
-            $empty_name = substr($name, $i, 1) == ' ';
-        }
-        if (!$empty_name) {
-            $name_line = '\\fancyfoot[R]{\\small{Correction proposée par '.$name.'}}';
-            array_splice($tex_contents, 18, 1, $name_line);
 
-            $name_or_not = 'Name';
-        }
-        else{
-            $name_or_not = 'No name';
-        }
+    // Register correction suggestion (if successful)
+    if (!$file_uploaded || $file_upload_successful) {
+        $date = new DateTime();
+        $corrections_file_handler = fopen('../data/corrections.csv', file_exists('../data/corrections.csv') ? 'a' : 'x');
+        fwrite(
+            $corrections_file_handler,
+            $date->getTimestamp() . "\t$qid\t$cid\t$ext\n"
+        );
+        fclose($corrections_file_handler);
     }
 
-    // Fetch output tex filename
-    $output_filename = $chapter.'/'.$question.'.tex';
-    $bad_filename = $chapter.'/'.$question.'.bad.tex';
-    if (file_exists($output_filename)) {unlink($output_filename);}
-    if (file_exists($bad_filename)) {unlink($bad_filename);}
 
-    // Write tex file
-    file_put_contents($output_filename, $tex_contents);
-
-    // Compile latex
-    exec('pdflatex -interaction=nonstopmode -output-directory="'.$chapter.'" "'.$output_filename.'"', $compil_output, $compil_returncode);
-    if ($compil_returncode == 0){
-        exec('pdflatex -interaction=nonstopmode -output-directory="'.$chapter.'" "'.$output_filename.'"');
-        $compil_success = true;
-        $pdf_filename = $chapter.'/'.$question.'.pdf';
-        $user_output = '<iframe id="iframe" src="'.$pdf_filename.'?'.filemtime($pdf_filename).'" frameborder="0">';
-    }
-    else{
-        $compil_success = false;
-        $user_output = '<p>La compilation a échoué... T\'es un peu nul mais c\'est pas grave.</p><br><div class="button" onclick="location.href=\'.?m='.$_POST['m'].'&c='.$_POST['c'].'&q='.$_POST['q'].'\'"><span>Réessayer</span></div><div class="button" onclick="window.open(\''.$chapter.'/'.$question.'.log\',\'_blank\')"><span>Ouvrir  le log</span></div>';
-    }
-
-    // Delete auxiliary files
-    $latex_jobname = substr($output_filename, 0, -4);
-    if (file_exists($latex_jobname.'.aux')) {
-        unlink($latex_jobname.'.aux');
-    }
-    if ($compil_success && file_exists($latex_jobname.'.log')) {
-        unlink($latex_jobname.'.log');
-    }
-
-    // Write log file
-    $text_output = fopen('../'.$discipline.'/corrections.txt', 'a');
-    fwrite($text_output, 'Chapter '.$_POST['c'].' - Question '.$question.'. Submitted on '.date('Y/m/d-g:i a'));
-    if (!$empty_name) {
-        fwrite($text_output, ' by '.$name);
-    }
-    if ($compil_success) { fwrite($text_output, ". Compilation succeeded :)".PHP_EOL); }
-    else { fwrite($text_output, ". Compilation failed !!!".PHP_EOL); }
-    fclose($text_output);
 ?>
 
 <html>
@@ -108,7 +107,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/ressources/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/ressources/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <title>Révisions MP - Proposer une correction</title>
+    <title>Révisions MP - Proposer une correction - Question <?php echo $qid; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -124,10 +123,8 @@
 
     <script>
         function onSubmit() {
-            gtag('event', 'Submitted correction', {'event_category':'Corrections', 'event_label':'<?php echo $name_or_not ?>'} );
+            gtag('event', 'Submitted correction', {'event_category':'Corrections'} );
         }
-
-        console.log('Tried to compile <?php echo $output_filename; ?>, return code <?php echo $compil_returncode; ?>')
     </script>
 
     <style>
@@ -177,9 +174,7 @@
 </head>
 
 <body onload="onSubmit();">
-    <h2>Votre correction a bien été enregistrée.</h2>
-    <p>Merci de votre contribution !</p>
-    <?php echo $user_output; ?>
+    <?php echo (!$file_uploaded || $file_upload_successful) ? FILE_UPLOAD_SUCCESSFUL : FILE_UPLOAD_UNSUCCESSFUL ?>
 </body>
 
 </html>

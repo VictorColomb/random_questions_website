@@ -10,14 +10,6 @@ var selected_chapters = [];
 var angle = 0;
 var questions = [];
 
-// PARSE QUESTIONS LIST
-var all_questions = [];
-chapters.forEach((_) => {
-  all_questions.push([]);
-});
-questions_content.forEach((question, question_nb) => {
-  all_questions[question[1]].push(question_nb);
-});
 
 // FIREWORKS <3
 function easteregg1() {
@@ -338,7 +330,28 @@ function swipes() {
   m.addEventListener("touchend", move, { passive: true });
 }
 
+
 // RESET
+function clear_progression() {
+  var pid = 0;
+  while (pid < progression.length) {
+    var qid = progression[pid];
+    for (
+      i = 0;
+      i < all_nb_of_questions && qid != questions_content[i][0];
+      i++
+    ) {}
+    if (
+      i != all_nb_of_questions &&
+      selected_chapters[questions_content[i][1]]
+    ) {
+      progression.splice(pid, 1);
+    } else {
+      ++pid;
+    }
+  }
+}
+
 function reset() {
   if (document.getElementById("help_overlay").style.display == "") {
     if (
@@ -346,19 +359,7 @@ function reset() {
         "Attention ! Vous êtes sur le point de réinitialiser la progression des chapitres sélectionnés. Voulez vous poursuivre ?"
       )
     ) {
-      progression.forEach((id, nb) => {
-        for (
-          i = 0;
-          i < all_nb_of_questions && id != all_questions[i][0];
-          i++
-        ) {}
-        if (
-          !i == all_nb_of_questions &&
-          selected_chapters.includes(all_questions[i][1])
-        ) {
-          progression.splice(nb, 1);
-        }
-      });
+      clear_progression();
       push_progression();
       document.getElementById("fab_menu").className = "shrink";
 
@@ -501,15 +502,7 @@ function nothing_remains() {
     )
   ) {
     // remove progression from selected chapters
-    progression.forEach((id, nb) => {
-      for (i = 0; i < all_nb_of_questions && id != all_questions[i][0]; i++) {}
-      if (
-        !i == all_nb_of_questions &&
-        selected_chapters.includes(all_questions[i][1])
-      ) {
-        progression.splice(nb, 1);
-      }
-    });
+    clear_progression();
     push_progression();
 
     // GA event
@@ -691,13 +684,13 @@ function keyDown(e) {
     suggestion_overlay == "hidden" || suggestion_overlay == "";
   correction_overlay_visibility =
     correction_overlay == "hidden" || correction_overlay == "";
-  help_overlay_visi =
+  help_overlay_visibility =
     document.getElementById("help_overlay").style.display == "";
   if (
     suggestion_overlay_visibility &&
     chapters_overlay_visibility &&
     keys_active &&
-    help_overlay_visi &&
+    help_overlay_visibility &&
     correction_overlay_visibility
   ) {
     if (e == 13 || e == 39 || e == 32) {
@@ -714,7 +707,7 @@ function keyDown(e) {
       view_correction();
     }
   } else if (e == 27) {
-    // echap
+    // escape
     if (!chapters_overlay_visibility) {
       show_overlay("chapters", 0, (key = true));
     } else if (!suggestion_overlay_visibility) {
@@ -740,8 +733,8 @@ function keyDown(e) {
 
 // HELP OVERLAY
 function showHelp(open = 1) {
-  help_overlay_visi = document.getElementById("help_overlay").style.display;
-  if (help_overlay_visi == "" && open) {
+  help_overlay_visibility = document.getElementById("help_overlay").style.display;
+  if (help_overlay_visibility == "" && open) {
     // if overlay hidden
 
     gtag("event", "help", { event_category: "Menus", event_label: "click" });

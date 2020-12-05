@@ -942,7 +942,7 @@ a.custom_button_right div{
   width: 100%;
   z-index: 2;
 }
-#help_overlay div{
+#help_overlay_inside{
   position: absolute;
   z-index: 7;
   left: 2%;
@@ -954,8 +954,16 @@ a.custom_button_right div{
   padding-right: 1em;
   overflow-y: scroll;
 }
-#help_overlay div::-webkit-scrollbar-track{
+#help_overlay_inside::-webkit-scrollbar-track{
   background: transparent;
+}
+#help_overlay_inside div{
+  display: block;
+  margin-right: 5pt;
+  float: left;
+}
+#help_overlay img{
+  height: 2em;
 }
 #help_overlay span{
   color: white;

@@ -53,3 +53,9 @@ Data, except corrections, is stored in the following csv files, located in the `
 * `corrections.csv` : timestamp | question_id | correction_id | file_extension
 
 ### Admin interface page coming...
+
+## License
+
+The code is licensed under the [MIT license](https://github.com/prepaStan-revisions/random_questions_website/blob/v2/LICENSE).
+
+Questions and corrections are licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).

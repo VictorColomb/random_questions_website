@@ -53,10 +53,10 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="apple-touch-icon" sizes="180x180" href="/ressources/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/ressources/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/ressources/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="../ressources/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../ressources/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../ressources/favicon-16x16.png">
+    <link rel="manifest" href="../site.webmanifest">
     <title>Révisions MP - Proposer une correction</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -75,10 +75,10 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap">
 
-    <link rel="stylesheet" href="/ressources/styles.css">
+    <link rel="stylesheet" href="../ressources/styles.css">
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js"></script>
-    <script src="/ressources/mathjaxloader.js"></script>
+    <script src="../ressources/mathjaxloader.js"></script>
 </head>
 
 <body onload="onLoad();">

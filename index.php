@@ -40,10 +40,10 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="apple-touch-icon" sizes="180x180" href="/ressources/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/ressources/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/ressources/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="ressources/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="ressources/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="ressources/favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
     <title>Révisions MP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -57,7 +57,7 @@
     </script>
 
 
-    <link rel="stylesheet" href="/ressources/styles.css">
+    <link rel="stylesheet" href="ressources/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap">
 
@@ -70,15 +70,13 @@
         const questions_content = [[<?php echo implode('],[', $questions) ?>]];
         const available_corrections = [<?php echo implode(',', $available_corrections) ?>];
     </script>
-    <script src="/ressources/scripts.js"></script>
-    <script src="/ressources/mathjaxloader.js"></script>
+    <script src="ressources/scripts.js"></script>
+    <script src="ressources/mathjaxloader.js"></script>
 </head>
 
 <body onload="on_load();" onkeydown="keyDown(event.keyCode);">
     <div id="head">
-        <a href="/">
-            <div id="head_img"><img src="ressources/icon.ico"></div>
-        </a>
+        <div id="head_img"><img src="ressources/icon.ico"></div>
 
         <a class="menu" href="?m=maths">
             <div style="text-align: center;<?php if ($discipline == "maths") {echo " color: #f9aa33;";} ?>">

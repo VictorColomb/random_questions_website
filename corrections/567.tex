@@ -1,0 +1,44 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 19}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Équations réelles $U-I$ d’une résistance, d’une source réelle de courant, \\ d’une source réelle de tension, d’un condensateur, d’une inductance}}}
+\end{center}
+
+% Correction
+
+On note \(U\) la tension et \(I\) l'intensité dans le dipôle en convention réceptrice.\\
+\setlength{\tabcolsep}{15pt} 
+\renewcommand{\arraystretch}{2.5} 
+\begin{table}[h]
+\centering
+\begin{tabular}{l|l}
+Dipôle                   & Equation \\ \hline
+Résistance \(R\)             & \(U=RI\)     \\
+Source réelle de courant & \(I=\mathrm{cste}\)   \\
+Source réelle de tension & \(U=\mathrm{cste}\)   \\
+Condensateur \(C\)           & \(I=C\dfrac{\mathrm{d}U}{\mathrm{d}t}\)      \\
+Inductance \(L\)             & \(U=L\dfrac{\mathrm{d}I}{\mathrm{d}t}\)     
+\end{tabular}
+\end{table}
+
+
+\end{document}

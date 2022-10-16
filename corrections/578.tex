@@ -1,0 +1,46 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 30}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Étude d’un passe-bande}}}
+\end{center}
+
+% Correction
+
+
+La fonction de transfert d'un passe-bande du deuxième ordre est :\begin{center}
+$\underline{H}=\dfrac{2\xi \dfrac{p}{\omega_0}}{1+2\xi \dfrac{p}{\omega_0}+\dfrac{p^2}{\omega_0^2}}=\dfrac{1}{1+jQ \left( \dfrac{\omega}{\omega_0}-\dfrac{\omega_0}{\omega} \right)}$ avec $Q=\dfrac{1}{2\xi}$ le facteur de qualité\end{center}
+  \(\omega\rightarrow 0 : \) On a \( \underline{H}\sim j \dfrac{\omega}{\omega_0},\quad G=20\log\omega-20\log\omega_0-20\log Q\) et \(\varphi=\dfrac{\pi}{2}=90^{\circ}\)\\
+  $\omega\rightarrow +\infty : $ On a $\underline{H}=-j \dfrac{\omega_0}{Q\omega},\quad G=-20\log\omega+20\log\omega_0-20\log Q$ et $\varphi=-\dfrac{\pi}{2}=-90^{\circ}$\\
+  $\omega=\omega_0:$ On a $ G_1=G_2=-20\log Q$\\
+
+  Réalisation pratique du filtre précédent :\\
+  \begin{minipage}{0.3\linewidth}
+    \begin{circuitikz}
+      \draw (0,0) to[C=$C$] ++(1.5,0) to[L=$L$] ++(1.5,0) -- ++(.5,0);
+      \draw (3,0) to[R=$R$] ++(0,-2);
+      \draw (0,-2) -- (3.5,-2);
+    \end{circuitikz}
+  \end{minipage}
+  \begin{minipage}{0.7\linewidth}
+    $\underline{H}=\dfrac{1}{1+\dfrac{j}{R}\left( L \dfrac{\omega}{\omega_0}\omega_0- \dfrac{1}{C\omega_0}\dfrac{\omega_0}{\omega} \right)}$\\
+    avec $\omega_0=\dfrac{1}{\sqrt{LC}}$ et $Q=\dfrac{1}{R}\sqrt{\dfrac{L}{C}}$
+  \end{minipage}
+\end{document}

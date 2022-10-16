@@ -1,0 +1,39 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Thermodynamique}\fancyhead[R]{Question 24}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Lois de Laplace}}}
+\end{center}
+
+% Correction
+
+Soit un gaz parfait d'indice adiabatique \(\gamma\) subissant une transformation adiabatique quasi-statique.\\
+On note \(P\) sa pression, \(V\) son volume et \(T\) sa température.\\
+Alors \begin{center}
+\fcolorbox{red}{white}{
+\begin{tabular}{c}
+\(PV^{\gamma}=\mathrm{cste}\)\\
+\(TV^{\gamma-1}=\mathrm{cste}\)\\
+\(T^{\gamma}P^{1-\gamma}=\mathrm{cste}\)
+\end{tabular}}
+\end{center}
+
+\end{document}

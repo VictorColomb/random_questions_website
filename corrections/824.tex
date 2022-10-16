@@ -1,0 +1,38 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint,makecell}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{SLCI}\fancyhead[R]{Question 9}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Erreur en fonction de la classe}}}
+\end{center}
+
+% Correction
+
+{\small
+\begin{tabular}{c|c|c}
+  Classe & \gape{\makecell{ Erreur de position : \\ entrée en échelon \( \dfrac{e_0}{p} \) }} & \gape{\makecell{ Erreur de traînage : \\ entrée en rampe \( \dfrac{a}{p^2} \) }} \\
+  \hline
+  0 & \gape{\( \dfrac{e_0}{1 + K_{\text{BO}}} \)} & \( +\infty \) \\
+  1 & 0 & \gape{\( \dfrac{a}{K_{\text{BO}}} \)} \\
+  2 & 0 & 0
+\end{tabular}
+}
+
+\end{document}

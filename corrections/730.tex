@@ -1,0 +1,46 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Thermodynamique}\fancyhead[R]{Question 40}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Equation de la chaleur, démonstration monodimensionnelle}}}
+\end{center}
+
+% Correction
+
+\begin{center}
+	\fcolorbox{red}{white}{ \( \rho c \dfrac{\partial T }{\partial t} = \lambda \Delta T \) }
+\end{center}
+
+On fait un bilan enthalpique sur une tranche entre $x$ et $x$ + d$x$.
+\\Donc \(\mathrm{d}(\delta H(t + \mathrm{d}t)) - \mathrm{d} (\delta H (t)) = (\Phi(x) -\Phi(x +\mathrm{d}x)) \mathrm{d}t\) \\
+Donc \(
+\dfrac{\partial (\delta H) }{\partial t} \mathrm{d}t = - \dfrac{\partial \Phi}{\partial x} \mathrm{d}x \mathrm{d}t \)
+
+Par loi phénoménologique de Fourier : \(c\, \rho\, \mathrm{d}x\, S \dfrac{\partial T}{\partial t} = - \dfrac{\partial }{\partial x} \left(\displaystyle\iint - \lambda \dfrac{\partial T }{\partial x} \mathrm{d}S \right)\mathrm{d}x\)\\
+Donc \(c\, \rho\, S\, \dfrac{\partial T}{\partial t} = \lambda \dfrac{\partial^2 T }{\partial x^2} S\)
+
+Donc:
+\begin{center}
+    \fcolorbox{red}{white}{
+        \(c\, \rho\, \dfrac{\partial T}{\partial t} = \lambda \dfrac{\partial^2 T }{\partial x^2} \)}
+\end{center}
+
+\end{document}

@@ -1,0 +1,40 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 10}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Diviseur de tension}}}
+\end{center}
+
+% Correction
+
+
+Dans le circuit ci-dessous :\begin{center}
+\begin{minipage}{0.3\linewidth}
+  \begin{circuitikz}[scale=.8]
+    \draw (0,4) to[short,i=$I$] (1,4) to[R=$R_1$] (1,2) to[R=$R_2$] (1,0) -- (0,0);
+    \draw (1,2) to[short,i=0] (3,2);
+    \draw[->] (0,.5) -- node[left] {$U$} (0,3.5);
+    \draw[->] (3,0) -- node[right] {$U_2$} ++(0,1.8);
+  \end{circuitikz}
+\end{minipage}
+\end{center}
+On a :\begin{center}\fcolorbox{red}{white}{\(U_2=\dfrac{R_2}{R_1+R_1}\)}\end{center}
+
+\end{document}

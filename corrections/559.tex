@@ -1,0 +1,42 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 11}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Diviseur de courant}}}
+\end{center}
+
+% Correction
+
+
+Pour le circuit suivant :\begin{center}
+\begin{minipage}{0.3\linewidth}
+  \begin{circuitikz}
+    \draw (0,3) to[short,i=$I$] ++(2,0) -- ++(0,-.5) -- ++(1,0) to[R=$R_2$,i=$I_2$] ++(0,-2) -- ++(-1,0) -- ++(0,-.5) -- (0,0);
+    \draw (2,2.5) -- ++(-1,0) to[R=$R_1$,i_=$I_1$] ++(0,-2) -- ++(1,0);
+    \draw[->] (0,.5) -- node[left] {$U$} ++(0,2);
+  \end{circuitikz}
+\end{minipage}
+\end{center}
+On a :\begin{center}\fcolorbox{red}{white}{\(I_1=\dfrac{G_1}{G_1+G_2}I=\dfrac{R_2}{R_1+R_2}I\)}\end{center}
+
+Donc \begin{center}\fcolorbox{red}{white}{\(G_\text{équivalent}=G_1+G_2\)}\end{center}
+
+
+\end{document}

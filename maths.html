@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="ressources/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="ressources/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="ressources/favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <title>Révisions MP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164106797-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "UA-164106797-1");
+    </script>
+
+
+    <link rel="stylesheet" href="ressources/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap">
+
+
+    <script>
+        const discipline = "maths";
+        const questions_per_chapter = [2,2,9,7,24,32,18,5,4,26,34,20,21,27,21,12,8,4,16,18,9,43,20,19,28,11,20,43,16,30];
+        // questions_per_chapter = questions_per_chapter.map(x=>parseInt(x));
+        const chapters = ["Sup I - Raisonnement et vocabulaire ensembliste","Sup II - Calculs algébriques","Sup III - Nombres complexes et trigonométrie","Sup IV - Techniques fondamentales de calcul en analyse","Sup V - Nombre réels et suites numériques","Sup VI - Limites, continuité, dérivabilité","Sup VII - Analyse asymptotique","Sup VIII - Arithmétique","Sup IX - Structures algébriques usuelles","Sup X - Polynômes et fractions rationnelles","Sup XI - Espaces vectoriels et applications linéaires","Sup XII - Matrices","Sup XIII - Groupe symétrique et déterminants","Sup XIV - Espaces Préhilbertiens réels","Sup XV - Intégration","Sup XVI - Séries numériques","Sup XVII - Dénombrement","Sup XVIII - Probabilités","Spé I - Structures algébriques usuelles","Spé II - Réduction","Spé III - Fonctions convexes","Spé IV - Espaces vectoriels normés","Spé V - Espaces préhilbertiens réels","Spé VI - Séries et familles sommables","Spé VII - Suites et séries de fonctions, séries entières","Spé VIII - Fonctions vectorielles, arcs paramétrés","Spé IX - Intégration sur un intervalle quelconque","Spé X - Variables aléatoires discrètes","Spé XI - Équations différentielles linéaires","Spé XII - Calcul différentiel"];
+        const questions_content = [[0,0,"La fonction indicatrice est une bijection de $\\mathcal{P}(A)$ dans $\\mathcal{F}(A, \\{ 0,1 \\} )$"],[1,0,"Une fonction est surjective ssi elle est inversible à droite et injective ssi elle est inversible à gauche"],[2,1,"Tableau de variation de $k \\mapsto \\binom{n}{k}$"],[3,1,"Somme des binomiaux pairs et impairs"],[4,2,"Cas d'égalité de l'inégalité triangulaire dans $\\mathbb{C}$"],[5,2,"Formule d'Euler et formule de Moivre"],[6,2,"Transformer $A \\cos(\\omega t) + B \\sin(\\omega t)$ en $C \\cos( \\omega t - \\phi)$"],[7,2,"Équation polynomiale d'ordre 2 dans $\\mathbb{C}$"],[8,2,"Résoudre $e^z = e^{z'}$"],[9,2,"Résoudre $e^z = a$"],[10,2,"Expressions de $\\cos(a+b)$, $\\sin(a+b)$, $\\tan(a+b)$, $\\cos p+\\cos q$ et $\\sin p\\,\\,\\sin q$"],[11,2,"Dérivées des fonctions trigonométriques et des fonctions trigonométriques réciproques"],[12,2,"Dérivée des fonctions trigonométriques hyperboliques"],[13,3,"Relation entre $\\mathrm{ch}$ et $\\mathrm{sh}$ et entre $\\cos$ et $\\sin$"],[14,3,"Primitive de $e^{ax} \\sin(bx)$, $\\dfrac{1}{ax^2 + bx + c}$, $\\dfrac{1}{1 + x^2}$ et de $\\dfrac{1}{\\sqrt{1 - x^2}}$"],[15,3,"Résolution de $y' + a(x)y = b(x)$"],[16,3,"Résolution de $y'' + ay' + by = f(x)$"],[17,3,"Formule de Pascal"],[18,3,"Formule du binôme"],[19,3,"Primitive de $\\dfrac{1}{ax^2+bx+c}$"],[20,4,"Existence et définition partie entière"],[21,4,"Propriété de la borne supérieure"],[22,4,"Définition d'intervalle"],[23,4,"Définition limite finie d'une suite"],[24,4,"Passage à la limite"],[25,4,"Les sous-groupes de $\\mathbb{R}$ sont de la forme $\\alpha \\mathbb{Z}$ ou dense dans $\\mathbb{R}$"],[26,4,"Les convexes de $\\mathbb{R}$ sont les intervalles"],[27,4,"Si $u_n$ converge vers $l \\in ]a,b[$ alors à partir d'un certain rang $u_n \\in ]a,b[$"],[28,4,"Théorème de la limite monotone"],[29,4,"Théorème de convergence par encadrement"],[30,4,"Théorème de divergence par minoration ou majoration"],[31,4,"Théorème des suites adjacentes"],[32,4,"Définition suite extraite"],[33,4,"Théorème de Bolzano-Weierstrass"],[34,4,"Densité de $\\mathbb{Q}$ et de $\\mathbb{R} \\backslash \\mathbb{Q}$ dans $\\mathbb{R}$"],[35,4,"Etude d'une suite arithmétique"],[36,4,"Etude d'une suite géométrique"],[37,4,"Etude d'une suite arithmético-géométrique"],[38,4,"Suite récurrente linéaire homogène d'ordre 2 à coefficients constants"],[39,4,"Si $u_{n+1}=f(u_n)$ alors $f$ croissante implique $(u_n)$ monotone et $f$ décroissante implique $(u_{2n})$ et $(u_{2n+1})$ monotones de monotonie opposées"],[40,4,"Si $u_{n+1}=f(u_n)$, $f$ est continue et $(u_n)$ converge vers $l$ alors $f(l)=l$"],[41,4,"Divergence de $H_n$"],[42,4,"$\\textbf{HP:}$ Théorème de Césaro"],[43,4,"$\\textbf{HP:}$ Suites de Cauchy: définition, équivalence à la convergence dans $\\mathbb{R}$"],[44,5,"Composition des limites"],[45,5,"Définition continuité en un point"],[46,5,"Théorème de prolongement par continuité"],[47,5,"Caractérisation séquentielle de la continuité"],[48,5,"TVI (démonstration par dichotomie)"],[49,5,"Image d’un segment par une fonction continue"],[50,5,"Continu et injectif implique strictement monotone"],[51,5,"La réciproque d’une fonction continue et strictement monotone est continue"],[52,5,"Dérivabilité en un point, équivalence avec un DL d’ordre $1$"],[53,5,"Dérivable implique continu"],[54,5,"Définition d’extremum local"],[55,5,"Condition nécessaire pour un extremum local en un point intérieur"],[56,5,"Théorème de Rolle"],[57,5,"Égalité des accroissements finis"],[58,5,"Inégalité des accroissements finis"],[59,5,"Définition fonction lipschitzienne"],[60,5,"$f’$ bornée par $K$ implique $f$ $K$-lipschitzienne"],[61,5,"Lien dérivée-monotonie"],[62,5,"Théorème de prolongement de classe $\\mathcal{C}^1$"],[63,5,"Définition fonction de classe $\\mathcal{C}^k$"],[64,5,"Formule de Leibniz"],[65,5,"Si $f$, $g$ sont $\\mathcal{C}^k$ alors $\\lambda f+\\mu g$ et $fg$ sont $\\mathcal{C}^k$ et valeur de la dérivée $k$-ième"],[66,5,"Si $f$ est $\\mathcal{C}^k$ et ne s’annule pas alors $\\dfrac{1}{f}$ est $\\mathcal{C}^k$"],[67,5,"Si $f$, $g$ sont $\\mathcal{C}^k$, alors $f\\circ g$ est $\\mathcal{C}^k$"],[68,5,"Si $f$ est $\\mathcal{C}^k$ telle que $f’$ ne s’annule pas, $f$ est bijective et $f^{-1}$ est $\\mathcal{C}^k$"],[69,5,"Théorème de prolongement de classe $\\mathcal{C}^k$"],[70,5,"$\\textbf{HP:}$ Une fonction périodique non constante n’a pas de limite en $\\pm \\infty$"],[71,5,"$\\textbf{HP:}$ Endomorphismes de $\\mathbb{R}$"],[72,5,"$\\textbf{HP:}$ L’ensemble des périodes d’une fonction périodique continue non-constante est de la forme $T_0\\mathbb{Z}$ avec $T_0 \\in \\mathbb{R}_+^*$"],[73,5,"$\\textbf{HP:}$Une fonction continue périodique admet un maximum et un minimum"],[74,5,"$\\textbf{HP:}$ Si $f:\\mathbb{R} \\mapsto \\mathbb{R}$ est continue et telle que $\\lim\\limits_{x \\rightarrow \\pm \\infty} f(x)  = +\\infty$, alors f admet un minimum"],[75,5,"$\\textbf{HP:}$ Si $P \\in \\mathbb{R}[X]$ est scindé sur $\\mathbb{R}$, alors $P’$ est scindé sur $\\mathbb{R}$"],[76,6,"Définition de domination, négligeabilité, équivalence"],[77,6,"Croissances comparées"],[78,6,"Opérations sur les $o$ et les $O$"],[79,6,"Opérations sur les équivalents"],[80,6,"Propriétés conservées par équivalence"],[81,6,"Définition développement limité"],[82,6,"Opérations sur les développements limités"],[83,6,"Composition des développements limités (démonstration $\\textbf{HP}$ )"],[84,6,"Intégration de développements limités"],[85,6,"Formule de Taylor reste intégral"],[86,6,"Inégalité de Taylor-Lagrange"],[87,6,"$\\textbf{HP:}$ Égalité de Taylor-Lagrange"],[88,6,"Formule de Taylor-Young"],[89,6,"DL en $0$ de $exp$, $sin$, $cos$, $sh$, $ch$, $x \\mapsto ln(1+x)$, $x \\mapsto (1+x)^{\\alpha }$, $Arctan$ et de $tan$ (à l'ordre 3)"],[90,6,"Formule de Stirling (démonstration $\\textbf{HP}$)"],[91,6,"Intégrales de Wallis"],[92,6,"Equivalent de $H_n$"],[93,6,"$\\textbf{HP:}$ Méthode du $\\alpha$"],[94,7,"Théorème de Bézout"],[95,7,"Lemme de Gauss"],[96,7,"Petit théorème de Fermat"],[97,7,"Décomposition en facteurs premiers d’un entier relatif"],[98,7,"Valeurs de $pgcd(ma,mb)$ et de $ppcm(ma,mb)$"],[99,8,"Définition d'un groupe"],[100,8,"Définition d'un anneau"],[101,8,"Si $H$, $K$ sont des groupes tels que $H \\cup K$ soit un groupe, alors $H \\subset K$ ou $K \\subset H$"],[102,8,"Si $a$ et $b$ sont nilpotents qui commutent, alors $ab$ et $a+b$ sont nilpotents et $1-a$ est inversible"],[103,9,"Définition degré d'un polynôme, coefficient dominant, polynôme unitaire"],[104,9,"Degré de la somme, du produit, de la composée de deux polynômes"],[105,9,"Intégrité de $\\mathbb{K}[X]$"],[106,9,"Division euclidienne dans $\\mathbb{K}[X]$"],[107,9,"Le nombre de racines est majoré par le degré"],[108,9,"Relations coefficients racines"],[109,9,"Dérivée de la somme, du produit et de la composée de 2 polynômes"],[110,9,"Caractérisation de la multiplicité d'une racine par les dérivées successives"],[111,9,"Formule de Taylor polynomiale"],[112,9,"Définition du PGCD et du PPCM de deux polynômes"],[113,9,"Algorithme d'Euclide (polynômes)"],[114,9,"Théorème de Bezout (polynômes)"],[115,9,"Définition de deux polynômes premiers entre eux"],[116,9,"Lemme de Gauss (polynômes)"],[117,9,"Théorème de d'Alembert Gauss (démonstration $\\textbf{HP}$)"],[118,9,"DFP dans $\\mathbb{C}[X]$"],[119,9,"DFP dans $\\mathbb{R}[X]$"],[120,9,"Polynômes interpolateurs de Lagrange"],[121,9,"Définition de degré, partie entière, zéro et pôle d'une fraction rationnelle"],[122,9,"DES sur $\\mathbb{C}[X]$"],[123,9,"DES sur $\\mathbb{R}[X]$"],[124,9,"DES de $\\dfrac{P'}{P}$"],[125,9,"Si $a$ est un pôle simple de $F$, coefficient de $\\dfrac{1}{X-a}$ dans la DES de $F$"],[126,9,"$\\textbf{HP:}$ (Polynômes de Tchebychev) Il existe un unique $P_n \\in \\mathbb{Z}[X]$ tel que pour tout $\\theta \\in \\mathbb{R}$, $P_n(cos \\theta ) = cos(n \\theta )$. Degré, coefficient dominant, racines avec multiplicité, le factoriser dans $\\mathbb{R}$"],[127,9,"$\\textbf{HP:}$ Pour tout $A \\in \\mathbb{R}[X]$ positif, il existe $P,Q \\in \\mathbb{R}[X]$ tels que $A=P^2 + Q^2$"],[128,9,"$\\textbf{HP:}$ Tout polynôme non constant de $\\mathbb{C}[X]$ est surjectif"],[129,10,"Définition d'un espace vectoriel"],[130,10,"Définition d'un sous-espace vectoriel"],[131,10,"Définition d'un sous-espace engendré"],[132,10,"Définition d'une famille libre (cas fini et infini)"],[133,10,"Définition d'une famille génératrice"],[134,10,"Caractérisation de la somme directe de ssev (2 ou plus)"],[135,10,"Définition de supplémentaire d’un sous-espace vectoriel"],[136,10,"Définition d'un espace vectoriel de dimension finie"],[137,10,"Théorème de la base incomplète"],[138,10,"Lemme de Steinitz"],[139,10,"Définition du rang d'une famille de vecteurs"],[140,10,"Existence d'un supplémentaire en dimension finie"],[141,10,"Formule de Grassmann"],[142,10,"Caractérisation de l'injectivité d'une application linéaire"],[143,10,"Image d'une base par une application linéaire et lien injectif/surjectif-libre/génératrice"],[144,10,"Exemple d'applications linéaires non commutatives en dimension $2$"],[145,10,"Définition d'une projection "],[146,10,"Caractérisation d'une projection"],[147,10,"Définition d'une symétrie"],[148,10,"Caractérisation d'une symétrie"],[149,10,"Lien reliant une symétrie à une projection"],[150,10,"Existence et unicité d'une application linéaire définie sur une base"],[151,10,"Équivalence bijectivité, injectivité et surjectivité en dimension finie"],[152,10,"En dimension finie, inversible ssi inversible à droite ssi inversible à gauche"],[153,10,"Application linéaire définie sur des sous-espace vectoriel supplémentaires"],[154,10,"Théorème du rang"],[155,10,"Définition d'un hyperplan"],[156,10,"Équation d'un hyperplan"],[157,10,"Si pour tout $x \\in \\mathbb{R}$ $(x,f(x))$ liée, alors f est une homothétie"],[158,10,"Hyperplan et Droite"],[159,10,"Deux formes linéaires $\\phi$ et $\\psi$ sont proportionnelles ssi $\\mathrm{Ker}\\, \\phi = \\mathrm{Ker}\\, \\psi$"],[160,10,"Dimension de l'intersection de $m$ hyperplans"],[161,10,"Définition d'un sous-espace affine"],[162,10,"$\\textbf{HP:}$ Suite des noyaux itérés"],[163,11,"$E_{i, j} \\times E_{k,l}$"],[164,11,"Puissances de matrices"],[165,11,"Exemple de non-commutativité de $M_2(\\mathbb{R})$"],[166,11,"Exemple de non intégrité de $M_2(\\mathbb{R})$"],[167,11,"Changement de base dans $M_n(\\mathbb{R})$"],[168,11,"Lecture $\\mathrm{Im}$, $\\mathrm{Ker}$ d'une matrice à l'aide des lignes et colonnes"],[169,11,"Produit de matrices par blocs"],[170,11,"L'inverse d'une matrice triangulaire est triangulaire"],[171,11,"Définition de matrices équivalentes, interprétation applications linéaires"],[172,11,"Toute matrice de rang $r$ est équivalente à $J_r$"],[173,11,"Caractérisation du rang par les matrices carrés extraites "],[174,11,"Définition de matrices semblables, interprétation applications linéaires"],[175,11,"Invariants de similitude (2)"],[176,11,"Définition de la trace d'un endomorphisme"],[177,11,"Trace d'un projecteur"],[178,11,"Opérations élémentaires et conservation rang/noyau/image"],[179,11,"Système de Cramer"],[180,11,"Algorithme du pivot de Gauss"],[181,11,"$\\textbf{HP:}$ Centre de $\\mathcal{M} _n(\\mathbb{K} ) $"],[182,11,"$\\textbf{HP:}$ $\\mathrm{rg}\\,A=1$ ssi il existe $X,Y \\in \\mathcal{M} _{n,1}(\\mathbb{K} )$ non nuls tels que $A=X^tY$"],[183,12,"Définitions de cycles et de transpositions"],[184,12,"Liens entre $S_n$ et les transpositions (démonstration $\\textbf{HP}$)"],[185,12,"Définition de la signature (démonstration $\\textbf{HP}$)"],[186,12,"Définition formelle du déterminant"],[187,12,"Expression du déterminant dans $\\mathbb{R}^n$"],[188,12,"Relations entre les formes $n$-linéaires alternées et le déterminant"],[189,12,"Relation de Chasles sur le déterminant"],[190,12,"Caractérisation d'une base à l'aide du déterminant"],[191,12,"Déterminant de la composée d'endomorphismes"],[192,12,"Caractérisation des isomorphismes à l'aide du déterminant"],[193,12,"Déterminant du produits de matrices"],[194,12,"Développent par rapport à une ligne"],[195,12,"Définition du cofacteur"],[196,12,"Déterminant d'une matrice triangulaire"],[197,12,"Déterminant de Vandermonde"],[198,12,"Lien entre les opérations élémentaires sur les lignes et les colonnes et le déterminant"],[199,12,"Définition de la comatrice"],[200,12,"Lien entre $A$ et $\\mathrm{Com}(A)$"],[201,12,"$\\textbf{HP:}$ $M$ inversible dans $\\mathcal{M} _n(\\mathbb{Z} )$ ssi $detM = \\pm 1 $"],[202,12,"$\\textbf{HP:}$ Déterminant de Hurwitz"],[203,12,"$\\textbf{HP:}$ Densité de $GL_n(\\mathbb{R} )$ dans $\\mathcal{M} _n(\\mathbb{R} )$"],[204,13,"Définition produit scalaire"],[205,13,"Définition espace euclidien"],[206,13,"Produits scalaires canoniques sur  $\\mathbb{R}^n$, $M_n(\\mathbb{R})$, $\\mathcal{C}^0([a,b],\\mathbb{R})$"],[207,13,"Définition d'une norme euclidienne, et d'une distance euclidienne"],[208,13,"Inégalité de Cauchy-Schwarz, cas d'égalité"],[209,13,"Inégalité triangulaire, cas d'égalité"],[210,13,"Identité de polarisation"],[211,13,"Définition orthogonal d'une partie"],[212,13,"Toute famille orthogonale de vecteurs non nuls est libre"],[213,13,"Théorème de Pythagore"],[214,13,"Algorithme de Gram-Schmidt"],[215,13,"Théorème de la base orthonormale incomplète"],[216,13,"Expression des coordonnées, du produit scalaire et de la norme en BON"],[217,13,"Définition produit mixte"],[218,13,"Supplémentaire orthogonal en dimension finie"],[219,13,"Vecteur normal à un hyperplan affine"],[220,13,"Équation d'un hyperplan affine en BON"],[221,13,"Distance à un hyperplan affine"],[222,13,"Définition d'un endomorphisme orthogonal"],[223,13,"Un endomorphisme orthogonal conserve produit scalaire"],[224,13,"L’image d’une BON par un endomorphisme orthogonal est une BON"],[225,13,"Définition d'une symétrie orthogonal"],[226,13,"Définition d'une réflexion"],[227,13,"Définition d'une matrice orthogonal"],[228,13,"Caractérisation matrice orthogonale"],[229,13,"Définition groupe spécial orthogonal"],[230,13,"Description des matrices orthogonales de taille 2"],[231,14,"Définition continuité uniforme"],[232,14,"Uniforme continuité implique continuité"],[233,14,"Lipschitzianité implique continuité"],[234,14,"Définition subdivision d’un segment, pas d’une subdivision"],[235,14,"Définition fonction en escalier"],[236,14,"Définition fonction continue par morceaux sur un segment"],[237,14,"Définition fonction continue par morceaux sur un intervalle"],[238,14,"Définition intégrale d’une fonction continue par morceaux (pas de définition officielle)"],[239,14,"Linéarité, positivité, croissance de l’intégrale sur un segment"],[240,14,"$\\left\\vert \\int_{[a,b]} f \\right\\vert \\leqslant \\int_{[a,b]} \\vert f \\vert$"],[241,14,"Relation de Chasles"],[242,14,"Nullité de l’intégrale sur un segment"],[243,14,"Sommes de Riemann"],[244,14,"Théorème fondamental du calcul intégral"],[245,14,"Intégration par parties"],[246,14,"Changement de variables"],[247,14,"$\\textbf{HP:}$ Lemme de Riemann-Lebesgue"],[248,14,"$\\textbf{HP:}$ Limite de la norme $n$ sur les intégrales"],[249,14,"$\\textbf{HP:}$ Si $f$ est telle que $\\int_{0}^{+\\infty}f$ converge et que $f$ admet une limite en $+\\infty$, alors cette limite est nulle. Exemple de $f$ non-bornée d’intégrale convergente"],[250,14,"$\\textbf{HP:}$ Définition et ensemble de définition de la fonction $\\Gamma$ d’Euler. Valeur sur $\\mathbb{N}$"],[251,14,"$\\textbf{HP:}$ L’intégrale de Dirichlet est semi-convergente"],[252,15,"Le terme général d'une série convergente tend vers $0$"],[253,15,"Définition divergence grossière"],[254,15,"Série géométrique "],[255,15,"Une série à termes positifs converge ssi la suite de ses sommes partielles est majorée"],[256,15,"Convergence de série par comparaison"],[257,15,"Comparaison série-intégrale"],[258,15,"Séries de Riemann"],[259,15,"$\\textbf{HP:}$ Séries de Bertrand"],[260,15,"Définition convergence absolue"],[261,15,"Dans $\\mathbb{R}$ ou $\\mathbb{C}$, la convergence absolue implique la convergence"],[262,15,"$\\textbf{HP:}$ Critère de Cauchy pour les séries"],[263,15,"Existence et unicité du développement décimal propre d'un réel (démonstration $\\textbf{HP}$)"],[264,16,"Dans un ensemble fini, injectif ssi surjectif ssi bijectif"],[265,16,"Cardinal d'un produit d'ensemble finis"],[266,16,"Cardinal de la réunion de 2 ensembles finis"],[267,16,"$\\textbf{HP:}$ Formule du crible de Poincaré"],[268,16,"Cardinal de $\\mathcal{F}(E,F)$ où $E$ et $F$ finis"],[269,16,"Cardinal de l'ensemble des parties d'un ensemble fini"],[270,16,"Nombre de $p$-uplets d'un ensemble à $n$ éléments"],[271,16,"Nombre de parties à $p$ éléments d'un ensemble à $n$ éléments"],[272,17,"Loi uniforme (définition, interprétation, espérance, variance)"],[273,17,"Loi de Bernoulli (définition, interprétation, espérance, variance, fonction génératrice)"],[274,17,"Loi binomiale (définition, interprétation, espérance, variance, fonction génératrice)"],[275,17,"Une VAD suivant une loi binomiale est la somme de $n$ VAD indépendantes suivant des loi de Bernoulli"],[276,18,"Définition d'un corps"],[277,18,"Définition d'un anneau intègre"],[278,18,"Définition morphisme d'anneau"],[279,18,"Définition d'un groupe monogène"],[280,18,"Définition d'un groupe cyclique"],[281,18,"Définition d'un idéal"],[282,18,"Démonstration de $x$ d'ordre fini $d$ alors $\\forall n \\in Z, x^n = e \\iff d|n$"],[283,18,"L'ordre d'un élément d'un groupe fini divise le cardinal du groupe"],[284,18,"Interprétation de la divisibilité en termes d'idéaux"],[285,18,"Théorème de Lagrange"],[286,18,"Théorème Chinois"],[287,18,"Théorème d'Euler"],[288,18,"Définition et expression de $\\varphi(n)$ à l'aide de la décomposition en facteurs premier"],[289,18,"Systèmes de congruences"],[290,18,"Algorithme d'Euclide pour le pgcd et les coefficients de Bezout"],[291,18,"$\\textbf{HP:}$ Un sous-groupe d'un groupe cyclique est cyclique"],[292,19,"La somme de sous espaces propres est directe"],[293,19,"Si $u,v$ commutent, les sous espaces propres de $u$ sont stables par $v$"],[294,19,"Polynôme caractéristique (définition, coefficient $n$, $n-1$, degré)"],[295,19,"$\\mathrm{dim}\\,E_{\\lambda} \\leqslant m_\\lambda$ ou $m_\\lambda$ est la multiplicité de $\\lambda$"],[296,19,"Une matrice est diagonalisable ssi $\\bigoplus\\limits_i E_{\\lambda_i}  = E$"],[297,19,"Diagonalisable ssi $\\chi_u$ est scindé et  $\\forall \\lambda \\in \\mathrm{Sp}(\\lambda) \\dim E_\\lambda = m_\\lambda$"],[298,19,"Trigonalisable ssi $\\chi_u$ scindé"],[299,19,"L'indice de nilpotence est majoré par $\\mathrm{dim} E $"],[300,19,"Nilpotent ssi trigonalisable avec pour seule valeur propre 0"],[301,19,"Définition du polynôme minimal"],[302,19,"On note $\\mu$ le polynome minimal de $u$ $\\mathrm{deg} \\mu = d \\implies \\left(u^k \\right)_{0 \\leqslant k \\leqslant d-1}$ est une base de $\\mathbb{K}[u]$"],[303,19,"$u(x) = \\lambda x \\implies P(u)(x) = $?"],[304,19,"Théorème de Cayley-Hamilton"],[305,19,"Lemme des noyaux"],[306,19,"Un endo est diagonalisable ssi il est annulé par un polynôme scindé à racines simples"],[307,19,"$\\textbf{HP:}$ Un endo est trigonalisable ssi il est annulé par un polynôme scindé"],[308,19,"$\\textbf{HP:}$ Codiagonalisation"],[309,19,"$\\textbf{HP:}$ Cotrigonalisation"],[310,20,"Définition d'un barycentre"],[311,20,"Définition d'une partie convexe"],[312,20,"Définition de l'enveloppe convexe"],[313,20,"Caractérisation pratique de l'enveloppe convexe"],[314,20,"Définition d'une fonction convexe"],[315,20,"Convexité et épigraphe"],[316,20,"Inégalité des pentes"],[317,20,"Inégalité de convexité à $n$ éléments"],[318,20,"Caractérisation fonctions convexes $\\mathcal{C}^1$ et $\\mathcal{C}^2$"],[319,21,"Définition d'une norme"],[320,21,"Distance associée à une norme"],[321,21,"Définition d'une boule ouverte, fermée, sphère"],[322,21,"Une boule est convexe"],[323,21,"Normes usuelles sur $K^n$, sur $\\mathcal{F}(E,\\mathbb{K})$"],[324,21,"Définition de la limite d'une fonction"],[325,21,"Unicité de la limite"],[326,21,"Toute suite convergente est bornée"],[327,21,"Opérations sur les limites"],[328,21,"Définition de normes équivalentes"],[329,21,"Non-équivalence des normes usuelles sur $F(E,\\mathbb{K})$"],[330,21,"Définition d'un espace ouvert, fermé"],[331,21,"Union et intersection d'ouverts, fermés"],[332,21,"Définition du voisinage d'un point"],[333,21,"Définition point intérieur, adhérent"],[334,21,"Définition intérieur, adhérence, frontière"],[335,21,"Caractérisation séquentielle des points adhérents"],[336,21,"Caractérisation séquentielle des fermés"],[337,21,"Définition d'une partie dense"],[338,21,"Définitions de ouvert, fermé et voisinage relatif à une partie"],[339,21,"Définition de la limite"],[340,21,"Caractérisation séquentielle de la limite"],[341,21,"Image réciproque d'un ouvert, fermé par une application continue"],[342,21,"Définition uniforme continuité"],[343,21,"Définition lipschitzianité"],[344,21,"Si $A$ non vide, $x \\mapsto d(x,A)$ est 1-lipschitzienne"],[345,21,"$\\mathcal{L}_\\mathcal{C}(E,F)$ et fonctions lipschitzienne"],[346,21,"$\\textbf{HP:}$ norme subordonnée"],[347,21,"Déf partie compacte (propriété de Bolzano-Weierstrass)"],[348,21,"$\\textbf{HP:}$ Propriété de Borel-Lebesgue"],[349,21,"$\\textbf{HP:}$ Équivalent Borel-Lebesgue et Bolzano-Weierstrass"],[350,21,"Compacte implique fermé borné"],[351,21,"Une partie fermée d'un compact est compacte"],[352,21,"Dans un compact, CVG ssi une unique valeur d'adhérence"],[353,21,"Produit de compact est compact"],[354,21,"Image d'un compact par une application continue"],[355,21,"Théorème de Heine"],[356,21,"Définition d’une partie connexe par arcs"],[357,21,"Les connexes par arcs de $\\mathbb{R}$ sont les intervalles"],[358,21,"En dimension finie, compact ssi fermé borné"],[359,21,"Un sous-espace vectoriel de dimension finie est fermé"],[360,21,"En dimension finie, linéaire implique continue"],[361,21,"$\\textbf{HP:}$ Une partie connexe par arcs à la fois fermée et ouverte est $E$ ou l’ensemble vide"],[362,22,"Définition de la projection orthogonale"],[363,22,"Projeté orthogonal et distance à un ensemble"],[364,22,"Inégalité de Bessel"],[365,22,"Définition d'une suite totale"],[366,22,"Soit $(e_i)_{i \\in \\mathbb{N}}$ une suite totale. Alors $\\forall x \\in E, \\sum\\limits_i^\\infty p_n(x) = x$  où $p_n$ est la projection sur $\\mathrm{Vect}(e_1,\\ldots,e_n)$"],[367,22,"Définition d'un endomorphisme symétrique"],[368,22,"Soit $p$ un projecteur. $p$ est orthogonal ssi $\\forall x,y \\in E \\langle x \\mid p(y) \\rangle = \\langle p(x) \\mid y \\rangle$"],[369,22,"Si $u$ est symétrique et $F$ est stable par $u$ alors $F^\\perp$ est stable par $u$"],[370,22,"Tout endomorphisme réel admet une droite stable ou un plan stable"],[371,22,"Théorème spectral"],[372,22,"Réduction d'une isométrie vectorielle en base orthonormée"],[373,22,"Toute forme linéaire s'écrit sous la forme $x \\mapsto \\langle a | x \\rangle $"],[374,22,"$\\textbf{HP:}$ Si $p$ est un projecteur tel que $\\Vert p(x)\\Vert \\leqslant \\Vert x\\Vert$, $p$ est orthogonal"],[375,22,"$\\textbf{HP:}$ Définition symétrique endomorphisme positif, équivalence à toutes les valeurs propres positives"],[376,22,"$\\textbf{HP:}$ Racine d'un endomorphisme symétrique positif"],[377,22,"$\\textbf{HP:}$ Décomposition polaire"],[378,22,"$\\textbf{HP:}$ Définition de l'adjoint"],[379,22,"$\\textbf{HP:}$ Définition d'une forme quadratique"],[380,22,"$\\textbf{HP:}$ Matrice de Gram"],[381,22,"$\\textbf{HP:}$ Déterminant de Gram"],[382,23,"En dimension finie, convergence absolue implique convergence"],[383,23,"$\\textbf{HP:}$ Règle de Duhamel"],[384,23,"$\\textbf{HP:}$ Règle de Raabe-Duhamel"],[385,23,"Critère spécial des séries alternées"],[386,23,"$\\textbf{HP:}$ Transformation d'Abel pour les séries"],[387,23,"Si $f$ continue par morceaux décroissante, alors la série de terme général $\\int_{n-1}^{n} f(t) \\mathrm{d}x - f(n)$ converge"],[388,23,"$\\textbf{HP:}$ Théorème de sommation par paquets pour les séries"],[389,23,"Définition dénombrabilité"],[390,23,"Un ensemble est fini ou dénombrable ssi il est en bijection avec une partie de $\\mathbb{N}$"],[391,23,"$\\textbf{HP:}$ Un ensemble est fini ou dénombrable ssi il peut s'écrire comme la réunion d'une suite croissante d'ensembles finis"],[392,23,"Un produit cartésien fini d'ensembles dénombrables est dénombrable. Une réunion dénombrable d'ensembles dénombrables est dénombrable (démonstration $\\textbf{HP}$)"],[393,23,"$\\mathbb{N}$, $\\mathbb{Z}$ et $\\mathbb{Q}$ sont dénombrables"],[394,23,"$\\mathbb{R}$ n'est pas dénombrable (démonstration $\\textbf{HP}$)"],[395,23,"$\\textbf{HP:}$ Si $X$ a plus de 2 éléments, $X^{\\mathbb{N} }$ est non dénombrable"],[396,23,"Définition famille sommable de réels positifs indexée par un ensemble dénombrable"],[397,23,"Théorème de sommation par paquets pour les familles sommables (démonstration $\\textbf{HP}$)"],[398,23,"Définition famille sommable de complexes indexée par un ensemble dénombrable"],[399,23,"Invariance de la valeur de la somme d'une famille sommable par permutation de l'ensemble des indices (démonstration $\\textbf{HP}$)"],[400,23,"Produit de Cauchy de deux séries absolument convergentes"],[401,24,"Définition convergence simple"],[402,24,"Définition convergence uniforme"],[403,24,"Convergence uniforme implique convergence simple"],[404,24,"Conservation de la continuité par passage à la limite"],[405,24,"Théorème de la double limite (Démo $\\textbf{HP}$)"],[406,24,"Passage à la limite dans l'intégrale"],[407,24,"Si $(f_n)$ tend vers $f$, théorème pour avoir $f$ de classe $\\mathcal{C}^1$"],[408,24,"Définition des convergences simple, absolue, uniforme et normale d’une série de fonctions"],[409,24,"CVU ssi CVS avec la suite des restes CVU vers 0"],[410,24,"La convergence normale implique la convergence uniforme et la convergence absolue en tout point"],[411,24,"Densité uniforme de $E([a,b])$ dans $\\mathcal{C}^0([a,b])$"],[412,24,"Théorème de Weierstrass (démonstration $\\textbf{HP}$)"],[413,24,"Lemme d'Abel"],[414,24,"Définition rayon de convergence"],[415,24,"Convergence normale d'une série entière dans le disque de convergence ouvert et divergence grossière en dehors"],[416,24,"Si $a_n=O(b_n)$, $R_a\\geqslant R_b$ (séries entières)"],[417,24,"Si $a_n\\sim b_n$, $R_a=R_b$ (séries entières)"],[418,24,"Règle de d'Alembert"],[419,24,"Les séries entières de terme général $a_n$ et $na_n$ ont même rayon de CVG"],[420,24,"Somme et produit de Cauchy de deux séries entières"],[421,24,"Primitivation d'une série entière"],[422,24,"Dérivée terme à terme d'une série entière $\\mathcal{C}^\\infty$ sur $D(0,\\mathbb{R})$"],[423,24,"Expression des coeffs d'une série entière à partir de sa somme"],[424,24,"Développement de exp en série entière"],[425,24,"Développement de $\\dfrac{1}{1-z}$ en série entière"],[426,24,"Série de Taylor d'une fonction $\\mathcal{C}^\\infty$"],[427,24,"DSE de $\\ln(1+x)$, ch, sh, arctan, cos, sin et $(1+x)^\\alpha$"],[428,24,"$\\textbf{HP:}$ Formule de Cauchy séries entières"],[429,25,"Dérivabilité d’une fonction vectorielle en un point"],[430,25,"Dérivabilité et dérivée de $L \\circ f$ où $L$ est linéaire dans un EVN"],[431,25,"Dérivabilité et dérivée de $B(f,g)$ où $B$ est bilinéaire dans un EVN"],[432,25,"Dérivation d’un produit scalaire"],[433,25,"Dérivabilité de $f \\circ \\varphi$ où $\\varphi$ est réelle de variable réelle et $f$ est une fonction vectorielle"],[434,25,"Définition de l’intégrale d’une fonction de variable réelle à valeur dans un EVN de dimension finie"],[435,25,"$\\left\\Vert \\int_a^b f \\right\\Vert \\leqslant \\int_a^b \\Vert f \\Vert$"],[436,25,"Sommes de Riemann dans un EVN de dimension finie"],[437,25,"Inégalité des accroissements finis dans un EVN"],[438,25,"Etudier l’arc paramétré $(\\sin t, \\dfrac{\\cos ^2t}{2-\\cos t})$"],[439,25,"Etudier l’arc paramétré $(\\dfrac{1}{t^2}+2t, \\dfrac{2}{t} +t^2)$"],[440,26,"Si $f$ est continue par morceaux sur $[a,b[$, définition de la convergence de $\\int_{a}^{b}f$"],[441,26,"Linéarité, positivité de l’intégrale sur un intervalle quelconque"],[442,26,"Si $f$ est continue sur $[a,b[$, dérivation de $x\\mapsto \\int_{x}^{b} f$"],[443,26,"Définition intégrabilité, semi-convergence"],[444,26,"$f$ intégrable sur $[a,b[$ implique $\\int_{a}^{b}f$ converge"],[445,26,"Si $f$ est positive sur $[a,b[$, $\\int_{a}^{b}f$ converge ssi $x\\mapsto \\int_{a}^{x}f $ est majorée"],[446,26,"Intégrales de Riemann"],[447,26,"$\\textbf{HP:}$ Intégrales de Bertrand"],[448,26,"Convergence d’intégrales par relations de comparaison"],[449,26,"Relation de Chasles sur un intervalle"],[450,26,"Espace des fonctions intégrables sur $I$ où $I$ intervalles de $\\mathbb{R}$"],[451,26,"Inégalité triangulaire sur les intégrales"],[452,26,"Nullité de l’intégrale sur un intervalle"],[453,26,"Changement de variable sur un intervalle"],[454,26,"Intégration par parties sur un intervalle"],[455,26,"Théorème de convergence dominée (démonstration $\\textbf{HP}$)"],[456,26,"Théorème d’intégration terme à terme (démonstration $\\textbf{HP}$)"],[457,26,"Théorème de continuité d’une intégrale à paramètre par domination (démonstration $\\textbf{HP}$)"],[458,26,"Théorème de dérivabilité d’une intégrale à paramètre par domination (démonstration $\\textbf{HP}$)"],[459,26,"Théorème de classe $\\mathcal{C}^k$ d’une intégrale à paramètre par domination (démonstration $\\textbf{HP}$)"],[460,27,"Définition d'une tribu sur $\\Omega$"],[461,27,"Définition d'un événement"],[462,27,"Définition d'une probabilité"],[463,27,"Continuité croissante des probabilités"],[464,27,"Continuité décroissante des probabilités"],[465,27,"Inégalité de Boole"],[466,27,"Définition d'une probabilité conditionnelle"],[467,27,"Formule des probabilités composées"],[468,27,"Formule des probabilités totales"],[469,27,"Formule de Bayes"],[470,27,"Famille d'évènements indépendants"],[471,27,"Définition d'une variable aléatoire discrète"],[472,27,"Définition de loi conditionnelle, loi conjointes, loi marginales"],[473,27,"Lemme des coalitions (démo $\\textbf{HP}$)"],[474,27,"Loi géométrique (définition, interprétation, espérance, variance, fonction génératrice)"],[475,27,"Loi de Poisson (définition, espérance, variance, fonction génératrice)"],[476,27,"Si $X_n$ suit une loi binomiale de paramètres ($n$,$p_n$) et si $np_n$ tend vers $\\lambda$, alors pour tout $k$, $P(X_n=k)$ tend vers $e^{-\\lambda}\\dfrac{\\lambda ^k}{k!}$"],[477,27,"Définition de l'espérance"],[478,27,"Linéarité de l'espérance"],[479,27,"Croissance de l'espérance"],[480,27,"Positivité de l'espérance"],[481,27,"Théorème de transfert (démo $\\textbf{HP}$)"],[482,27,"Inégalité de Markov"],[483,27,"Si $X$ et $Y$ sont indépendantes, $E(XY)=E(X)E(Y)$"],[484,27,"Définition moment d'ordre $k$"],[485,27,"Moment d'ordre $n$ fini implique moment d'ordre $k$ fini pour tout $k\\leqslant n$"],[486,27,"Inégalité de Cauchy-Schwarz (probabilités)"],[487,27,"Définition de la variance et de l'écart-type"],[488,27,"Relation entre variance, espérance et moment d'ordre 2"],[489,27,"Valeur de $V(aX+b)$ (probabilités)"],[490,27,"Inégalité de Bienaymé-Tchebychev"],[491,27,"Définition de la covariance"],[492,27,"Variance d'une somme de VAD indépendantes 2 à 2"],[493,27,"Loi faible des grands nombres"],[494,27,"Définition de la fonction génératrice, rayon de convergence et convergence normale sur $D(0,1)$"],[495,27,"Déterminer la loi de $X$ avec $G_X$"],[496,27,"$X$ est d'espérance finie ssi $G_X$ est dérivable en 1 et dans ce cas $E(X)=G_X'(1)$"],[497,27,"$X$ admet un moment d'ordre 2 ssi $G_X$ dérivable 2 fois en 1"],[498,27,"Valeur de $V(X)$ en fonction de $G_X'(1)$ et $G_X''(1)$"],[499,27,"Fonction génératrice d'une somme de VAD indépendantes"],[500,27,"$\\textbf{HP:}$ Lemmes de Borel-Cantelli"],[501,27,"$\\textbf{HP:}$ Convergence en probabilité, convergence presque sûre"],[502,27,"$\\textbf{HP:}$ Soit $X$ une VAD à valeur dans $\\mathbb{N}$, $E(X)=\\sum\\limits_{k=1}^{+\\infty} P(X\\geqslant k)$"],[503,28,"Définition d’équation différentielle linéaire"],[504,28,"Définition problème de Cauchy"],[505,28,"Principe de superposition"],[506,28,"Passage d’une équation scalaire linéaire d’ordre $n$ à un système différentiel linéaire d’ordre $2$"],[507,28,"Théorème de Cauchy linéaire (démonstration $\\textbf{HP}$)"],[508,28,"Dimension de l’espace des solutions d’une équation linéaire"],[509,28,"Exponentielle d’un endomorphisme en dimension fini, d’une matrice"],[510,28,"Continuité de l’exponentielle sur $\\mathcal{L}(E)$ et sur $\\mathcal{M}_n(\\mathbb{R})$"],[511,28,"Exponentielle de la somme de deux endomorphismes qui commutent (démonstration $\\textbf{HP}$)"],[512,28,"Dérivation de $t\\mapsto e^{ta}$ où $a \\in \\mathcal{L}(E)$"],[513,28,"Résolution de $x’=a(x),\\,x(t_0)=x_0$ où $a\\in \\mathcal{L}(E)$. Calcul explicite pour $\\mathrm{dim}\\,E \\leqslant 3$ où $A$ diagonalisable"],[514,28,"Méthode de variation des constantes pour les systèmes différentiels linéaires à coefficients continus"],[515,28,"$\\textbf{HP:}$ Méthode d’abaissement des degrés pour les systèmes différentiels linéaires à coefficients continus"],[516,28,"Définition et théorème sur le wronskien de deux solutions d’une équation scalaire homogène d’ordre $2$"],[517,28,"Calcul explicite du wronskien de deux solutions d’une équation scalaire homogène d’ordre $2$"],[518,28,"$\\textbf{HP:}$ Lemme de Gronwall"],[519,29,"Définition de la dérivée d’une application selon un vecteur et des dérivées partielles dans une base"],[520,29,"Définition d’application différentiable au point $a$ et de la différentielle en $a$"],[521,29,"Différentiable implique continue"],[522,29,"Lien entre différentielle et dérivée partielle"],[523,29,"Définition d’application différentiable sur un ouvert et de la différentielle associée"],[524,29,"Une application constante est différentiable sur tout ouvert"],[525,29,"Une application linéaire est différentiable sur tout ouvert"],[526,29,"Matrice de d$f(a)$ dans un couple de bases, matrice jacobienne d’une application de $\\mathbb{R}^n$ dans $\\mathbb{R}^m$"],[527,29,"Dans $\\mathbb{R}$, différentiable équivaut à dérivable et valeur de la différentielle"],[528,29,"Différentielle d’une combinaison linéaire d’applications différentiables, de $B(f,g)$ où $B$ est bilinéaire et $f$ et $g$ sont différentiables"],[529,29,"Différentielle d’une composée d’applications différentiables"],[530,29,"Dérivation le long d’un arc"],[531,29,"Dérivées partielles d’une composée d’applications différentiables"],[532,29,"Dans un espace euclidien, gradient en $a$ d’une application numérique différentiable en $a$"],[533,29,"Définition point critique d’une application différentiable"],[534,29,"Condition nécessaire pour l’existence d’un extremum local en un point intérieur"],[535,29,"Définition vecteur tangent à une partie de $E$"],[536,29,"Les vecteurs tangents à une ligne de niveau de $f$ en $x$ sont orthogonaux au gradient de $f$ en $x$"],[537,29,"Définition application de classe $\\mathcal{C}^1$ sur un ouvert de $E$"],[538,29,"Lien entre $\\mathcal{C}^1$ et dérivées partielles relativement à une base de $E$ (démonstration $\\textbf{HP}$)"],[539,29,"Opérations algébriques sur les applications $\\mathcal{C}^1$ sur un ouvert de $E$"],[540,29,"Si $\\Omega$ est connexe par arcs, caractérisation des fonctions constantes sur $\\Omega$ (démonstration en dimension finie dans le cas convexe)"],[541,29,"Si $f$ est $\\mathcal{C}^1$ de $\\Omega$ dans F, si $\\gamma$ est $\\mathcal{C}^1$ de $[0,1]$ dans $\\Omega$ et si $\\gamma (0)=a$ et $\\gamma (1)=b$, alors $f(b)-f(a)=\\int_{0}^{1}\\mathrm{d}f(\\gamma (t))\\gamma ’(t)\\mathrm{d}t$"],[542,29,"Définition dérivées partielles d’ordre $k$"],[543,29,"Définition application de classe $\\mathcal{C}^k$"],[544,29,"Théorème de Schwarz (démonstration $\\textbf{HP}$)"],[545,29,"Opérations algébriques et composition d’applications de classe $\\mathcal{C}^k$ sur un ouvert de $E$ (démonstration $\\textbf{HP}$)"],[546,29,"Changement de variables affine et passage en coordonnées polaires dans une équation aux dérivées partielles"],[547,29,"$\\textbf{HP:}$ Théorème des accroissements finis pour une fonction de $\\mathbb{R}^n$ dans $\\mathbb{R}$"],[548,29,"$\\textbf{HP:}$ $\\mathcal{C}^1$ implique continue dans un evn de dimension finie"]];
+        const available_corrections = [];
+    </script>
+    <script src="ressources/scripts.js"></script>
+    <script src="ressources/mathjaxloader.js"></script>
+</head>
+
+<body onload="on_load();" onkeydown="keyDown(event.keyCode);">
+    <div id="head">
+        <div id="head_img"><img src="ressources/icon.ico"></div>
+
+        <a class="menu" href="maths.html">
+            <div style="text-align: center; color: #f9aa33;">
+                <span class="material-icons">
+                    functions
+                </span>
+                <span style="font-family: 'Work Sans', sans-serif;">Maths</span>
+            </div>
+        </a>
+
+        <a class="menu" href="physique.html">
+            <div style="text-align: center;">
+                <span class="material-icons">
+                    flash_on
+                </span>
+                <span style="font-family: 'Work Sans', sans-serif;">Physique</span>
+            </div>
+        </a>
+
+        <a class="menu" href="si.html">
+            <div style="text-align: center;">
+                <span class="material-icons">
+                    miscellaneous_services
+                </span>
+                <span style="font-family: 'Work Sans', sans-serif;">SI</span>
+            </div>
+        </a>
+
+        <a class="menu github" href="https://github.com/prepaStan-revisions/random_questions_website" target="_blank">
+            <svg class="github_logo" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"/></svg>
+        </a>
+    </div>
+
+    <div id="progress_bar">
+        <p id="progress_number"></p>
+        <div id="empty">
+            <div id="progress"></div>
+        </div>
+        <p id="question_succeeded" style="opacity: 0;">Question réussie</p>
+    </div>
+
+    <div class ="overlay" id="correction_overlay">
+        <div class="scrim" onclick='show_overlay("correction",0);'></div>
+        <div class="dialog" id="correction_dialog">
+        <span class="correction_overlay_buttons material-icons" id="leave_correction" onclick="show_overlay('correction',0);">
+            clear
+        </span>
+        <span class="correction_overlay_buttons material-icons" id="new_correction" onclick="view_correction(0)">
+            emoji_objects
+        </span>
+        <iframe id="correction_frame" allowtransparency="true" frameborder="0" src="">
+        </iframe>
+        </div>
+    </div>
+
+    <div class ="overlay" id="chapters_overlay">
+    <div class="scrim" onclick="show_overlay('chapters',0);"></div>
+        <div class="dialog" id="chapters_dialog">
+            <div class="header">
+                <span class="title">Chapitres</span>
+                <br>
+                <div class="button" onclick="select_all(1);">Tout sélectionner</div>
+                <div class="button" style="margin-right:0;"onclick="select_all(0);">Tout désélectionner</div>
+                <hr>
+            </div>
+            <div id="chapter_container" class="content">
+                <ul>
+                <div class='chapter_container'>
+                            <label for='chap0'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap0'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup I - Raisonnement et vocabulaire ensembliste</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar0'></div>
+                                </div>
+                                <p id='chapter_progression0'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap1'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap1'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup II - Calculs algébriques</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar1'></div>
+                                </div>
+                                <p id='chapter_progression1'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap2'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap2'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup III - Nombres complexes et trigonométrie</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar2'></div>
+                                </div>
+                                <p id='chapter_progression2'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap3'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap3'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup IV - Techniques fondamentales de calcul en analyse</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar3'></div>
+                                </div>
+                                <p id='chapter_progression3'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap4'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap4'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup V - Nombre réels et suites numériques</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar4'></div>
+                                </div>
+                                <p id='chapter_progression4'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap5'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap5'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup VI - Limites, continuité, dérivabilité</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar5'></div>
+                                </div>
+                                <p id='chapter_progression5'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap6'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap6'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup VII - Analyse asymptotique</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar6'></div>
+                                </div>
+                                <p id='chapter_progression6'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap7'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap7'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup VIII - Arithmétique</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar7'></div>
+                                </div>
+                                <p id='chapter_progression7'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap8'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap8'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup IX - Structures algébriques usuelles</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar8'></div>
+                                </div>
+                                <p id='chapter_progression8'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap9'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap9'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup X - Polynômes et fractions rationnelles</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar9'></div>
+                                </div>
+                                <p id='chapter_progression9'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap10'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap10'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup XI - Espaces vectoriels et applications linéaires</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar10'></div>
+                                </div>
+                                <p id='chapter_progression10'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap11'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap11'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup XII - Matrices</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar11'></div>
+                                </div>
+                                <p id='chapter_progression11'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap12'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap12'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup XIII - Groupe symétrique et déterminants</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar12'></div>
+                                </div>
+                                <p id='chapter_progression12'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap13'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap13'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup XIV - Espaces Préhilbertiens réels</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar13'></div>
+                                </div>
+                                <p id='chapter_progression13'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap14'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap14'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup XV - Intégration</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar14'></div>
+                                </div>
+                                <p id='chapter_progression14'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap15'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap15'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup XVI - Séries numériques</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar15'></div>
+                                </div>
+                                <p id='chapter_progression15'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap16'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap16'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup XVII - Dénombrement</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar16'></div>
+                                </div>
+                                <p id='chapter_progression16'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap17'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap17'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Sup XVIII - Probabilités</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar17'></div>
+                                </div>
+                                <p id='chapter_progression17'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap18'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap18'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé I - Structures algébriques usuelles</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar18'></div>
+                                </div>
+                                <p id='chapter_progression18'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap19'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap19'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé II - Réduction</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar19'></div>
+                                </div>
+                                <p id='chapter_progression19'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap20'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap20'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé III - Fonctions convexes</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar20'></div>
+                                </div>
+                                <p id='chapter_progression20'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap21'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap21'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé IV - Espaces vectoriels normés</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar21'></div>
+                                </div>
+                                <p id='chapter_progression21'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap22'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap22'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé V - Espaces préhilbertiens réels</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar22'></div>
+                                </div>
+                                <p id='chapter_progression22'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap23'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap23'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé VI - Séries et familles sommables</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar23'></div>
+                                </div>
+                                <p id='chapter_progression23'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap24'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap24'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé VII - Suites et séries de fonctions, séries entières</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar24'></div>
+                                </div>
+                                <p id='chapter_progression24'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap25'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap25'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé VIII - Fonctions vectorielles, arcs paramétrés</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar25'></div>
+                                </div>
+                                <p id='chapter_progression25'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap26'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap26'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé IX - Intégration sur un intervalle quelconque</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar26'></div>
+                                </div>
+                                <p id='chapter_progression26'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap27'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap27'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé X - Variables aléatoires discrètes</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar27'></div>
+                                </div>
+                                <p id='chapter_progression27'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap28'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap28'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé XI - Équations différentielles linéaires</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar28'></div>
+                                </div>
+                                <p id='chapter_progression28'></p>
+                            </div>
+                        </div>
+                        <hr><div class='chapter_container'>
+                            <label for='chap29'>
+                                <div class='switch'>
+                                    <input type='checkbox' name='check_chapters' id='chap29'>
+                                    <span class='slider'></span>
+                                </div>
+                                <p class='chapter'>Spé XII - Calcul différentiel</p>
+                            </label>
+                            <div class='chapter_progression'>
+                                <div class='empty'>
+                                    <div class='progress' id='chapter_progress_bar29'></div>
+                                </div>
+                                <p id='chapter_progression29'></p>
+                            </div>
+                        </div>
+                        <hr>                </ul>
+            </div>
+            <hr>
+            <div id="navigation" class="footer">
+                <div class="button" onclick="show_overlay('chapters', 0);">Annuler</div>
+                <div class="button" style="color:var(--secondary-color)" onclick="confirm_choice();">Activer</div>
+            </div>
+        </div>
+    </div>
+
+    <input type="checkbox" id="fab_input">
+    <label for="fab_input" onclick="show_menus();">
+        <div id="fab">
+            <span class="material-icons"></span>
+        </div>
+    </label>
+    <div id="fab_menu" class="shrink">
+        <div class="mini_fab tooltip" onclick="set_chapter_menu(); show_overlay('chapters', 1);">
+            <span class="material-icons">
+                format_list_bulleted
+            </span>
+            <span class="tooltiptext">Choix des chapitres</span>
+            <span class="help left">Sélection des chapitres</span>
+        </div>
+        <div class="mini_fab tooltip" onclick="reset();">
+            <span class="material-icons">
+                refresh
+            </span>
+            <span class="tooltiptext">Réinitialiser la progression</span>
+            <span class="help left">Réinitialiser la progression</span>
+        </div>
+        <div class="mini_fab tooltip" onclick="show_buttons();">
+            <span class="material-icons" id="button_visibility">
+                visibility_off
+            </span>
+            <span id="button_visibility_tip" class="tooltiptext">Masquer les boutons</span>
+            <span class="help left">Afficher/cacher les boutons</span>
+        </div>
+        <div class="mini_fab tooltip" onclick="showHelp();">
+            <span class="material-icons">
+                help
+            </span>
+            <span class="tooltiptext">Aide</span>
+            <span class="help left">Afficher ce message d'aide</span>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="correction fake tooltip" onclick="view_correction()">
+            <a class="material-icons">emoji_objects</a>
+            <span id="correction_tooltip" class="tooltiptext">Correction</span>
+        </div>
+
+        <div id="question_div">
+            <div id="carousel">
+                <div class="carousel_cell" id="cell_0"><div class="container"><div class="question"><span id="question_0" class="question"></span></div><p id="question_chap_0"></p><div class="correction"><a class="material-icons" id="correction0">emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id="cell_7"><div class="container"><div class="question"><span id="question_7" class="question"></span></div><p id="question_chap_7"></p><div class="correction"><a class="material-icons" id="correction7">emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id="cell_6"><div class="container"><div class="question"><span id="question_6" class="question"></span></div><p id="question_chap_6"></p><div class="correction"><a class="material-icons" id="correction6">emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id="cell_5"><div class="container"><div class="question"><span id="question_5" class="question"></span></div><p id="question_chap_5"></p><div class="correction"><a class="material-icons" id="correction5">emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id="cell_4"><div class="container"><div class="question"><span id="question_4" class="question"></span></div><p id="question_chap_4"></p><div class="correction"><a class="material-icons" id="correction4">emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id="cell_3"><div class="container"><div class="question"><span id="question_3" class="question"></span></div><p id="question_chap_3"></p><div class="correction"><a class="material-icons" id="correction3">emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id="cell_2"><div class="container"><div class="question"><span id="question_2" class="question"></span></div><p id="question_chap_2"></p><div class="correction"><a class="material-icons" id="correction2">emoji_objects</a></div></div></div>
+                <div class="carousel_cell" id="cell_1"><div class="container"><div class="question"><span id="question_1" class="question"></span></div><p id="question_chap_1"></p><div class="correction"><a class="material-icons" id="correction1">emoji_objects</a></div></div></div>
+            </div>
+        </div>
+    </div>
+    <div id="button_div">
+        <a id="previous_button" class="custom_button hidable_buttons" style="position:absolute; left:30px; opacity:0;" onclick="nextQuestion(-1,false,'click');">
+        <div style="text-align: left;">
+            <span class="material-icons">
+                navigate_before
+            </span>
+            <span class="custom_button_text" style="font-size: .95em; font-family: 'Work Sans', sans-serif;">Précédente</span>
+        </div>
+        </a>
+
+        <a class="custom_button custom_button_right hidable_buttons" style="right: 30px;" onclick="questionSucceeded();">
+        <div style="right: 30px;  color: #f9aa33; text-align: right; font-weight: bold;">
+            <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Suivante</span>
+            <span class="material-icons" id="custom_button_next">
+                navigate_next
+            </span>
+        </div>
+        <a class="custom_button custom_button_right hidable_buttons" onclick="questionFailed();">
+        <div>
+            <span class="material-icons">
+                clear
+            </span>
+            <span class="custom_button_text" style="font-family: 'Work Sans', sans-serif; text-emphasis: bold;">Échouée</span>
+        </div>
+        </a>
+    </div>
+
+    <div id="help_overlay" onclick="showHelp();">
+        <div id="help_overlay_inside">
+            <span class="material-icons">navigate_next</span><span class="not-material-icons">Les questions réussies ne reviennent pas.</span><br><br>
+            <span class="material-icons">clear</span><span class="not-material-icons">Les questions échouées reparaissent éventuellement.</span><br><br>
+            <span class="material-icons">refresh</span><span class="not-material-icons">Réinitialiser la progression retire les questions des chapitres sélectionnés des questions réussies.</span><br><br>
+            <span class="material-icons">swap_horiz</span><span class="not-material-icons">Balayez horizontalement pour passer à la question suivante/précédente. Balayez vers le haut pour marquer une question échouée.</span><br><br>
+            <span class="material-icons">emoji_objects</span><span class="not-material-icons">Certaines questions viennent avec des corrigés. Appuyez sur C pour ouvrir la correction plus rapidement.</span><br>
+            <span class="material-icons-outlined">emoji_objects</span><span class="not-material-icons">Pour celles qui n'en n'ont pas, vous pouvez en proposer une.</span><br><br>
+            <span class="material-icons no-tel">keyboard</span><span class="not-material-icons no-tel">Appuyez sur les touches Entrée, Espace ou &rarr; pour passer à la question suivante. Appuyez sur &uarr; pour marquer une question échouée. Appuyez sur &larr; pour revenir à la question précédente.</span><br><br>
+            <span class="material-icons">error</span><span class="not-material-icons">Les navigateurs Internet Explorer, Duck Duck Go et Écosia ne sont pas supportés (pour l'instant).</span><br><br>
+            <div><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.eu.svg" alt="CC BY-NC-DA 4.0" /></a></div><span class="not-material-icons">Les questions et corrections sont soumises à la licence Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</span>
+        </div>
+    </div>
+
+    <canvas id="canvasFireworks">Canvas is not supported in your browser.</canvas>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 8}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Définition d’une source réelle de tension}}}
+\end{center}
+
+% Correction
+
+
+Si pour tout $I$, $P_{\mathrm{délivrée}} = \alpha I-\beta I^2$ alors $\forall I\quad V_A-V_B=\alpha-\beta I$\\
+  Alors on note $\alpha=E_g$ la force électromotrice et $\beta=R$ la résistance interne\\
+  On a :\begin{center}\fcolorbox{red}{white}{\(V_A-V_B=E_g-RI\)}\end{center}
+C'est une source réelle de tension.
+  \begin{minipage}{0.2\linewidth}
+    Représentation :
+  \end{minipage}
+  \begin{minipage}{0.5\linewidth}
+    \begin{circuitikz}[scale=.7]
+      \draw (1,0) node[right] {B} to[short,*-,i=$I$] (0,0) to[R=$R$] (0,2) to[vsource=$E_g$] (0,4) to[short,-*] (1,4) node[right] {A};
+    \end{circuitikz}
+  \end{minipage}
+\end{document}

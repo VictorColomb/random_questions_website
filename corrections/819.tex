@@ -1,0 +1,38 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{SLCI}\fancyhead[R]{Question 4}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Théorèmes des valeurs initiale et finale}}}
+\end{center}
+
+% Correction
+
+On note $F$ la transformée de Laplace d'une fonction $f$. \\
+Alors,
+\begin{center}
+\fcolorbox{red}{white}{
+	\begin{tabular}{c}
+    	\( \lim\limits_{t\rightarrow 0} f(t) = \lim\limits_{p\rightarrow+\infty} pF(p) \) \\
+        \( \lim\limits_{t\rightarrow+\infty} f(t) = \lim\limits_{p\rightarrow 0} pF(p) \)
+    \end{tabular}
+}\end{center}
+
+\end{document}

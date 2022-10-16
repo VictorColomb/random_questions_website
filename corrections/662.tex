@@ -1,0 +1,86 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electromagnétisme}\fancyhead[R]{Question 47}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Propagation d’une onde EM dans un plasma non collisionnel}}}
+\end{center}
+
+% Correction
+
+Soit un plasma gazeux : un gaz partiellement ou totalement ionisé. Il est donc constitué d'ions et d'électrons libres. On s'intéresse aux plasma peu denses, pour lesquels on peut négliger les chocs des électrons avec les ions.\\
+On suppose que le plasma est neutre $\rho=0$\par
+Soit $n$ la densité d'électrons libres. Alors $\rho_e=-ne$ et $\rho_{\text{ions}}=ne$
+
+On cherche à propager une OPPHM dans ce plasma.\\
+C'est un problème d'interaction matière rayonnement : le champ modifie le mouvement des charges qui à son tour modifie le champ.
+
+\textcolor{red}{Partie mécanique de l'étude :}\\
+PFD sur un électron libre dans $\mathcal{R}_g$ : $m\dfrac{\mathrm{d}\vv*ve}{\mathrm{d}t}=-e(\vv E+\vv v\wedge\vv B)$\\
+Or $\Vert\vv B\Vert=\dfrac{\Vert\vv E\Vert}{c}$ donc $\dfrac{\Vert\vv v\wedge\vv B\Vert}{\Vert\vv E\Vert}$ est de l'ordre de $\dfrac{\Vert\vv v\Vert}{c}$.\\
+Ainsi, dans le cadre non relativiste, la partie magnétique de la force de Lorentz est négligeable devant la partie électrique.\\
+Donc $m\dfrac{\mathrm{d}v_e}{\mathrm{d}t}=-eE$.\par
+De plus, dans le cadre non relativiste, on a $\dfrac{\mathrm{d}\vv*ve}{\mathrm{d}t}\simeq\dfrac{\partial\vv*ve}{\partial t}$\\
+Donc \[m\dfrac{\partial\vv*ve}{\partial t}=-e\vv E\]
+
+\textcolor{red}{Partie électromagnétique de l'étude :}\\
+Tout se passe comme si les ions étaient immobiles (trop massiques).\\
+Ainsi, en notation opticienne, $-mi\omega \underline{\vv*ve}=-e \underline{\vv E}$. \\
+Donc $\underline{\vv j}=-ne\underline{\vv*ve}+ne\underline{\vv*vi}=-ne \dfrac{e\vv E}{mi\omega}=-\dfrac{ne^2}{i\omega m}\underline{\vv E}$ (on néglige $\vv*vi$)\\
+On trouve une conductivité imaginaire pure au plasma : $\underline{\gamma}=i \dfrac{ne^2}{m\omega}$.\par
+Équations de Maxwell : 
+\(\left\{
+    \begin{array}{ll}
+        i\vv k\cdot \underline{\vv E}=0\\
+        i\vv k\cdot \underline{\vv B}=0\\
+        i\vv k\wedge\vv B=\mu_0\gamma\underline{\vv E}-\mu_0\varepsilon_0 i\omega \underline{\vv E}\\
+        i\vv k\wedge \underline{\vv E}=i\omega \underline{\vv B}\\
+    \end{array}
+\right.\)\\
+Donc $\underline{\vv B}=\dfrac{\vv k\wedge\vv E}{\omega}$ donc $\dfrac{i}{\omega}\vv k\wedge(\vv k\wedge\underline{\vv E})=\mu_0\gamma\vv E-\mu_0\varepsilon_0 i\omega\underline{\vv E}$ donc $-\dfrac{i}{\omega}\vv k^2=\mu_0(\gamma-\varepsilon_0 i\omega)$\\
+Donc $\vv k^2=i\omega\mu_0(\gamma-\varepsilon_0 i\omega)=\dfrac{\omega^2}{c^2}-\dfrac{\omega\mu_0ne^2}{m\omega}$
+Donc\\
+\begin{center}\fcolorbox{red}{white}{\(\vv k^2=\dfrac{\omega^2-\omega_p^2}{c^2}\)
+avec $\omega_p^2=\dfrac{ne^2}{m\varepsilon_0}$}\end{center}
+
+\underline{1$^{\mathrm{er}}$ cas :} $\omega>\omega_p$\\
+Alors $k=\pm \sqrt{\dfrac{\omega^2-\omega_p^2}{2}}$ deux solutions, une progressive, une régressive.\\
+On s'intéresse à la solution progressive.\\
+$v_\varphi=\dfrac{\omega}{k}=\dfrac{\omega}{\sqrt{\omega^2-\omega_p^2}}c\qquad n(\omega)=\dfrac{c}{v_\varphi}=\dfrac{\sqrt{\omega^2-\omega_p^2}}{\omega}<1$\\
+Le milieu est dispersif.\\
+Si $\omega\gg\omega_p$, $v_\varphi\simeq c$ : un signal dont le spectre est centré autour d'une pulsation très supérieure à $\omega_p$ progresse sans se déformer.\newpage
+Propagation de l'énergie :\\
+$k$ est réel donc $v_g$ représente la vitesse de propagation de l'énergie.\\
+$v_g=\dfrac{c^2}{v_\varphi}=c \dfrac{\omega^2-\omega_p^2}{\omega} \leqslant c$
+
+\underline{2$^{\mathrm{ème}}$ cas :} $\omega<\omega_p$\\
+Alors $k=\pm i \sqrt{\dfrac{\omega^2-\omega_p^2}{c^2}}$\\
+$\underline{\vv E}=\underline{\vv*E0}e^{i-(\omega t-kz)}$\\
+On suppose le champ $\underline{\vv E}$ polarisé rectilignement selon $\vv z$\\
+$\underline{\vv E}=A\vv x\exp\left(-\sqrt{\omega_p^2-\omega}\dfrac{z}{c}\right)e^{-i\omega t}$\\
+L'onde ne se propage plus, on dit que c'est une onde \textbf{évanescente}. Elle ne transporte aucune énergie.
+
+Le plasma peut ainsi être considéré comme un filtre passe haut de fréquence de coupure $\omega_p$.\par
+$\underline{\vv R}=\dfrac{\underline{\vv E}\wedge \underline{\vv B}^*}{\mu_0}=\dfrac{\vv E}{\mu_0}\wedge \left( \dfrac{\vv k\wedge \underline{\vv E}^*}{\omega} \right)=|\underline{\vv E}|^2 \dfrac{\vv k^*}{\omega\mu_0}$ avec $\vv k=i \dfrac{\sqrt{\omega_p^2-\omega^2}}{c}\vv z$\\
+Donc $<\vv R>=\dfrac{1}{2}\text{Re} \underline{\vv R}=\vv 0$ car $\text{Re}\vv k^*=0$
+Pour $\omega<\omega_p$, le plasma est un miroir parfait.
+
+
+\end{document}

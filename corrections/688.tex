@@ -1,0 +1,32 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Optique}\fancyhead[R]{Question 14}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Condition d’interférences constructives d’un réseau}}}
+\end{center}
+
+% Correction
+
+On s'intéresse à deux traits consécutifs du réseau.\\
+Par théorème de Malus, \( \delta_{1 ,2} = d_1 - d_2 = a(\sin(\theta) -\sin(i))\).\\
+Il y a donc interférences constructives si \fcolorbox{red}{white}{\(  a(\sin(\theta) -\sin(i)) \in \lambda \mathbb{Z} \)}.
+
+\end{document}

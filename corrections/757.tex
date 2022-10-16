@@ -1,0 +1,34 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Chimie}\fancyhead[R]{Question 13}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Définition de l’avancement d’une réaction}}}
+\end{center}
+
+% Correction
+
+Pour une réaction chimique notée \(\sum_i\nu_iB_i\), avec \(\nu_i\) négatif si \(B_i\) est un réactif et positif sinon, on définit l'avancement \(\xi\) par la grandeur vérifiant :
+\begin{center}
+\fcolorbox{red}{white}{\(\forall i,\mathrm{d}\xi=\dfrac{\mathrm{d}n_i}{\nu_i}\)}
+\end{center}
+où \(n_i\) est la quantité de matière de l'espèce \(B_i\) au cours de la réaction.
+
+\end{document}

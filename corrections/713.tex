@@ -1,0 +1,33 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Thermodynamique}\fancyhead[R]{Question 23}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Définition entropie d’échange, de création}}}
+\end{center}
+
+% Correction
+
+On définit l'entropie d'échange par \fcolorbox{red}{white}{\( S_e = \dfrac{Q}{T_{th}} \)} où \( T_{th} \) est la température du thermostat. \\
+On peut avoir \( S_e = \displaystyle\sum_i \dfrac{Q_i}{T_i} \) avec plusieurs thermostats \( (T_i) \).
+
+Alors \( \Delta S = S_e + S_c \) où \fcolorbox{red}{white}{\( S_c \geqslant 0 \)} est appelée entropie de création.
+
+\end{document}

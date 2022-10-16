@@ -1,0 +1,44 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Mécanique}\fancyhead[R]{Question 18}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Force et énergie potentielle: poids, force gravitationnelle, \\ force électrique, force d’un ressort, force d’entraînement}}}
+\end{center}
+
+% Correction
+
+\setlength{\tabcolsep}{10pt}
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[h]
+\begin{tabular}{p{0.4\linewidth}|p{0.3\linewidth}|p{0.3\linewidth}} 
+                       & Force & Energie potentielle \\ \hline
+Poids dans un champ de gravité \(\vv{g}=-g\vv{z}\)    &  \(\vv{P}=m\vv{g}\)     &    \(E_p=mgz\)                 \\
+Force gravitationnelle pour une masse \(m\) autour d'une masse \(M\) à la distance \(r\)&\(\vv{F}=-\mathcal{G}\dfrac{Mm}{r^3}\vv{r} \)      &       \(E_p=    -\mathcal{G}\dfrac{Mm}{r}   \)       \\
+Force électrique pour une charge \(q\) autour d'une charge \(Q\) à la distance \(r\)      &\(\vv{F}=\dfrac{1}{4\pi\epsilon_0}\dfrac{qQ}{r^3}\vv{r}\)       &\(E_p=\dfrac{1}{4\pi\epsilon_0}\dfrac{qQ}{r}\)\\
+Force d'un ressort de raideur \(k\) et de longueur à vide \(l_0\) sur l'axe \(\vv{x}\)   &\(\vv{F}=-k(l-l_0)\vv{x}\)       & \(E_p=\dfrac{1}{2}k(l-l_0)^2\)                    \\
+Force d'entraînement pour un référentiel tournant à vitesse \(\omega\) autour d'un axe du référentiel galiléen   &\(\vv{F_{\mathrm{ent}}}=m\omega^2\vv{HM}\) avec \(H\) projeté orthogonal de \(M\) sur l'axe       &   \(E_p=-\dfrac{1}{2}m\omega^2HM^2\)                 
+\end{tabular}
+\end{table}
+
+
+
+
+\end{document}

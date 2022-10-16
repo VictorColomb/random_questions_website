@@ -1,0 +1,40 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 1}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Définition convention réceptrice}}}
+\end{center}
+
+% Correction
+
+
+\begin{minipage}{0.4\linewidth}
+  \begin{circuitikz}
+    \draw (0,0) to (0.5,0) node[draw,circle,fill=black,inner sep=1pt] {} node[above] {A} to[generic,i>_=$I$] (3.5,0) node[draw,circle,fill=black,inner sep=1pt] {} node[above] {B} to (4,0);
+    \draw [thick,->] (3.5,0.5) to (0.5,0.5) ;
+    \draw (2,0.5) node[anchor=south ]{$U$};
+  \end{circuitikz}
+\end{minipage}
+\begin{minipage}{0.6\linewidth}
+  $U = V_A-V_B$ (différence de potentiel)\\
+  $U$ est appelée tension aux bornes du dipôle.\\
+  $I$ est l'intensité du courant traversant le dipôle.
+\end{minipage}
+\end{document}

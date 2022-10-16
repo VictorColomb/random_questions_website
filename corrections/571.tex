@@ -1,0 +1,57 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 23}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Définition du gain, de l’impédance d’entrée, \\ de l’impédance de sortie d’un quadripôle}}}
+\end{center}
+
+% Correction
+
+
+\begin{center}
+\begin{minipage}{0.6\linewidth}
+    \begin{circuitikz}
+      \draw (2,0) to[short,o-] (0,0) to[V=$E_g$] (0,2) to[R=$R_g$,-o] (2,2);
+      \draw (2.5,0) to[short,o-] (3,0);
+      \draw (2.5,2) to[short,o-,i=$\underline{i_e}$] (3,2);
+      \draw[->] (2.5,.2) -- node[left] {$\underline{v_e}$} (2.5,1.8);
+      \node[draw,rectangle,minimum height=2.4cm,minimum width=2cm,fill=white] at (4,1) {$Q$};
+      \draw (5,0) to[short,-o] ++(1,0);
+      \draw (5,2) to[short,-o,i=$\underline{i_s}$] ++(1,0);
+      \draw (6.5,0) to[short,o-] ++(.5,0) to[R,l_=$R_u$] ++(0,2) to[short,-o] ++(-.5,0);
+      \draw[->] (6,.2) -- node[left] {$\underline{v_s}$} (6,1.8);
+    \end{circuitikz}
+  \end{minipage}
+\end{center}
+
+  Gain du quadripôle : \begin{center}\fcolorbox{red}{white}{$\dfrac{\underline{v_s}}{\underline{v_e}}$}\end{center}
+  L'impédance d'entrée est l'impédance du générateur de Thévenin situé à droite des bornes d'entrées du quadripôle.\\
+    Notation : $\underline{Z_e}$\begin{center}
+    \fcolorbox{red}{white}{$\underline{Z_e}=\dfrac{\underline{v_e}}{\underline{i_e}}$}\end{center}
+    (car ici la droite des bornes d'entrées est passivée).
+  L'impédance de sortie est l'impédance du générateur de Thévenin situé à gauche des bornes de sortie du quadripôle.\\
+    Notation : $\underline{Z_s}$\begin{center}
+    \fcolorbox{red}{white}{$\underline{Z_s}=\dfrac{\underline{v_s}}{\underline{i_s}}$}\end{center}
+    pour $E_g=0$ et en introduisant une tension $\underline{U}$ en sortie. \\
+    Alors, $\underline{Z_s}=\dfrac{\underline{U}}{\underline{i_s}}$.
+  
+
+\end{document}

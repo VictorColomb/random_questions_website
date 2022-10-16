@@ -1,0 +1,56 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 27}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Étude de $\underline{H}=1+jx$}}}
+\end{center}
+
+% Correction
+
+
+On a $\underline{H}=1+jx=1+j\dfrac{\omega}{\omega_0}$\\
+  $\omega\rightarrow 0$ : $\underline{H}\sim 1,\quad G=0\text{ dB},\quad\varphi=0^{\circ}$\\
+  $\omega\rightarrow+\infty$ : $ \underline{H}\sim j\dfrac{\omega}{\omega_0},\quad G=20\log\omega-20\log\omega_0\quad,\varphi=90^{\circ}$
+
+\begin{center}
+  \begin{tikzpicture}
+  \draw [thick,->] (-2.5,0) to (2.5,0) node[anchor=north west]{\(\log\omega\)};
+  \draw[thick,->](0,-2.5) to (0,2.5) node[anchor=south east]{\(G_{\mathrm{dB}}\)};
+  \draw (-2.5,0.1) to (0,0.1) ;
+  \draw (0,0.1) to (2.5,2.5) node[anchor=north west]{20dB/décade};
+  \draw (0,0) node[anchor=north west]{\(\log\omega_0\)};
+  \draw [red](-2.5,0.2) ..controls (0,0.1)..(2.4,2.5);
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\begin{tikzpicture}
+  \draw [thick,->] (-2.5,0) to (2.5,0) node[anchor=north west]{\(\log\omega\)};
+  \draw[thick,->](0,-2.5) to (0,2.5) node[anchor=south east]{\(\varphi\)};
+  \draw (-2.5,0.1) to (0,0.1);
+  \draw (0,2) to (2.5,2);
+  \draw (0,2) node [anchor=south east ]{\(90^{\circ}\)};
+  \draw [red](-2.5,0.1) ..controls (0,0.1) and (0,2)..(2.5,2); 
+  \draw (0,1) node[anchor=south east]{\(45^{\circ}\)};
+\end{tikzpicture}
+\end{center}
+
+
+\end{document}

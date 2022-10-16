@@ -1,0 +1,37 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 6}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Graphe $U-I$ d’une source idéale de courant}}}
+\end{center}
+
+% Correction
+
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[thick,->](-2.5,0)--(2.5,0) node[anchor=north west ]{$U$};
+    \draw[thick,->](0,-2.5)--(0,2.5) node[anchor=south east]{$I$};
+    \draw (-2.5,1)--(2.5,1) ;
+    \draw (0,1) node[anchor=south east]{$I_0$};
+  \end{tikzpicture}
+\end{center}
+
+\end{document}

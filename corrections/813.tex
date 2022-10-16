@@ -1,0 +1,42 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Mécanique quantique}\fancyhead[R]{Question 19}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Niveaux d’énergie de l’atome d’hydrogène}}}
+\end{center}
+
+% Correction
+
+On utilise la formule de Rydberg.\\
+Soient \(n_1, n_2 \in \mathbb{N}^*\) tels que \(n_2 > n_1\),
+\[\frac{1}{\lambda} = R_H\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right)\]
+\(E =h \nu\) donc\\
+\begin{center}\fcolorbox{red}{white}{\(\Delta E = hcR_H\left(\dfrac{1}{n_1^2} - \dfrac{1}{n_2^2}\right) \)}\\
+\fcolorbox{red}{white}{\( E_n = -hcR_H\dfrac{1}{n^2}\)}\end{center}
+\emph{Rappel: }\(R_H = 1.097\cdot 10^7 m^{-1}\) est la constante de Rydberg pour l'hydrogène. À ne pas confondre avec \(R\) la constante universel des gaz parfaits.
+
+
+
+
+
+
+
+\end{document}

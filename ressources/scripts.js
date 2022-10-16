@@ -148,10 +148,6 @@ function updateChapterProgression() {
 function show_overlay(name, bol, key = false) {
   if (document.getElementById("help_overlay").style.display == "") {
     if (bol == 1) {
-      if (name == "suggestion") {
-        document.getElementById("name").focus();
-        document.getElementById("comment").value = "";
-      }
       if (name == "chapters") {
         updateChapterProgression();
       }
@@ -185,30 +181,6 @@ function show_overlay(name, bol, key = false) {
       }
     }
   }
-}
-
-function send_comment() {
-  qid = questions_content[questions[my_position][1]][0];
-  timestamp = Date.now();
-  name_input = document.getElementById("name").value;
-  email = document.getElementById("mail").value;
-  comment = document.getElementById("comment").value;
-
-  var xmlhttprequest = new XMLHttpRequest();
-  xmlhttprequest.open("POST", "submitsuggestion.php", true);
-  var params = "qid=" + qid + "&timestamp=" + timestamp + "&name=" + name_input + "&comment=" + comment + "&email=" + email;
-  xmlhttprequest.setRequestHeader(
-    "Content-Type",
-    "application/x-www-form-urlencoded"
-  );
-  xmlhttprequest.onreadystatechange = function() {
-    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-      alert("Commentaire envoyé !");
-    }
-  }
-  xmlhttprequest.send(params);
-
-  show_overlay("suggestion", 0);
 }
 
 function show_menus() {
@@ -380,10 +352,9 @@ function displayCorrectionButton(q, which) {
 }
 function displayCorrectionTooltip(q) {
   if (available_corrections.includes(q)) {
-    document.getElementById("correction_tooltip").innerHTML = "Correction";
+    document.getElementById("correction_tooltip").hidden = false;
   } else {
-    document.getElementById("correction_tooltip").innerHTML =
-      "Proposer une correction";
+    document.getElementById("correction_tooltip").hidden = true;
   }
 }
 
@@ -395,9 +366,6 @@ function view_correction(allow_open = 1) {
     iframe.src = "corrections/" + qid + ".pdf#toolbar=0&view=FitH";
     show_overlay("correction", 1);
     gtag("event", "Opened correction", { event_category: "Corrections" });
-  } else {
-    window.open("correction/?q=" + qid, "_blank");
-    gtag("event", "Opened correction form", { event_category: "Corrections" });
   }
 }
 
@@ -407,10 +375,6 @@ function modpos(n) {
 }
 
 function on_load() {
-  has_text(document.getElementById("name"), 0);
-  has_text(document.getElementById("mail"), 0);
-  document.getElementById("comment").value = "";
-
   document.addEventListener("keydown", function (event) {
     if (event.keyCode === 13 && event.target.nodeName === "INPUT") {
       var form = event.target.form;
@@ -674,20 +638,15 @@ function questionFailed(key = false) {
 function keyDown(e) {
   chapters_overlay = document.getElementById("chapters_overlay").style
     .visibility;
-  suggestion_overlay = document.getElementById("suggestion_overlay").style
-    .visibility;
   correction_overlay = document.getElementById("correction_overlay").style
     .visibility;
   chapters_overlay_visibility =
     chapters_overlay == "hidden" || chapters_overlay == "";
-  suggestion_overlay_visibility =
-    suggestion_overlay == "hidden" || suggestion_overlay == "";
   correction_overlay_visibility =
     correction_overlay == "hidden" || correction_overlay == "";
   help_overlay_visibility =
     document.getElementById("help_overlay").style.display == "";
   if (
-    suggestion_overlay_visibility &&
     chapters_overlay_visibility &&
     keys_active &&
     help_overlay_visibility &&
@@ -710,8 +669,6 @@ function keyDown(e) {
     // escape
     if (!chapters_overlay_visibility) {
       show_overlay("chapters", 0, (key = true));
-    } else if (!suggestion_overlay_visibility) {
-      show_overlay("suggestion", 0, (key = true));
     } else if (!correction_overlay_visibility) {
       show_overlay("correction", 0, (key = true));
     } else {

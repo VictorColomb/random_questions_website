@@ -1,0 +1,51 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 15}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{HP: Théorème de Millman}}}
+\end{center}
+
+% Correction
+
+
+Le réseau doit être muni d'une masse qui définit le zéro des potentiels pour que ce théorème puisse s'appliquer. \vspace{0.3cm}\\
+Dans le cas le plus complexe, on s'intéresse à un noeud auquel sont connectés \(n\) dipôles de la forme :\begin{center}
+\begin{minipage}{0.4\linewidth}
+  \begin{circuitikz}
+    \draw (0,0) -- ++(.5,0) node[above] {$j$} to[short,*-,i=$i_{jk}$] ++(1,0) -- ++(0,1) to[R=$R_{jk}$] ++(1.5,0) to[vsource=$E_{jk}$] ++(1.5,0) -- ++(0,-1) to[short,-*] ++(1,0) node[above] {$k$};
+    \draw (1.5,0) -- ++(0,-1) to[isource=$I_{jk}$] ++(3,0) -- ++(0,1);
+  \end{circuitikz}
+\end{minipage}
+\end{center}
+Alors 
+  $i_{jk}=\dfrac{V_k-V_j-E_{jk}}{R_{jk}}+I_{jk}$\\
+  Par loi des noeuds : $\displaystyle\sum\limits_ji_{jk}=0$
+\\
+
+
+  Cas particulier :
+  $\forall j,I_{jk}=0; E_{jk}=0$\\
+  Alors \begin{center}
+    \fcolorbox{red}{white}{
+    $V_k=\dfrac{\displaystyle\sum\limits_jV_jG_{jk}}{\displaystyle\sum\limits_jG_{jk}}$
+    }\end{center}
+
+
+\end{document}

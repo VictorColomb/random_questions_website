@@ -1,0 +1,35 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 33}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Égalité de Parseval}}}
+\end{center}
+
+% Correction
+
+On note \(s=\sum\limits_{n=0}^{+\infty}s_n \cos(2\pi nft +\varphi_n)\) la décomposition de \(s\) en série de Fourier.\\
+Alors
+\begin{center}
+	\fcolorbox{red}{white}{\(\langle s^2 \rangle = s_0^2 +\dfrac{1}{2}\displaystyle\sum_{n=1}^{+\infty}s_n^2\)}
+\end{center}
+
+
+\end{document}

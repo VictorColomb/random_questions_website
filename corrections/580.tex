@@ -1,0 +1,33 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 32}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Transformée de Fourier d’un signal}}}
+\end{center}
+
+% Correction
+
+Soit un signal réel \(s(t)\).\\
+Si \(s\) est de carré sommable, c'est-à-dire si \(\displaystyle\int_{-\infty}^{+\infty}s(t)^2\mathrm{d}t\) converge (en pratique, tous les signaux physique le sont car ils ont un début et une fin), on appelle transfomée de Fourier du signal \(s\) la fonction de \(f\) définie par :\begin{center}
+\fcolorbox{red}{white}{\(\overset{\sim}{s}(f)=\displaystyle\int_{-\infty}^{+\infty}s(t)e^{-2i\pi ft}\mathrm{d}t\)}\end{center}
+On a alors \(\forall t\in\mathbb{R},s(t)=\displaystyle\int_{-\infty}^{+\infty}\overset{\sim}{s}(f)e^{2i\pi ft}\mathrm{d}f\).
+
+
+\end{document}

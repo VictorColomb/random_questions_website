@@ -1,0 +1,38 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Thermodynamique}\fancyhead[R]{Question 8}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Détente de Joule Gay-Lussac}}}
+\end{center}
+
+% Correction
+
+Un volume $V$ est isolé par des parois adiabatiques et est divisé en $V_1$ et $V_2$ par une paroi amovible. Le volume $V_1$ est occupé par un gaz à la pression $P$ et le volume $V_2$ est vide.\\
+À l'instant $t=0$, on enlève la paroi centrale.\par
+On considère le système composé des volumes $V_1$ et $V_2$ et de la paroi centrale : $\Sigma=$ \{gaz + vide\}.\\
+Premier principe : $\Delta U_{\text{gaz}}=\Delta U_{\text{gaz}}+\Delta U_{\text{vide}}=\Delta U=W+Q$\\
+Or $Q=0$ et $W=0$ car le système est isolé.\\
+Donc $\Delta U=0$\par
+Pour certains gaz, $T_F=T_I$. On dit qu'ils suivent la première loi de Joule.\\
+C'est le cas des gaz parfaits.
+
+
+\end{document}

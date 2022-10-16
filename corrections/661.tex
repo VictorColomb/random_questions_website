@@ -1,0 +1,50 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electromagnétisme}\fancyhead[R]{Question 46}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Propagation d’une onde EM dans un conducteur}}}
+\end{center}
+
+% Correction
+
+On s'intéresse à une onde polarisée rectilignement selon $\vv x$ dans un bon conducteur (conducteur où est valable l'approximation des bons conducteurs : $\gamma\gg\varepsilon_0\omega$, qui est équivalente à l'ARQP)\par
+Équations de Maxwell : $\mathrm{div}\,\vv B=0=\mathrm{div}\vv E\quad\mathrm{rot}\,\vv E=-\dfrac{\partial\vv B}{\partial t}\quad\mathrm{rot}\,\vv B=\mu_0\vv j + \mu \varepsilon_0 \dfrac{\partial\vv E}{\partial t}$\\
+Donc $i\vv k\cdot \underline{\vv E}=0=i\vv k\cdot \underline{\vv B}\quad i\vv k\wedge\vv B=\mu_0\gamma\underline{\vv E}-\mu_0\varepsilon_0 i\omega \underline{\vv E}\quad i\vv k\wedge \underline{\vv E}\quad i\vv k\wedge \underline{\vv E}=i\omega \underline{\vv B}$\\
+Donc $\underline{\vv E}\perp\vv k$ et $\underline{\vv B}\perp\vv k$ donc le champ électromagnétique est transverse.\\
+De plus, \( \vv k\wedge (\vv k\wedge\vv E) = -i\omega\vv k\wedge\vv B = - i\omega\mu_0 (\gamma + i\omega\varepsilon_0) \) donc \( -\vv k^2 = - i\omega\mu_0(\gamma + i\omega\varepsilon_0) \) donc \( \vv k^2 = \dfrac{\omega^2}{c^2} - i\omega\mu_0\gamma  \)
+\par
+
+On obtient donc la relation de dispersion du conducteur $\gamma$ : $\vv k^2=\dfrac{\omega^2}{c^2}-i\omega\mu_0\gamma$\\
+Avec l'approximation des bons conducteurs : \fcolorbox{red}{white}{$\vv k^2=-i\omega\mu_0\gamma$}
+\par
+
+On a donc $k=\pm \dfrac{1+i}{\sqrt{2}}\sqrt{\mu_0\omega\gamma}$\\
+L'onde peut être progressive ou régressive. On s'intéresse à l'onde progressive.\\
+On note $k=\dfrac{1+i}{\delta}$ avec $\delta=\sqrt{\dfrac{2}{\mu_o\gamma\omega}}$, \(\delta\) est appelée \emph{épaisseur de peau}\\
+$\underline{\vv E}=\underline{A}\vv xe^{-\frac{z}{\delta}}e^{-i(\omega t- \frac{z}{\delta})}$ avec une bonne origine des temps, $\underline{A}$ est réel.\\
+L'onde se propage selon $\vv z$ en s'amortisant est devient négligeable après une longueur \(\delta\). On parle d'onde amortie ou évanescente.\\
+$\vv E=\text{Re} \underline{\vv E}=A\vv xe^{-\frac{z}{\delta}}\cos(\omega t- \dfrac{z}{\delta})$\\
+L'onde est plane. $v_\varphi=\dfrac{\omega}{\text{Re} \underline{k}}=\sqrt{\dfrac{2\omega}{\mu_0\gamma}}$.\par
+
+
+
+
+\end{document}

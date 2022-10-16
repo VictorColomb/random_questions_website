@@ -1,0 +1,39 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{SLCI}\fancyhead[R]{Question 5}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Forme canonique des fonctions de transfert \\ de premier et de second ordre}}}
+\end{center}
+
+% Correction
+
+Premier ordre :
+\begin{center}\fcolorbox{red}{white}{
+	\( H = \dfrac{K}{1+\tau p} \)
+}\end{center}
+
+Second ordre :
+\begin{center}\fcolorbox{red}{white}{
+	\( H = \dfrac{K}{1+\dfrac{2\xi}{\omega_0}p + \dfrac{1}{\omega_0^2}p} \)
+}\end{center}
+
+
+\end{document}

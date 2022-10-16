@@ -1,0 +1,33 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 35}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Montage dérivateur sur série de Fourier}}}
+\end{center}
+
+% Correction
+
+Soit \(e\) un signal périodique de fréquence \(f\) dont on note \(e(t)=e_0+\sum e_n\cos(2\pi nft +\varphi_n)\) la décomposition en série de Fourier.\\
+Soit \(f_c\) la fréquence de coupure du filtre qu'on suppose passe-haut.
+
+Si \(f\ll f_c\), alors le signal en sortie vaut \begin{center}\fcolorbox{red}{white}{\(s(t)=-\dfrac{1}{f_c}\ds\sum\limits_{n\geq1}2\pi nfe_n\sin(2\pi nft +\varphi_n)\simeq\dfrac{1}{f_c}\dfrac{\mathrm{d}e}{\mathrm{d}t}\)}\end{center}
+Si \(f\gg f_c\), alors le signal en sortie vaut \begin{center}\fcolorbox{red}{white}{\(s(t)=e(t)-\langle e\rangle\)}\end{center}
+
+\end{document}

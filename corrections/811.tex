@@ -1,0 +1,51 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Mécanique quantique}\fancyhead[R]{Question 17}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Valeur de $\vec{j}$ si $E>V$ et si $E<V$, \\ pour une marche de potentiel}}}
+\end{center}
+
+% Correction
+
+On considère un champ de force d'énergie potentielle \( V(x) = \left\{ \begin{array}{l} 0\,,\mathrm{si}\,x < 0 \\ V_0 \,,\mathrm{si}\,x > 0 \end{array}\right. \).\\
+Soit une particule quantique de masse \( m \) dans l'état stationnaire \( \psi(x,t) = \varphi(x)\exp( - i \dfrac{E}{\hbar}t) \)
+\par
+
+La fonction \( \varphi \) vérifie \( - \dfrac{h^2}{2m}\dfrac{\mathrm{d}^2\varphi}{\mathrm{d}x^2} = E\varphi \) pour \( x < 0 \) et \( - \dfrac{h^2}{2m}\dfrac{\mathrm{d}^2\varphi}{\mathrm{d}x^2} = (E - V_0)\varphi \) pour \( x > 0 \).
+\par
+
+\underline{1$^{\mathrm{er}}$ cas :} \( E > V_0 \)\\
+Pour \( K^2 = \dfrac{2mE}{\hbar^2} \) et \( k^2 = \dfrac{2m(E - V_0)}{\hbar^2}  \), on a \[ \varphi(x) = \left\{\begin{array}{l} A\exp(iKx) + B\exp( - iKx)\,,\mathrm{si}\,x < 0 \\ C\exp(ikx)\,,\mathrm{si}\,x > 0 \end{array}\right. \]\\
+En \( x = 0 \), on a \( A + B = C \) et \( iK(A - B) = ikC \) d'où \( B = \dfrac{K - k}{K + k}A \) et \( C = \dfrac{2K}{K + k}A \)
+
+Ainsi :
+\begin{center}\fcolorbox{red}{white}{\(j_i = |A|^2 \dfrac{\hbar K}{m} \qquad j_r = -|B|^2 \dfrac{\hbar K}{m} \qquad j_t = |C|^2 \dfrac{\hbar K}{m} \)}\end{center}
+On peut donc définir des coefficients de réflexion et de transmission : \[ R = \left( \dfrac{K - k}{K + k}  \right)^2 \qquad T = \left( \dfrac{2K}{K + k}  \right)^2 + \dfrac{k}{K} = \dfrac{4kK}{(K + k)^2} \]
+\par
+
+\underline{2$^{\mathrm{eme}}$ cas :} \( E < V_0 \)\\\
+Pour \( K^2 = \dfrac{2mE}{\hbar^2} \) et \( \alpha^2 = -\dfrac{2m(E - V_0)}{\hbar^2}  \), on a \[ \varphi(x) = \left\{\begin{array}{l} A\exp(iKx) + B\exp( - iKx)\,,\mathrm{si}\,x < 0 \\ C\exp(-\alpha x)\,,\mathrm{si}\,x > 0 \end{array}\right. \]\\
+En \( x = 0 \), on a \( A + B = C \) et \( iK(A - B) = \alpha C \) d'où \( B = \dfrac{K - i\alpha}{K + i\alpha} A \) et \( C = \dfrac{2K}{K + i\alpha}A \)\\
+On trouve cette fois ci \[ R = \dfrac{|B|^2}{|A|^2} = 1 \qquad T = 0 \]\\
+L'onde transmise est evanescante de profondeur de pénétration \( \delta = \dfrac{1}{\alpha} \) : son amplitude décroît exponentiellement et ne transporte pas de densité de probabilité.
+
+
+\end{document}

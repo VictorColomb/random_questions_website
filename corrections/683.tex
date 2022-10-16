@@ -1,0 +1,38 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Optique}\fancyhead[R]{Question 9}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Critère de brouillage temporel et spatial}}}
+\end{center}
+
+% Correction
+Brouillage spatial : \\
+Soient $O$ le centre de la source et $B$ un point de la périphérie de la source.\\
+$\Delta\delta=\delta_B(M)-\delta_O(M)\qquad\Delta p=\dfrac{\Delta\delta}{\lambda_0}$.\par
+Brouillage temporel :\\
+$p=\dfrac{\delta}{\lambda}=\sigma\delta$.
+$\Delta p=p_{\nu_{\text{max}}}-p_{\nu_0}=\dfrac{\Delta\sigma}{2}\delta(M)$
+\par
+
+Dans les deux cas :\\
+\fcolorbox{red}{white}{Il y a brouillage si \( |\Delta p| > \dfrac{1}{2} \)}
+
+\end{document}

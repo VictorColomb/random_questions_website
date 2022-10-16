@@ -1,0 +1,36 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electromagnétisme}\fancyhead[R]{Question 37}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Règle de calcul sur les ondes (convention électronicienne): \\ $\mathrm{div}\,\vec f$, $\vec{\mathrm{grad}}\,f$, $\vec{\mathrm{rot}}$ $\vec f$, $\Delta\,f$ et $\vec\Delta\,\vec f$}}}
+\end{center}
+
+% Correction
+
+On suppose que \(\underline{f}=\underline{f_0}e^{i(\omega t-\vv{k}\cdot\vv{r})}\) et \(\vv{\underline{f}}=\vv{\underline{f_0}}e^{i(\omega t-\vv{k}\cdot\vv{r})}\) où \(\underline{f_0}\) et \(\vv{\underline{f_0}}\) sont des constantes spatiales.\\
+Alors on a :\begin{center}\fcolorbox{red}{white}{\(\mathrm{div}\vv{\underline{f}}=i\vv{k}\cdot\vv{\underline{f}}\)}\\
+\fcolorbox{red}{white}{\(\vv{\mathrm{grad}}\underline{f}=i\vv{k}\underline{f}\)}\\
+\fcolorbox{red}{white}{\(\vv{\mathrm{rot}}\vv{\underline{f}}=i\vv{k}\wedge\vv{\underline{f}}\)}\\
+\fcolorbox{red}{white}{\(\Delta\underline{f}=-\vv{k}^2\underline{f}\)}\\
+\fcolorbox{red}{white}{\(\vv{\Delta}\vv{\underline{f}}=-\vv{k}^2\vv{\underline{f}}\)}\end{center}
+
+
+\end{document}

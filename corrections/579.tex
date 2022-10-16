@@ -1,0 +1,38 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 31}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Théorème de développement en série de Fourier}}}
+\end{center}
+
+% Correction
+
+Soit \(g\) une fonction continue par morceaux périodique de période \(T\) et de fréquence \(f=\dfrac{1}{T}\).\\
+Alors \(g\) possède un développement unique dit en série de Fourier donné par :
+\begin{center}\fcolorbox{red}{white}{\(\forall t \in \mathbb{R},g(t)=a_0+\sum_n(a_n\cos(2\pi nft)+b_n\sin(2\pi nft))\)}\end{center}
+Ce développement vaut \(g(t)\) en tout point \(t\) où \(g\) est continue et \(\dfrac{g(t^-)+g(t^+)}{2}\) en tout point \(t\) où \(g\) est discontinue.
+
+\emph{HP :} Les coefficients de ce développement sont donnés par \begin{center}\(a_0=\dfrac{1}{T}\ds\int_t^{t+T}g(t)\mathrm{d}t=\langle g \rangle\)\\
+\(\forall n \in \mathbb{N}^*,a_n=\dfrac{2}{T}\ds\int_t^{t+T}g(t)\cos(2\pi nft)\mathrm{d}t\)\\
+\(\forall n \in \mathbb{N}^*,b_n=\dfrac{2}{T}\ds\int_t^{t+T}g(t)\sin(2\pi nft)\mathrm{d}t\)\end{center}
+
+
+
+\end{document}

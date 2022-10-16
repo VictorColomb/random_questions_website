@@ -1,0 +1,41 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 36}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Montage intégrateur sur série de Fourier}}}
+\end{center}
+
+% Correction
+
+On note \(f_c\) la fréquence de coupure du montage intégrateur, qu'on suppose passe bas.\\
+On note \(e=\displaystyle\sum_{n=0}^{+\infty} e_n\cos(2\pi nft+\varphi_n)\) la décomposition en série de Fourier de \(e\).\\
+On note \(s\) le signal en sortie du filtre.
+
+Si \(f\gg f_c\), alors
+\begin{center}
+\fcolorbox{red}{white}{\(s=\langle e \rangle+ f_c\displaystyle\int\left(e(t)-\langle e\rangle\right)\mathrm{d}t\)}
+\end{center}
+Si \(f\ll f_c\), alors
+\begin{center}
+\fcolorbox{red}{white}{\(s=e\)}
+\end{center}
+
+
+\end{document}

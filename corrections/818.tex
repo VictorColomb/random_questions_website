@@ -1,0 +1,40 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor,makecell}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{SLCI}\fancyhead[R]{Question 3}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Transformée de Laplace de l'impulsion de Dirac, \\ d'un échelon, d'une fonction affine \\ et d'une exponentielle décroissante}}}
+\end{center}
+
+% Correction
+
+\begin{table}[h]
+	\begin{tabular}{c|c}
+		\( x(t) \) & \( X(p) \) \\
+		\hline
+		Impulsion de Dirac & \( 1 \) \\
+		\( e_0 u(t) \) & \gape{\( \dfrac{e_0}{p} \)} \\
+		\( at\, u(t) \) & \gape{\( \dfrac{a}{p^2} \)} \\
+		\( e^{-\alpha t} \) & \gape{\( \dfrac{1}{p+\alpha} \)}
+	\end{tabular}
+\end{table}
+
+
+\end{document}

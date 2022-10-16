@@ -1,0 +1,47 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 12}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Théorème d’équivalence entre une source réelle \\ de courant et une source réelle de tension}}}
+\end{center}
+
+% Correction
+
+Il y a équivalence entre :
+\begin{center}
+\begin{minipage}{0.2\linewidth}
+\centering
+  \begin{circuitikz}
+    \draw (1,0) node[right] {B} to[short,*-] (0,0) to[vsource=$E_g$] ++(0,1.5) to[R=$R$] ++(0,1.5) to[short,i=$I$,-*] ++(1,0) node[right] {A};
+  \end{circuitikz}
+\end{minipage}
+et
+\begin{minipage}{0.3\linewidth}
+\centering
+  \begin{circuitikz}
+    \draw (3,0) node[right] {B} to[short,*-] (0,0) to[isource=$\dfrac{E_g}{R}$] ++(0,2) -- ++(2,0) to[short,i=$I$,-*] ++(1,0) node[right] {A};
+    \draw (2,0) to[R=$R$] ++(0,2);
+  \end{circuitikz}
+\end{minipage}
+\end{center}
+
+
+\end{document}

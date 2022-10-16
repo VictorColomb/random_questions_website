@@ -1,0 +1,39 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{SLCI}\fancyhead[R]{Question 8}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Définition des marges de gain et de phase}}}
+\end{center}
+
+% Correction
+
+Si \( \omega_G \) est tel que \( \mathrm{arg}(\mathrm{FTBO}(j\omega_G)) = -180^\circ \), on définit la marge de gain comme
+\begin{center}\fcolorbox{red}{white}{
+	\( M_G = -G_{\mathrm{dB}}(\omega_G) \)
+}\end{center}
+
+Si \( \omega_\varphi \) est tel que \( |\mathrm{FTBO}(j\omega_\varphi)| = 1 \), on définit la marge de phase comme
+\begin{center}\fcolorbox{red}{white}{
+	\( M_\varphi = 180^\circ + \mathrm{arg}(\mathrm{FTBO}(j\omega_\varphi)) \)
+}\end{center}
+
+
+\end{document}

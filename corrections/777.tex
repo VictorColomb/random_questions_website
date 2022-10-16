@@ -1,0 +1,36 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}\usepackage[version=4]{mhchem}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Chimie}\fancyhead[R]{Question 33}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Formule de Nernst}}}
+\end{center}
+
+% Correction
+
+On s'intéresse à la réaction \(\alpha Ox +\ce{xH+}+ne^-\ce{<=>}\beta Red\).\\
+On note \(E^{\circ}=E_{Ox/Red}^{\circ}\).\\
+Alors les activités à l'équilibre vérifient :
+\begin{center}
+\fcolorbox{red}{white}{\(E=E^{\circ}+\dfrac{U}{n}\log\left(\dfrac{h^x(Ox)^{\alpha}}{(Red)^{\beta}}\right)\)}
+\end{center}
+
+
+\end{document}

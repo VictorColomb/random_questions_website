@@ -1,0 +1,34 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Chimie}\fancyhead[R]{Question 28}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Sens d’une réaction en fonction de $Q_r$ et de $K^{\circ}$}}}
+\end{center}
+
+% Correction
+
+On rappelle que \(\Delta_rG=\mathrm{RT ln}\left(\dfrac{Q_r}{K^{\circ}}\right)\) et que \(\Delta_rG\mathrm{d}\xi=-T\delta S_C\leqslant 0\).\\
+Si \(Q_r< K^{\circ}\), alors \(\Delta_rG<0\) donc \(\mathrm{d}\xi>0\) donc la réaction avance dans le sens des produits.\\
+Si \(Q_r> K^{\circ}\), alors \(\Delta_rG>0\) donc \(\mathrm{d}\xi<0\) donc la réaction avance dans le sens des réactifs.\\
+Si \(Q_r=K^{\circ}\), alors \(\Delta_rG=0\) donc \(\delta S_c=0\) et comme une réaction chimique crée toujours de l'entropie, la réaction chimique n'a pas lieu et le système est à l'équilibre chimique.
+
+
+\end{document}

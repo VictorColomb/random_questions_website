@@ -1,0 +1,45 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Electrocinétique}\fancyhead[R]{Question 37}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Montage passe-bande sur série de Fourier}}}
+\end{center}
+
+% Correction
+
+On note \(f_c\) la pulsation de coupure du passe-bande.\\
+Soit \(Q\) le facteur de qualité du montage.\\
+On montre que $Q=\dfrac{\omega_0}{\Delta\omega}=\dfrac{f_0}{\Delta f}$ où $\Delta f=f_++f_-$ largeur de la bande passante du filtre passe-bande idéal à -3dB\\
+
+  \underline{$1^{\mathrm{er}}$ cas :} $f<<f_0$\\
+  $e(t)\simeq <e>+\displaystyle\sum\limits_{i=1}^{9}a_i\cos(2\pi ift)$ où $f,\ldots,9f<<f_0$\\
+  $\underline{H}\sim j \dfrac{\omega}{Q\omega_0}$ (dérivateur)\\
+  $s(t)\simeq \dfrac{1}{Q\omega_0}\dfrac{\mathrm{d}e}{\mathrm{d}t}$\par
+  \textbullet~$Q<1$ : le diagramme de sortie réel est sous ses asymptotes. La sortie est bien représentée par $\dfrac{1}{Q\omega_0}\dfrac{\mathrm{d}e}{\mathrm{d}t}$\par
+  \textbullet~$Q>1$ : Il y a résonnance et le diagramme réel se trouve au dessus de ses asymptotes.\\
+  Les harmoniques $f_i\in \left[f_0- \dfrac{f_0}{2Q};f_0+\dfrac{f_0}{2Q}\right]$ sont suramplifiées par la résonnance du filtre. Ces harmoniques se superposent sensiblement au premières harmoniques.\\
+  On obtient un signal supplémentaire en $e_n e^{-\frac{\omega_0}{2Q}t}\sin\omega_0t$. Décroissance des oscillations parasites en $\exp(- \dfrac{\pi}{Q})$
+
+  \underline{$2^{\mathrm{ème}}$ cas :} $f>>f_0$\\
+  Toutes les harmoniques non nulles vérifient $if>>f_0$ donc $\underline{H}\sim \dfrac{1}{jQ \dfrac{\omega}{\omega_0}}$ (intégrateur)\\
+  $s(t)\simeq \dfrac{\omega_0}{Q}\displaystyle\int{}{}(e(t)-<e>)\mathrm{d}t$
+
+
+\end{document}

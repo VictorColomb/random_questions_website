@@ -1,0 +1,36 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip 1em\parindent 0pt
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Thermodynamique}\fancyhead[R]{Question 39}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Définition flux de conduction, de convection}}}
+\end{center}
+
+% Correction
+
+\begin{center}
+	\fcolorbox{red}{white}{ \( \phi\,^{\mathrm{cd}/\mathrm{cv}} = \displaystyle\iint \vv j\,^{\mathrm{cd}/\mathrm{cv}} \cdot \vv{\mathrm{d}S} \) }
+\end{center}
+
+Pour la convection, \( \vv j^{\mathrm{cv}} = \dfrac{\mathrm{d}H}{\mathrm{d}V} \vv v = h\rho \vv v \)\\
+Pour la conduction, la loi de Fourier donne \( \vv j^{\mathrm{cd}} = -\lambda \vv{\mathrm{grad}}\,T \)
+
+
+\end{document}

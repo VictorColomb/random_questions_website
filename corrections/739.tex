@@ -1,0 +1,33 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{calc}
+
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{Thermodynamique}\fancyhead[R]{Question 49}
+
+% Énoncé
+\begin{center}
+	\large{\boldmath{\textbf{Définition fonction de partition $Z$}}}
+\end{center}
+
+% Correction
+
+Pour une particule, la probabilité de se trouver dans l'état d'énergie \(E\) est proportionnelle à \(\exp(-\dfrac{E}{k_BT})\).\\
+On note alors \(\dfrac{1}{Z}\) la constante de proportionnalité.\\
+\(Z\) est appelée fonction de partition et vaut \fcolorbox{red}{white}{\(Z=\sum\limits_{E \,possible}\exp(-\dfrac{E}{k_BT})\)} par normalisation.
+
+
+\end{document}

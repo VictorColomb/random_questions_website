@@ -3,7 +3,6 @@
 [![Releases](https://img.shields.io/github/v/release/viccol961/random_questions_website?sort=semver&style=flat-square)](https://github.com/viccol961/random_questions_website/releases)
 [![Issues](https://img.shields.io/github/issues/viccol961/random_questions_website?style=flat-square)](https://github.com/viccol961/random_questions_website/issues)
 [![License](https://img.shields.io/github/license/viccol961/random_questions_website?style=flat-square)](https://github.com/viccol961/random_questions_website/blob/master/LICENSE)
-[![CodeFactor](https://www.codefactor.io/repository/github/prepastan-revisions/random_questions_website/badge/v2?style=flat-square)](https://www.codefactor.io/repository/github/prepastan-revisions/random_questions_website/overview/v2?style=flat-square)
 
 **Site de révision du programme de MP**
 

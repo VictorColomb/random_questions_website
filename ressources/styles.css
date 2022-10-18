@@ -377,10 +377,10 @@ input:checked + label #fab:hover{
   position: relative;
   width: 60px;
   height: 34px;
-  left: 0; top: -.4em;
+  left: 0; top: 0;
   transform: scale(0.6);
   border-radius: 5px;
-  float: left;
+  display: inline-block;
 }
 /*hides the vanilla check box*/
 .switch input {

@@ -183,26 +183,24 @@
             </div>
             <div id="chapter_container" class="content">
                 <ul>
-                <?php
-                    for ($i=0, $n=count($chapters); $i<$n; $i++){
-                        echo("<div class='chapter_container'>
-                            <label for='chap".$i."'>
-                                <div class='switch'>
-                                    <input type='checkbox' name='check_chapters' id='chap".$i."'>
-                                    <span class='slider'></span>
-                                </div>
-                                <p class='chapter'>".$chapters[$i]."</p>
+                <?php for ($i=0, $n=count($chapters); $i<$n; $i++){ ?>
+                        <div class='chapter_container'>
+                            <div class='switch'>
+                                <input type='checkbox' name='check_chapters' id='chap<?=$i?>'>
+                                <span class='slider'></span>
+                            </div>
+                            <label for='chap<?=$i?>'>
+                                <p class='chapter'><?=$chapters[$i]?></p>
                             </label>
                             <div class='chapter_progression'>
                                 <div class='empty'>
-                                    <div class='progress' id='chapter_progress_bar".$i."'></div>
+                                    <div class='progress' id='chapter_progress_bar<?=$i?>'></div>
                                 </div>
-                                <p id='chapter_progression".$i."'></p>
+                                <p id='chapter_progression<?=$i?>'></p>
                             </div>
                         </div>
-                        <hr>");
-                    }
-                ?>
+                        <hr>
+                <?php } ?>
                 </ul>
             </div>
             <hr>
